@@ -855,6 +855,431 @@ body {
 }
 
 /* ==========================================================================
+   4B. DIVERSE EDITORIAL COMPOSITIONS (BREAKING THE SINGLE-COLUMN MONOTONY)
+   ========================================================================== */
+
+/* 1. Reversed Grid: Prose Left (Cols 1-7), Specimen/Marginalia Right (Cols 9-13) */
+.col-main-left {
+  grid-column: 1 / 8;
+}
+
+.col-specimen-right {
+  grid-column: 9 / 13;
+  border-top: 2px solid var(--ink-primary);
+  padding-top: 1.25rem;
+  align-self: start;
+}
+
+.surface-obsidian .col-specimen-right {
+  border-top-color: var(--vermilion-bright);
+}
+
+.specimen-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--vermilion);
+  margin-bottom: 0.75rem;
+}
+
+.surface-obsidian .specimen-label {
+  color: var(--vermilion-bright);
+}
+
+.specimen-entry {
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--rule-light);
+}
+
+.surface-obsidian .specimen-entry {
+  border-bottom-color: var(--rule-dark);
+}
+
+.specimen-entry strong {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  margin-bottom: 0.2rem;
+}
+
+.specimen-entry p {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--ink-secondary);
+}
+
+.surface-obsidian .specimen-entry p {
+  color: var(--text-ash);
+}
+
+.specimen-big-stat {
+  font-family: var(--font-serif);
+  font-size: clamp(2.6rem, 4vw, 3.6rem);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--vermilion);
+  margin: 0.5rem 0 0.35rem;
+}
+
+/* 2. Horizontal Itinerary Strip (Calamba -> Biarritz -> Ghent Page 112 -> Publication) */
+.itinerary-strip {
+  grid-column: 1 / 13;
+  border-top: 2px solid var(--ink-primary);
+  border-bottom: 1px solid var(--rule-light);
+  padding: 2.5rem 0;
+  margin-top: 0.5rem;
+}
+
+.itinerary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.itinerary-header h3 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.85rem, 3vw, 2.35rem);
+  font-weight: 600;
+}
+
+.itinerary-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.itinerary-step {
+  border-left: 1px solid var(--rule-light);
+  padding-left: 1.25rem;
+}
+
+.itinerary-step .step-date {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--vermilion);
+  margin-bottom: 0.3rem;
+}
+
+.itinerary-step h4 {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  margin-bottom: 0.45rem;
+}
+
+.itinerary-step p {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--ink-secondary);
+}
+
+/* 3. Bapor Tabo Architectural Deck Split (Upper Deck vs. Lower Deck) */
+.deck-architecture-spread {
+  grid-column: 1 / 13;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem;
+  position: relative;
+  padding: 1rem 0 2rem;
+}
+
+.deck-tier {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule-dark);
+}
+
+.deck-tier.deck-lower {
+  margin-top: 4.5rem;
+  border-top: 2px solid var(--vermilion-bright);
+}
+
+.deck-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--vermilion-bright);
+  margin-bottom: 0.4rem;
+}
+
+.deck-tier h3 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 2.6vw, 2.2rem);
+  margin-bottom: 1rem;
+}
+
+.deck-tier p {
+  font-size: 1.02rem;
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+  color: var(--text-bone);
+}
+
+/* 4. Cabesang Tales Escalation Ledger + Narrative Spread */
+.tales-escalation-ledger {
+  grid-column: 1 / 6;
+  border-top: 2px solid var(--vermilion-bright);
+  padding-top: 1.25rem;
+  align-self: start;
+}
+
+.tales-narrative-col {
+  grid-column: 7 / 13;
+}
+
+.escalation-rung {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--rule-dark);
+}
+
+.rung-stage {
+  display: block;
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-ash);
+}
+
+.rung-figure {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--vermilion-bright);
+  line-height: 1.15;
+  margin: 0.15rem 0 0.25rem;
+}
+
+.escalation-rung p {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--text-ash);
+  margin: 0;
+}
+
+/* 5. Two-Page Open Folio Spread (Chapters 6-7, Chapters 14-20, Chapter 39) */
+.folio-book-spread {
+  grid-column: 1 / 13;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--rule-light);
+  border-bottom: 1px solid var(--rule-light);
+  position: relative;
+}
+
+.surface-obsidian .folio-book-spread {
+  border-color: var(--rule-dark);
+}
+
+.folio-book-spread::after {
+  content: '';
+  position: absolute;
+  top: 2.5rem;
+  bottom: 2.5rem;
+  left: 50%;
+  width: 1px;
+  background: var(--rule-light);
+}
+
+.surface-obsidian .folio-book-spread::after {
+  background: var(--rule-dark);
+}
+
+.folio-page h3,
+.folio-page h4 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.65rem, 2.5vw, 2.1rem);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.folio-page p {
+  font-size: 1.02rem;
+  line-height: 1.82;
+  margin-bottom: 1.25rem;
+}
+
+.folio-speaker-tag {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--vermilion);
+  margin-bottom: 0.45rem;
+}
+
+.surface-obsidian .folio-speaker-tag {
+  color: var(--vermilion-bright);
+}
+
+/* 6. Staggered Nocturne Triptych & Sudden 6:00 PM Interruption (Chapters 16-23) */
+.nocturne-stagger-grid {
+  grid-column: 1 / 13;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 2.5rem;
+  row-gap: 3rem;
+}
+
+.nocturne-card-left {
+  grid-column: 1 / 6;
+  border-top: 1px solid var(--rule-light);
+  padding-top: 1.25rem;
+}
+
+.nocturne-card-right {
+  grid-column: 6 / 13;
+  border-top: 1px solid var(--rule-light);
+  padding-top: 1.25rem;
+  margin-top: 2.5rem;
+}
+
+.nocturne-card-left h4,
+.nocturne-card-right h4 {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  margin-bottom: 0.75rem;
+}
+
+.nocturne-card-left p,
+.nocturne-card-right p {
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.santa-clara-toll-interruption {
+  grid-column: 2 / 12;
+  padding: 3rem 0 2rem;
+  border-top: 2px solid var(--ink-primary);
+  border-bottom: 1px solid var(--rule-light);
+}
+
+.toll-hours-row {
+  display: flex;
+  gap: 2.5rem;
+  margin-bottom: 1.25rem;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--vermilion);
+}
+
+.santa-clara-toll-interruption .toll-headline {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.6vw, 2.9rem);
+  font-weight: 600;
+  line-height: 1.15;
+  margin-bottom: 1.25rem;
+  color: var(--ink-primary);
+}
+
+.santa-clara-toll-interruption p {
+  font-size: 1.06rem;
+  line-height: 1.82;
+  margin-bottom: 1.15rem;
+  max-width: 72ch;
+}
+
+/* 7. Solitary Centered Elegy (Chapter 30: Juli & Chapter 38: Carolino) */
+.solitary-elegy-wrap {
+  grid-column: 3 / 11;
+  padding: 3.5rem 0;
+  border-top: 1px solid var(--rule-dark);
+  border-bottom: 1px solid var(--rule-dark);
+}
+
+.solitary-elegy-wrap .elegy-kicker {
+  display: block;
+  text-align: center;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--vermilion-bright);
+  margin-bottom: 0.65rem;
+}
+
+.solitary-elegy-wrap h3 {
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: clamp(2.1rem, 3.6vw, 3rem);
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.solitary-elegy-wrap .elegy-verse {
+  font-family: var(--font-serif);
+  font-size: clamp(1.28rem, 2vw, 1.52rem);
+  line-height: 1.68;
+  color: var(--text-bone);
+  margin-bottom: 1.5rem;
+}
+
+.solitary-elegy-wrap .elegy-climax {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.45rem, 2.3vw, 1.8rem);
+  line-height: 1.45;
+  color: var(--vermilion-bright);
+  margin: 2rem 0;
+  padding-left: 1.5rem;
+  border-left: 2px solid var(--vermilion-bright);
+}
+
+/* 8. Side-by-Side Exhibition Plate & Laboratory Spread (Lampara ni Simoun) */
+.lamp-exhibit-spread {
+  grid-column: 1 / 13;
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 3.5rem;
+  align-items: start;
+  padding: 2rem 0;
+  border-top: 1px solid var(--rule-dark);
+}
+
+.lamp-visual-column {
+  position: relative;
+}
+
+.lamp-specs-ledger {
+  margin-top: 1.25rem;
+  border-top: 1px solid var(--rule-dark);
+}
+
+.lamp-specs-ledger > div {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--rule-dark);
+  font-size: 0.88rem;
+}
+
+.lamp-specs-ledger dt {
+  color: var(--text-ash);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.74rem;
+}
+
+.lamp-specs-ledger dd {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--text-bone);
+}
+
+
+/* ==========================================================================
    5. DRAMATIS PERSONAE CATALOGUE MODAL
    ========================================================================== */
 .modal-backdrop {
@@ -981,6 +1406,14 @@ body {
 
   .col-margin,
   .col-main,
+  .col-main-left,
+  .col-specimen-right,
+  .tales-escalation-ledger,
+  .tales-narrative-col,
+  .nocturne-card-left,
+  .nocturne-card-right,
+  .santa-clara-toll-interruption,
+  .solitary-elegy-wrap,
   .plate-num,
   .plate-caption-grid p {
     grid-column: 1 / 13;
@@ -990,8 +1423,21 @@ body {
   .editorial-triplets,
   .editorial-split-columns,
   .museum-plinth-pair,
-  .modal-char-layout {
+  .modal-char-layout,
+  .itinerary-steps,
+  .deck-architecture-spread,
+  .folio-book-spread,
+  .lamp-exhibit-spread {
     grid-template-columns: 1fr;
+  }
+
+  .deck-tier.deck-lower,
+  .nocturne-card-right {
+    margin-top: 0;
+  }
+
+  .folio-book-spread::after {
+    display: none;
   }
 
   .book-object {
