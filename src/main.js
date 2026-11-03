@@ -10,7 +10,6 @@ const CHARACTER_ARCHETYPES = {
   simoun: {
     name: 'Simoun (Crisóstomo Ibarra)',
     archetype: 'The Jeweler of the Escolta',
-    portrait: '/assets/characters/simoun.png',
     chapters: 'Chapters 1–2, 7, 10–11, 16, 23, 33–35, 39',
     role: 'Thirteen years after being hunted on the lake as Crisóstomo Ibarra, he returns from Cuba with a fortune in jewels and the ear of the Captain-General. He believes that reform only prolongs slavery—so he bribes officials and encourages worse abuses to force the populace into armed revolt.',
     significance:
@@ -19,7 +18,6 @@ const CHARACTER_ARCHETYPES = {
   basilio: {
     name: 'Basilio',
     archetype: 'Medical Student & Patron of Captain Tiago',
-    portrait: '/assets/characters/basilio.png',
     chapters: 'Chapters 6–7, 23, 26, 31, 33–35',
     role: 'Orphaned son of Sisa who worked as an unpaid servant for Captain Tiago while enduring years of classroom humiliation to reach his final year of medicine. In Chapter 7, he refuses Simoun’s conspiracy because he wants only to heal the sick and marry Juli.',
     significance:
@@ -28,7 +26,6 @@ const CHARACTER_ARCHETYPES = {
   isagani: {
     name: 'Isagani',
     archetype: 'Poet & Spokesman of the Student Academy',
-    portrait: '/assets/characters/isagani.png',
     chapters: 'Chapters 2, 14–15, 22, 27, 35',
     role: 'Raised on the Pacific coast by his uncle Father Florentino, Isagani challenges Señor Pasta’s selfishness (Chapter 15) and debates the Jesuit Father Fernández face-to-face on the failures of colonial schooling (Chapter 27).',
     significance:
@@ -37,7 +34,6 @@ const CHARACTER_ARCHETYPES = {
   'cabesang-tales': {
     name: 'Cabesang Tales (Matanglawin)',
     archetype: 'Farmer of Tiani Turned Outlaw',
-    portrait: '/assets/characters/cabesang-tales.png',
     chapters: 'Chapters 4, 10, 38',
     role: 'Son of Tandang Selo and father of Tano and Juli. He clears virgin forest at the cost of his wife and eldest daughter Lucia’s lives, pays escalating Dominican rents from 20 to 200 pesos, loses his legal appeal in court, and is kidnapped by bandits for a 500-peso ransom.',
     significance:
@@ -46,7 +42,6 @@ const CHARACTER_ARCHETYPES = {
   juli: {
     name: 'Juli (Juliana)',
     archetype: 'Daughter of Cabesang Tales · Basilio’s Beloved',
-    portrait: '/assets/characters/juli.png',
     chapters: 'Chapters 4, 8–9, 10, 30',
     role: 'To raise the 500-peso ransom for her kidnapped father Tales, she sells her jewelry and enters domestic servitude under Hermana Penchang on Christmas Day. Months later, when Basilio is the last student left in prison facing deportation, Sister Bali and the town judge pressure her to seek help from Father Camorra.',
     significance:
@@ -55,7 +50,6 @@ const CHARACTER_ARCHETYPES = {
   'padre-florentino': {
     name: 'Father Florentino',
     archetype: 'Retired Filipino Secular Priest',
-    portrait: '/assets/characters/padre-florentino.png',
     chapters: 'Chapters 2–3, 39',
     role: 'Born to a wealthy family in Manila and forced by his mother to enter the priesthood despite being in love, he retired to his Pacific estate shortly after the 1872 execution of Gomburza to live as a private citizen and raise his nephew Isagani.',
     significance:
@@ -64,7 +58,6 @@ const CHARACTER_ARCHETYPES = {
   'maria-clara': {
     name: 'María Clara',
     archetype: 'Cloistered Inside Santa Clara',
-    portrait: '/assets/characters/maria-clara.png',
     chapters: 'Chapters 18, 23',
     role: 'Never seen alive on stage in El Filibusterismo, she remains locked inside the Convent of Santa Clara for thirteen years while Simoun builds an entire revolution around the goal of breaking down the cloister doors to rescue her.',
     significance:
@@ -356,25 +349,20 @@ function initCharacterModal() {
     });
 
     bodyContainer.innerHTML = `
-      <div class="modal-char-layout">
-        <div>
-          <img src="${data.portrait}" alt="${data.name}" class="modal-char-img" />
+      <div class="modal-char-details">
+        <h4>${data.name}</h4>
+        <span class="modal-archetype-pill">${data.archetype}</span>
+        <div class="modal-detail-block">
+          <h5>Chapters</h5>
+          <p>${data.chapters}</p>
         </div>
-        <div class="modal-char-details">
-          <h4>${data.name}</h4>
-          <span class="modal-archetype-pill">${data.archetype}</span>
-          <div class="modal-detail-block">
-            <h5>Chapters</h5>
-            <p>${data.chapters}</p>
-          </div>
-          <div class="modal-detail-block">
-            <h5>Narrative Role</h5>
-            <p>${data.role}</p>
-          </div>
-          <div class="modal-detail-block">
-            <h5>Historical &amp; Sociological Significance</h5>
-            <p>${data.significance}</p>
-          </div>
+        <div class="modal-detail-block">
+          <h5>Narrative Role</h5>
+          <p>${data.role}</p>
+        </div>
+        <div class="modal-detail-block">
+          <h5>Historical &amp; Sociological Significance</h5>
+          <p>${data.significance}</p>
         </div>
       </div>
     `;
