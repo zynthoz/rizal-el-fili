@@ -4,64 +4,80 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 /* ==========================================================================
-   1. DRAMATIS PERSONAE CATALOGUE DATA
+   1. DRAMATIS PERSONAE CATALOGUE DATA (MAPPED TO TOPIC_OUTLINE.MD SECTION III)
    ========================================================================== */
 const CHARACTER_ARCHETYPES = {
   simoun: {
     name: 'Simoun (Crisóstomo Ibarra)',
-    archetype: 'The Jeweler of the Escolta',
+    archetype: 'The Radicalized Revolutionary / Accelerationist',
     chapters: 'Chapters 1–2, 7, 10–11, 16, 23, 33–35, 39',
-    role: 'Thirteen years after being hunted on the lake as Crisóstomo Ibarra, he returns from Cuba with a fortune in jewels and the ear of the Captain-General. He believes that reform only prolongs slavery—so he bribes officials and encourages worse abuses to force the populace into armed revolt.',
+    role: 'Thirteen years after being hunted on the lake as Crisóstomo Ibarra, he returns from Cuba with a fortune in jewels and the ear of the Captain-General. He believes peaceful reform only prolongs slavery—so he bribes officials and encourages worse abuses to force the populace into armed revolt.',
     significance:
       'His tragedy lies in his own contradiction: while claiming to act as the judge of a corrupt colonial order, his first uprising collapses when he learns María Clara has died (Chapter 23), exposing how deeply his revolution remains tied to private grief and personal vengeance.'
   },
   basilio: {
     name: 'Basilio',
-    archetype: 'Medical Student & Ward of Captain Tiago',
+    archetype: 'The Assimilated Pragmatist Turned Rebel',
     chapters: 'Chapters 6–7, 23, 26, 31, 33–35',
-    role: 'Orphaned son of Sisa who worked as an unpaid servant for Captain Tiago while enduring years of classroom humiliation to reach his final year of medicine. In Chapter 7, he refuses Simoun’s conspiracy because he wants only to heal the sick and marry Juli.',
+    role: 'Orphaned son of Sisa and ward of Captain Tiago who endured years of classroom humiliation to reach his final year of medicine. In Chapter 7, he refuses Simoun’s conspiracy because he wants only to heal the sick and marry Juli.',
     significance:
-      'Basilio’s arc is not a theoretical conversion; it is a personal collapse. Arrested for posters he knew nothing about, robbed of his inheritance by Father Irene, and learning that Juli leaped to her death to save him, he walks into Simoun’s laboratory asking for nitroglycerin—yet still cannot stop himself from warning Isagani outside the wedding feast.'
+      'Embodies the educated youth trying to survive through quiet compliance and clinical science until systemic brutality destroys his loved ones—arrested without a warrant, robbed of his 25-peso bequest by Father Irene, and driven to Simoun’s laboratory after Juli’s death.'
   },
   isagani: {
     name: 'Isagani',
-    archetype: 'Poet & Spokesman of the Student Academy',
+    archetype: 'The Idealistic Poet-Patriot',
     chapters: 'Chapters 2, 14–15, 22, 27, 35',
     role: 'Raised on the Pacific coast by his uncle Father Florentino, Isagani challenges Señor Pasta’s selfishness (Chapter 15) and debates the Jesuit Father Fernández face-to-face on the failures of colonial schooling (Chapter 27).',
     significance:
-      'Embodies the novel’s sharpest irony: in Chapter 35, the young man who spoke most eloquently against colonial injustice rushes into the mined mansion and throws Simoun’s bomb into the Pasig River—saving the very officials and friars who ruined his country because he cannot bear to let his lost love Paulita Gómez die.'
+      'Voices Rizal’s highest civic ideals, yet embodies the novel’s sharpest irony: in Chapter 35, he rushes into the mined mansion and hurls Simoun’s nitroglycerin lamp into the Pasig River—saving the colonial elite because he cannot bear to let his lost love Paulita Gómez die.'
   },
   'cabesang-tales': {
     name: 'Cabesang Tales (Matanglawin)',
-    archetype: 'Farmer of Tiani Turned Outlaw',
+    archetype: 'The Dispossessed Peasant Turned Outlaw',
     chapters: 'Chapters 4, 10, 38',
-    role: 'Son of Tandang Selo and father of Tano and Juli. He clears virgin forest at the cost of his wife and eldest daughter Lucia’s lives, pays escalating Dominican rents from 20 to 200 pesos, loses his legal appeal in court, and is kidnapped by bandits for a 500-peso ransom.',
+    role: 'Son of Tandang Selo and father of Tano and Juli. He clears virgin forest at the cost of his wife and eldest daughter Lucia’s lives, pays escalating friar rents from 20 to 200 pesos, loses his legal appeal in court, and is kidnapped by bandits for a 500-peso ransom.',
     significance:
-      'Every step Tales takes before Chapter 10 is lawful, patient, and peaceful. Only after his land is handed to another man, his daughter Juli becomes a servant, and he is ordered out of his own house does he take Simoun’s revolver and become the guerrilla chief Matanglawin.'
+      'Modeled on the evicted tenant farmers of Calamba; demonstrates a Lockean view of property—that land belongs to the farmer who clears it—and shows how institutional land-grabbing leaves peaceful citizens no recourse but armed insurgency.'
   },
   juli: {
     name: 'Juli (Juliana)',
     archetype: 'Daughter of Cabesang Tales · Basilio’s Beloved',
     chapters: 'Chapters 4, 8–9, 10, 30',
-    role: 'To raise the 500-peso ransom for her kidnapped father Tales, she sells her jewelry and enters domestic servitude under Hermana Penchang on Christmas Day. Months later, when Basilio is the last student left in prison facing deportation, Sister Bali and the town judge pressure her to seek help from Father Camorra.',
+    role: 'To raise the 500-peso ransom for her kidnapped father Tales, she sells her jewelry and enters domestic servitude under Hermana Penchang on Christmas Day. When Basilio is the last student left in prison facing deportation, Sister Bali and the town judge pressure her to seek help from Father Camorra.',
     significance:
-      'Juli’s story shows how colonial and clerical power falls heaviest on those with the fewest choices. Knowing what Father Camorra demands in return for his influence, she enters the Tiani convent in terror and leaps from the stone window to her death.'
+      'Shows how colonial debt, judicial abandonment, and clerical abuse fall heaviest on those with the fewest choices. Knowing what Father Camorra demands in return for his influence, she leaps from the Tiani convent window to her death.'
   },
   'padre-florentino': {
     name: 'Father Florentino',
-    archetype: 'Retired Filipino Secular Priest',
+    archetype: 'The Moral Conscience / Filipino Secular Clergy',
     chapters: 'Chapters 2–3, 39',
     role: 'Born to a wealthy family in Manila and forced by his mother to enter the priesthood despite being in love, he retired to his Pacific estate shortly after the 1872 execution of Gomburza to live as a private citizen and raise his nephew Isagani.',
     significance:
-      'In Chapter 39, he hears Simoun’s confession and argues that freedom cannot be won by corrupting society or by the sword alone (“Why independence, if the slaves of today will be the tyrants of tomorrow?”)—yet his call for patient suffering leaves open the hard question of what remains when every peaceful effort has been crushed.'
+      'Serves as a tribute to Gomburza and articulates the ethical thesis of Chapter 39: that freedom cannot be won by corrupting society or by personal vengeance (“Why independence, if the slaves of today will be the tyrants of tomorrow?”).'
+  },
+  'pasta-custodio': {
+    name: 'Señor Pasta & Don Custodio',
+    archetype: 'The Colonial Technocrat & Pretentious Bureaucrat',
+    chapters: 'Chapters 14–15, 20',
+    role: 'Señor Pasta is the wealthiest Filipino lawyer in Manila who counsels the friars and tells Isagani to care only for himself; Don Custodio (“Buena Tinta”) is the Spanish arbitrator whose shelves overflow with unread folders of “Projects in Study.”',
+    significance:
+      'Pasta represents educated Filipinos who abandon national solidarity to protect their personal comfort; Custodio embodies absurd colonial incompetence disguised as liberal statesmanship.'
+  },
+  'zayb-paulita': {
+    name: 'Ben Zayb & Paulita Gómez',
+    archetype: 'The Corrupt Colonial Press & Self-Serving Elite',
+    chapters: 'Chapters 1, 16–18, 22, 34–36',
+    role: 'Ben Zayb (an anagram of Ybañez) is a Spanish journalist who fabricates flattering stories for the friars until the Captain-General censors his wedding article; Paulita Gómez is Doña Victorina’s niece who abandons Isagani after his arrest to marry the wealthy Juanito Pelaez.',
+    significance:
+      'Satirize sycophantic colonial journalism and superficial Hispanized social climbing that prioritize status and safety over truth and solidarity.'
   },
   'maria-clara': {
     name: 'María Clara',
     archetype: 'Cloistered Inside Santa Clara',
     chapters: 'Chapters 18, 23',
-    role: 'Never seen alive on stage in El Filibusterismo, she remains locked inside the Convent of Santa Clara for thirteen years while Simoun builds an entire revolution around the goal of breaking down the cloister doors to rescue her.',
+    role: 'Locked inside the Convent of Santa Clara for thirteen years while Simoun builds an entire revolution around the goal of breaking down the cloister doors to rescue her.',
     significance:
-      'Her death at six o’clock on the evening of Chapter 23—just one hour before Simoun’s cannon signal is set to fire—causes Simoun to abandon his waiting regiments, revealing that his first uprising was driven as much by private obsession as by national liberation.'
+      'Her death at 6:00 PM in Chapter 23—one hour before Simoun’s 8:00 PM cannon signal—causes Simoun to abandon his waiting regiments, exposing how his first uprising was tied to private obsession.'
   }
 };
 
@@ -74,13 +90,11 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollProgressAndNav();
   initSelectiveMomentReveals();
   initCharacterModal();
-  initKeyboardNavigation();
+  initPresentationBeatStepper();
 });
 
 /* ==========================================================================
    3A. OPENING BOOK PORTAL (60FPS GPU-ACCELERATED)
-   Instead of scaling a preserve-3d element to 6.5x (which lags GPU rasterization),
-   we scale gently to 2.2x while crossfading the lightweight #portal-page-wipe layer.
    ========================================================================== */
 function initBookPortalTransition() {
   const portalSection = document.getElementById('hero-book');
@@ -109,7 +123,6 @@ function initBookPortalTransition() {
     }
   });
 
-  // Step 1 (0% -> 46%): Swing facsimile cover open around the spine
   tl.to(
     bookObject,
     {
@@ -140,10 +153,8 @@ function initBookPortalTransition() {
       0.2
     );
 
-  // Step 2 (46% -> 62%): Brief hold on open title spread
   tl.to(bookObject, { scale: 1.06, duration: 0.16, ease: 'none' }, 0.46);
 
-  // Step 3 (62% -> 100%): Gentle 2.2x zoom paired with smooth full-screen paper wipe
   tl.to(
     insideContent,
     {
@@ -187,7 +198,6 @@ function initBookOutroTransition() {
 
   if (!outroSection || !outroPinViewport || !outroBook || !outroCover || !outroWipe) return;
 
-  // Start with lightweight paper wipe at opacity: 1 and book at modest 2.25x scale
   gsap.set(outroWipe, { opacity: 1 });
   gsap.set(outroBook, { scale: 2.25, rotateX: 0, rotateY: 0, force3D: true });
   gsap.set(outroCover, { rotateY: -168, force3D: true });
@@ -205,7 +215,6 @@ function initBookOutroTransition() {
     }
   });
 
-  // Step 1 (0% -> 38%): Fade out paper wipe while pulling book back from 2.25x to 1.04x
   tl.to(
     outroWipe,
     {
@@ -235,10 +244,8 @@ function initBookOutroTransition() {
       0.15
     );
 
-  // Step 2 (38% -> 52%): Brief hold on the Finis page
   tl.to(outroBook, { scale: 1, duration: 0.14, ease: 'none' }, 0.38);
 
-  // Step 3 (52% -> 100%): Swing the facsimile front cover closed (rotateY: 0)
   tl.to(
     outroContent,
     {
@@ -271,23 +278,22 @@ function initBookOutroTransition() {
 }
 
 /* ==========================================================================
-   4. RESTRAINED ANIMATION SYSTEM (ONLY PLATES & MONUMENTAL REVELATIONS)
-   Ordinary paragraphs are NOT animated so the page reads with calm authority.
+   4. RESTRAINED ANIMATION SYSTEM (PLATES & MONUMENTAL BEATS)
    ========================================================================== */
 function initSelectiveMomentReveals() {
   const moments = document.querySelectorAll('.reveal-moment');
   moments.forEach((el) => {
     gsap.fromTo(
       el,
-      { y: 20, opacity: 0 },
+      { y: 18, opacity: 0 },
       {
         y: 0,
         opacity: 1,
-        duration: 0.75,
+        duration: 0.7,
         ease: 'power2.out',
         scrollTrigger: {
           trigger: el,
-          start: 'top 86%',
+          start: 'top 88%',
           toggleActions: 'play none none none'
         }
       }
@@ -296,12 +302,14 @@ function initSelectiveMomentReveals() {
 }
 
 /* ==========================================================================
-   5. SCROLL PROGRESS, NAV HIGHLIGHT & CATALOGUE MODAL
+   5. SCROLL PROGRESS & STAGE HIGHLIGHT
    ========================================================================== */
 function initScrollProgressAndNav() {
   const progressBar = document.getElementById('scroll-progress-bar');
   const navLinks = document.querySelectorAll('.chapter-nav .nav-link');
   const stages = document.querySelectorAll('[data-stage-index]');
+  const beats = Array.from(document.querySelectorAll('.presentation-beat'));
+  const beatIndicator = document.getElementById('beat-indicator');
 
   window.addEventListener(
     'scroll',
@@ -325,11 +333,25 @@ function initScrollProgressAndNav() {
       navLinks.forEach((link, idx) => {
         link.classList.toggle('active', idx === activeIdx);
       });
+
+      if (beatIndicator && beats.length > 0) {
+        let currentBeatNum = '01';
+        beats.forEach((beat) => {
+          const rect = beat.getBoundingClientRect();
+          if (rect.top <= window.innerHeight * 0.48) {
+            currentBeatNum = beat.getAttribute('data-beat') || '01';
+          }
+        });
+        beatIndicator.textContent = `${currentBeatNum} / ${String(beats.length).padStart(2, '0')}`;
+      }
     },
     { passive: true }
   );
 }
 
+/* ==========================================================================
+   6. DRAMATIS PERSONAE CATALOGUE MODAL (OUTLINE III)
+   ========================================================================== */
 function initCharacterModal() {
   const modal = document.getElementById('archetype-modal');
   const closeBtn = document.getElementById('modal-close');
@@ -409,8 +431,38 @@ function initCharacterModal() {
   });
 }
 
-function initKeyboardNavigation() {
-  const stages = Array.from(document.querySelectorAll('[data-stage-index]'));
+/* ==========================================================================
+   7. LIVE PRESENTATION BEAT STEPPER (01 -> 18 + BOOK PORTALS)
+   Allows presenter to step sequentially through every numbered beat using
+   Left/Right Arrow keys or the top-nav stepper buttons.
+   ========================================================================== */
+function initPresentationBeatStepper() {
+  const stops = [
+    document.getElementById('hero-book'),
+    ...Array.from(document.querySelectorAll('.presentation-beat')),
+    document.getElementById('closing-book')
+  ].filter(Boolean);
+
+  const prevBtn = document.getElementById('beat-prev');
+  const nextBtn = document.getElementById('beat-next');
+
+  function stepNext() {
+    const next = stops.find((el) => el.getBoundingClientRect().top > 95);
+    if (next) {
+      next.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function stepPrev() {
+    const prevs = stops.filter((el) => el.getBoundingClientRect().top < -60);
+    const target = prevs[prevs.length - 1] || stops[0];
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  if (nextBtn) nextBtn.addEventListener('click', stepNext);
+  if (prevBtn) prevBtn.addEventListener('click', stepPrev);
 
   window.addEventListener('keydown', (e) => {
     if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return;
@@ -419,13 +471,10 @@ function initKeyboardNavigation() {
 
     if (e.key === 'ArrowRight') {
       e.preventDefault();
-      const next = stages.find((sec) => sec.getBoundingClientRect().top > 80);
-      if (next) next.scrollIntoView({ behavior: 'smooth' });
+      stepNext();
     } else if (e.key === 'ArrowLeft') {
       e.preventDefault();
-      const prevs = stages.filter((sec) => sec.getBoundingClientRect().top < -80);
-      const target = prevs[prevs.length - 1] || stages[0];
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
+      stepPrev();
     }
   });
 }
