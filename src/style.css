@@ -1,0 +1,996 @@
+/* ==========================================================================
+   EL FILIBUSTERISMO — LITERARY EXHIBITION & ARCHIVAL EDITION
+   Two-Typeface System: Cormorant Garamond (Display/Editorial) + Inter (Prose)
+   ========================================================================== */
+
+:root {
+  --bg-obsidian: #0e0c0a;
+  --bg-soot: #15120f;
+  --paper-warm: #f1e9d8;
+  --ink-primary: #18130f;
+  --ink-secondary: #3b3026;
+  --ink-muted: #6e5d4f;
+  --text-bone: #ede5d5;
+  --text-ash: #a89b8c;
+  --vermilion: #9e2424;
+  --vermilion-bright: #c83232;
+  --rule-light: rgba(24, 19, 15, 0.16);
+  --rule-dark: rgba(237, 229, 213, 0.14);
+
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --nav-height: 56px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-obsidian);
+  color: var(--text-bone);
+  font-family: var(--font-sans);
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: var(--bg-obsidian);
+}
+
+/* ==========================================================================
+   1. EXHIBITION NAVIGATION BAR
+   ========================================================================== */
+.top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-height);
+  background: rgba(14, 12, 10, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--rule-dark);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2.25rem;
+  z-index: 500;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.brand-title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--text-bone);
+}
+
+.brand-year {
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  color: var(--text-ash);
+  text-transform: uppercase;
+}
+
+.chapter-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.35rem;
+}
+
+.nav-link {
+  color: var(--text-ash);
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  padding: 0.25rem 0;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--text-bone);
+  border-bottom-color: var(--vermilion-bright);
+}
+
+.btn-exhibit-index {
+  background: transparent;
+  border: 1px solid rgba(237, 229, 213, 0.3);
+  color: var(--text-bone);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  padding: 0.28rem 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn-exhibit-index:hover {
+  background: var(--text-bone);
+  color: var(--bg-obsidian);
+}
+
+.scroll-progress-track {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: transparent;
+}
+
+.scroll-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--vermilion-bright);
+}
+
+/* ==========================================================================
+   2. BOOK OPENING & CLOSING PORTALS (60FPS GPU-ACCELERATED)
+   ========================================================================== */
+.stage-book-portal {
+  position: relative;
+  width: 100%;
+  background-color: var(--bg-obsidian);
+  background-image:
+    radial-gradient(circle at center, rgba(34, 24, 17, 0.45) 0%, rgba(10, 8, 6, 0.95) 85%),
+    url('/assets/book/leather.jpg');
+  background-size: 100% 100%, 420px 420px;
+}
+
+.portal-pin-viewport {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding-top: var(--nav-height);
+}
+
+/* Lightweight full-screen paper overlay that crossfades in/out during zoom */
+.portal-page-wipe {
+  position: absolute;
+  inset: 0;
+  z-index: 25;
+  pointer-events: none;
+  opacity: 0;
+  will-change: opacity;
+  background-color: var(--paper-warm);
+  background-image: url('/assets/book/parchment.jpg');
+  background-size: 640px 640px;
+  background-repeat: repeat;
+}
+
+.portal-page-wipe.outro-wipe {
+  opacity: 1;
+}
+
+.book-portal-scene {
+  perspective: 1800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+.book-object {
+  position: relative;
+  width: 390px;
+  height: 580px;
+  transform-style: preserve-3d;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.book-page-thickness {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  right: -11px;
+  width: 12px;
+  background: repeating-linear-gradient(
+    90deg,
+    #e2d3b5 0px,
+    #cbb894 2px,
+    #dfd0b2 4px
+  );
+  box-shadow: 12px 24px 48px rgba(0, 0, 0, 0.85);
+}
+
+.book-inside-page {
+  position: absolute;
+  inset: 0;
+  background-color: var(--paper-warm);
+  background-image: url('/assets/book/parchment.jpg');
+  background-size: 512px 512px;
+  border: 1px solid rgba(110, 82, 51, 0.45);
+  box-shadow:
+    inset 24px 0 36px rgba(45, 31, 18, 0.22),
+    0 28px 65px rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.25rem;
+  text-align: center;
+  color: var(--ink-primary);
+}
+
+.inside-page-content {
+  border: 1px solid var(--rule-light);
+  padding: 2.5rem 1.75rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  will-change: opacity, transform;
+}
+
+.folio-imprint {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--ink-muted);
+  margin-bottom: 1.25rem;
+}
+
+.book-main-title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 2.45rem;
+  color: var(--ink-primary);
+  line-height: 1.08;
+}
+
+.book-sub-title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--ink-secondary);
+  margin-top: 0.35rem;
+}
+
+.thin-ink-rule {
+  width: 48px;
+  height: 1px;
+  background: var(--ink-primary);
+  margin: 1.5rem auto;
+  opacity: 0.4;
+}
+
+.book-dedication-preview {
+  font-family: var(--font-serif);
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: var(--ink-secondary);
+}
+
+/* Front Facsimile Cover */
+.book-front-cover {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  z-index: 10;
+  will-change: transform;
+}
+
+.cover-outer-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  overflow: hidden;
+  box-shadow:
+    -6px 0 18px rgba(0, 0, 0, 0.65),
+    0 25px 55px rgba(0, 0, 0, 0.9);
+  background: #d8be82;
+}
+
+.cover-texture-img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  display: block;
+}
+
+.cover-spine-shadow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(25, 16, 8, 0.52) 0%,
+    rgba(255, 245, 220, 0.2) 3.5%,
+    rgba(25, 16, 8, 0.25) 5.5%,
+    transparent 10%
+  );
+}
+
+.cover-inner-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+  background-color: #dfd0b2;
+  background-image: url('/assets/book/parchment.jpg');
+  background-size: 512px 512px;
+  border: 1px solid rgba(110, 82, 51, 0.4);
+  box-shadow: inset -20px 0 32px rgba(45, 31, 18, 0.25);
+}
+
+/* ==========================================================================
+   3. ASYMMETRICAL EDITORIAL GRID SYSTEM (NO ROUNDED CARD BOXES)
+   ========================================================================== */
+.exhibit-section {
+  position: relative;
+  width: 100%;
+  padding: 7.5rem 2rem 8rem;
+}
+
+.surface-paper {
+  background-color: var(--paper-warm);
+  background-image:
+    radial-gradient(ellipse at center, rgba(248, 240, 222, 0.05) 0%, rgba(196, 172, 132, 0.22) 100%),
+    url('/assets/book/parchment.jpg');
+  background-size: 100% 100%, 640px 640px;
+  color: var(--ink-primary);
+}
+
+.surface-obsidian {
+  background-color: var(--bg-soot);
+  background-image:
+    radial-gradient(circle at top, rgba(34, 24, 17, 0.25) 0%, rgba(10, 8, 6, 0.78) 100%),
+    url('/assets/book/leather.jpg');
+  background-size: 100% 100%, 420px 420px;
+  color: var(--text-bone);
+  border-top: 1px solid var(--rule-dark);
+}
+
+/* 12-Column Asymmetrical Literary Layout */
+.editorial-grid {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 2.5rem;
+  row-gap: 3.5rem;
+}
+
+/* Left Marginalia Column (Cols 1-3) */
+.col-margin {
+  grid-column: 1 / 4;
+  padding-top: 0.35rem;
+  border-top: 1px solid var(--rule-light);
+}
+
+.surface-obsidian .col-margin {
+  border-top-color: var(--rule-dark);
+}
+
+/* Main Narrative Column (Cols 5-12) */
+.col-main {
+  grid-column: 5 / 13;
+}
+
+/* Full-Bleed Interruption Column (Cols 1-13) */
+.col-full {
+  grid-column: 1 / 13;
+}
+
+.hairline-divider {
+  grid-column: 1 / 13;
+  border: none;
+  border-top: 1px solid var(--rule-light);
+  margin: 1rem 0;
+}
+
+.surface-obsidian .hairline-divider {
+  border-top-color: var(--rule-dark);
+}
+
+/* Marginalia Typography */
+.folio-num {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--vermilion);
+  margin-bottom: 0.45rem;
+}
+
+.surface-obsidian .folio-num {
+  color: var(--vermilion-bright);
+}
+
+.margin-date {
+  display: block;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.margin-note {
+  font-family: var(--font-serif);
+  font-size: 1.02rem;
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+
+.surface-obsidian .margin-note {
+  color: var(--text-ash);
+}
+
+/* Main Editorial Typography */
+.display-title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(2.75rem, 5vw, 4.25rem);
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.5rem;
+}
+
+.lead-paragraph {
+  font-family: var(--font-serif);
+  font-size: clamp(1.35rem, 2.2vw, 1.65rem);
+  line-height: 1.52;
+  color: var(--ink-secondary);
+}
+
+.surface-obsidian .lead-paragraph {
+  color: var(--text-ash);
+}
+
+.prose-flow h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(1.85rem, 3vw, 2.4rem);
+  line-height: 1.18;
+  margin-bottom: 1.35rem;
+}
+
+.prose-flow h3 + p {
+  margin-top: 0;
+}
+
+.prose-flow p {
+  font-size: 1.06rem;
+  line-height: 1.85;
+  margin-bottom: 1.4rem;
+  max-width: 68ch;
+}
+
+.drop-cap::first-letter {
+  float: left;
+  font-family: var(--font-serif);
+  font-size: 4.1rem;
+  line-height: 0.8;
+  padding-top: 0.22rem;
+  padding-right: 0.65rem;
+  font-weight: 600;
+  color: var(--vermilion);
+}
+
+.surface-obsidian .drop-cap::first-letter {
+  color: var(--vermilion-bright);
+}
+
+/* ==========================================================================
+   4. MONUMENTAL INTERRUPTIONS, PLATES & MUSEUM PLINTHS
+   ========================================================================== */
+
+/* A. 17 February 1872 Monumental Date Interruption */
+.monumental-interruption {
+  padding: 3.5rem 0;
+  border-top: 2px solid var(--ink-primary);
+  border-bottom: 1px solid var(--rule-light);
+}
+
+.date-monument {
+  margin-bottom: 2.5rem;
+}
+
+.monument-day {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: clamp(3.2rem, 6.5vw, 5.5rem);
+  font-weight: 600;
+  line-height: 0.95;
+  color: var(--vermilion);
+  letter-spacing: -0.02em;
+}
+
+.monument-sub {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  margin-top: 0.5rem;
+  color: var(--ink-primary);
+}
+
+.dedication-columns {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 3.5rem;
+  align-items: start;
+}
+
+.manuscript-excerpt {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.42rem;
+  line-height: 1.55;
+  color: var(--ink-primary);
+}
+
+.manuscript-excerpt cite {
+  display: block;
+  margin-top: 1rem;
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.correction-prose {
+  font-size: 0.98rem;
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+  color: var(--ink-secondary);
+}
+
+.editorial-ledger {
+  border-top: 1px solid var(--rule-light);
+}
+
+.editorial-ledger > div {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--rule-light);
+  font-size: 0.92rem;
+}
+
+.editorial-ledger dt {
+  color: var(--ink-muted);
+}
+
+.editorial-ledger del {
+  color: var(--ink-muted);
+  margin-right: 0.35rem;
+}
+
+.editorial-ledger strong {
+  color: var(--vermilion);
+}
+
+.ledger-source-note {
+  margin-top: 0.75rem;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+
+/* B. Unboxed Editorial Triplets */
+.editorial-triplets {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.25rem;
+  margin: 2.25rem 0 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule-light);
+}
+
+.triplet-num {
+  display: block;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.6rem;
+  color: var(--vermilion);
+  margin-bottom: 0.35rem;
+}
+
+.triplet-entry h4 {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1.25;
+  margin-bottom: 0.6rem;
+}
+
+.triplet-entry p {
+  font-size: 0.94rem;
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+/* C. Open Split Columns (No background boxes) */
+.editorial-split-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  margin: 2rem 0;
+  padding: 1.75rem 0;
+  border-top: 1px solid var(--rule-dark);
+  border-bottom: 1px solid var(--rule-dark);
+}
+
+.surface-paper .editorial-split-columns {
+  border-color: var(--rule-light);
+}
+
+.editorial-split-columns h4 {
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  margin-bottom: 0.5rem;
+}
+
+.editorial-split-columns p {
+  font-size: 0.96rem;
+  line-height: 1.72;
+  margin-bottom: 0;
+}
+
+/* D. Full-Bleed Exhibition Plates */
+.exhibition-plate {
+  margin: 1.5rem 0 2rem;
+}
+
+.plate-image-wrap {
+  width: 100%;
+  overflow: hidden;
+  background: #080605;
+}
+
+.plate-image-wrap img {
+  width: 100%;
+  max-height: 540px;
+  object-fit: cover;
+  display: block;
+}
+
+.plate-caption-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 2.5rem;
+  padding-top: 1rem;
+  border-bottom: 1px solid var(--rule-dark);
+  padding-bottom: 1.25rem;
+}
+
+.plate-num {
+  grid-column: 1 / 4;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-ash);
+}
+
+.plate-caption-grid p {
+  grid-column: 5 / 13;
+  font-family: var(--font-serif);
+  font-size: 1.08rem;
+  line-height: 1.5;
+  color: var(--text-ash);
+}
+
+.plate-caption-grid strong {
+  color: var(--text-bone);
+}
+
+/* E. Museum Portrait Plinths (Minimalist Exhibition Plaques, No UI Clutter) */
+.museum-portrait-plinth {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule-dark);
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.museum-portrait-plinth.light-plinth {
+  border-top-color: var(--rule-light);
+}
+
+.museum-portrait-plinth:hover {
+  opacity: 0.82;
+}
+
+.museum-portrait-plinth img {
+  width: 96px;
+  height: 120px;
+  object-fit: cover;
+  filter: contrast(1.05);
+}
+
+.plinth-caption h4 {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.plinth-caption p {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.12rem;
+  line-height: 1.5;
+  color: var(--text-ash);
+  margin-bottom: 0;
+}
+
+.light-plinth .plinth-caption p {
+  color: var(--ink-secondary);
+}
+
+.museum-plinth-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+}
+
+/* F. Oversized Pullquotes */
+.oversized-pullquote {
+  margin: 2.75rem 0;
+  padding-left: 1.75rem;
+  border-left: 2px solid var(--vermilion-bright);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.45rem, 2.3vw, 1.85rem);
+  line-height: 1.45;
+}
+
+.oversized-pullquote cite {
+  display: block;
+  margin-top: 0.85rem;
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-size: 0.76rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-ash);
+}
+
+/* G. Blood-Red Inscription Interruption (Mane, Thecel, Phares) */
+.inscription-interruption {
+  padding: 4.5rem 0;
+  text-align: center;
+  border-top: 1px solid var(--rule-dark);
+  border-bottom: 1px solid var(--rule-dark);
+}
+
+.inscription-words {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(2.8rem, 6vw, 4.75rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vermilion-bright);
+  line-height: 1.05;
+}
+
+.inscription-translation {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  color: var(--text-ash);
+  margin-top: 0.65rem;
+}
+
+/* H. Open Typographic Comparison Table */
+.open-editorial-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+
+.open-editorial-table th,
+.open-editorial-table td {
+  padding: 1.35rem 1.25rem 1.35rem 0;
+  text-align: left;
+  border-bottom: 1px solid var(--rule-light);
+  vertical-align: top;
+}
+
+.open-editorial-table th {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--vermilion);
+  border-bottom: 2px solid var(--ink-primary);
+}
+
+.closing-epigraph-block {
+  margin-top: 4.5rem;
+  padding-top: 3rem;
+  border-top: 2px solid var(--ink-primary);
+}
+
+.closing-epigraph-block p {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.55rem, 2.5vw, 2.1rem);
+  line-height: 1.4;
+  color: var(--ink-primary);
+  margin-bottom: 0.65rem;
+}
+
+.closing-epigraph-block cite {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-style: normal;
+  color: var(--vermilion);
+}
+
+/* ==========================================================================
+   5. DRAMATIS PERSONAE CATALOGUE MODAL
+   ========================================================================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 6, 5, 0.88);
+  backdrop-filter: blur(8px);
+  z-index: 600;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.modal-backdrop.open {
+  display: flex;
+}
+
+.modal-dialog {
+  background: var(--bg-soot);
+  border: 1px solid rgba(237, 229, 213, 0.25);
+  max-width: 840px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  color: var(--text-bone);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--rule-dark);
+}
+
+.modal-header h3 {
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--text-bone);
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.modal-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--rule-dark);
+}
+
+.char-tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-ash);
+  padding: 0.25rem 0;
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.char-tab-btn.active {
+  color: var(--text-bone);
+  border-bottom-color: var(--vermilion-bright);
+}
+
+.modal-body {
+  padding: 2.25rem 2rem;
+}
+
+.modal-char-layout {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 2.25rem;
+  align-items: start;
+}
+
+.modal-char-img {
+  width: 100%;
+}
+
+.modal-char-details h4 {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  margin-bottom: 0.2rem;
+}
+
+.modal-archetype-pill {
+  display: block;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--vermilion-bright);
+  margin-bottom: 1.25rem;
+}
+
+.modal-detail-block {
+  margin-bottom: 1.15rem;
+}
+
+.modal-detail-block h5 {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-ash);
+  margin-bottom: 0.25rem;
+}
+
+/* ==========================================================================
+   6. RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 920px) {
+  .chapter-nav {
+    display: none;
+  }
+
+  .col-margin,
+  .col-main,
+  .plate-num,
+  .plate-caption-grid p {
+    grid-column: 1 / 13;
+  }
+
+  .dedication-columns,
+  .editorial-triplets,
+  .editorial-split-columns,
+  .museum-plinth-pair,
+  .modal-char-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .book-object {
+    width: 300px;
+    height: 446px;
+  }
+}
