@@ -716,12 +716,9 @@ body {
   color: var(--text-bone);
 }
 
-/* E. Museum Portrait Plinths (Minimalist Exhibition Plaques, No UI Clutter) */
+/* E. Museum Character Plinths (Typographic Exhibition Plaques, No Images) */
 .museum-portrait-plinth {
-  display: grid;
-  grid-template-columns: 96px 1fr;
-  gap: 1.5rem;
-  align-items: center;
+  display: block;
   margin-top: 2.5rem;
   padding-top: 1.5rem;
   border-top: 1px solid var(--rule-dark);
@@ -735,13 +732,6 @@ body {
 
 .museum-portrait-plinth:hover {
   opacity: 0.82;
-}
-
-.museum-portrait-plinth img {
-  width: 96px;
-  height: 120px;
-  object-fit: cover;
-  filter: contrast(1.05);
 }
 
 .plinth-caption h4 {
