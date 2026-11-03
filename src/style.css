@@ -672,6 +672,21 @@ body {
   display: block;
 }
 
+.plate-image-wrap.plate-sketch-wrap {
+  background: #f6f4ef;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1.5rem;
+}
+
+.plate-image-wrap img.plate-sketch-img {
+  width: auto;
+  max-width: 100%;
+  max-height: 640px;
+  object-fit: contain;
+}
+
 .plate-caption-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
