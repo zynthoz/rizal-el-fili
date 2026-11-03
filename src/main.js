@@ -17,7 +17,7 @@ const CHARACTER_ARCHETYPES = {
   },
   basilio: {
     name: 'Basilio',
-    archetype: 'Medical Student & Patron of Captain Tiago',
+    archetype: 'Medical Student & Ward of Captain Tiago',
     chapters: 'Chapters 6–7, 23, 26, 31, 33–35',
     role: 'Orphaned son of Sisa who worked as an unpaid servant for Captain Tiago while enduring years of classroom humiliation to reach his final year of medicine. In Chapter 7, he refuses Simoun’s conspiracy because he wants only to heal the sick and marry Juli.',
     significance:
