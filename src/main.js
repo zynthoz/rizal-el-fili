@@ -448,14 +448,14 @@ function initPresentationControls() {
   const fullscreenBtn = document.getElementById('btn-fullscreen');
 
   function stepNext() {
-    const next = stops.find((el) => el.getBoundingClientRect().top > 95);
+    const next = stops.find((el) => el.getBoundingClientRect().top > 85);
     if (next) {
       next.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 
   function stepPrev() {
-    const prevs = stops.filter((el) => el.getBoundingClientRect().top < -60);
+    const prevs = stops.filter((el) => el.getBoundingClientRect().top < 40);
     const target = prevs[prevs.length - 1] || stops[0];
     if (target) {
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -489,14 +489,25 @@ function initPresentationControls() {
   }
 
   window.addEventListener('keydown', (e) => {
-    if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return;
+    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) return;
+    if (e.key === ' ' && document.activeElement?.tagName === 'BUTTON') return;
     const modalOpen = document.getElementById('archetype-modal')?.classList.contains('open');
     if (modalOpen) return;
 
-    if (e.key === 'ArrowRight') {
+    if (
+      e.key === 'ArrowRight' ||
+      e.key === 'ArrowDown' ||
+      e.key === 'PageDown' ||
+      (e.key === ' ' && !e.shiftKey)
+    ) {
       e.preventDefault();
       stepNext();
-    } else if (e.key === 'ArrowLeft') {
+    } else if (
+      e.key === 'ArrowLeft' ||
+      e.key === 'ArrowUp' ||
+      e.key === 'PageUp' ||
+      (e.key === ' ' && e.shiftKey)
+    ) {
       e.preventDefault();
       stepPrev();
     }
