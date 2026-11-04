@@ -1,0 +1,2030 @@
+# build_index_html.py
+# Generates the complete, verified 39-slide index.html for El Filibusterismo classroom presentation
+
+html_content = """<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El Filibusterismo — Ghent, 1891 · Classroom Presentation &amp; Literary Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+
+<body>
+  <!-- Fixed Top Presentation Navigation Bar -->
+  <header class="top-nav" id="top-nav">
+    <div class="nav-brand">
+      <span class="brand-title"><em>El Filibusterismo</em></span>
+      <span class="brand-year">José Rizal · 1891</span>
+    </div>
+
+    <div class="nav-center">
+      <span class="slide-indicator" id="slide-indicator">Slide 01 / 39 · Cover</span>
+      <select id="nav-section-jump" class="nav-section-select" aria-label="Jump to lesson unit">
+        <option value="slide-cover">Cover (Slide 01)</option>
+        <option value="slide-title-gomburza">Orientation: Meaning &amp; Gomburza (Slide 02)</option>
+        <option value="slide-historical-timeline">Orientation: Writing Timeline (Slide 03)</option>
+        <option value="slide-noli-bridge">Orientation: Bridge from Noli (Slide 04)</option>
+        <option value="slide-tabo-ship">Unit 1: The Steamer Tabo (Slide 05)</option>
+        <option value="slide-tabo-upper">Unit 1: Ch. I Upper Deck (Slide 06)</option>
+        <option value="slide-tabo-lower">Unit 1: Ch. II Lower Deck (Slide 07)</option>
+        <option value="slide-tabo-legends">Unit 1: Ch. III River Legends (Slide 08)</option>
+        <option value="slide-tales-dispossession">Unit 2: Ch. IV Cabesang Tales (Slide 09)</option>
+        <option value="slide-tales-christmas">Unit 2: Ch. V &amp; VIII Christmas Eve (Slide 10)</option>
+        <option value="slide-basilio-forest">Unit 2: Ch. VI &amp; VII Forest Discovery (Slide 11)</option>
+        <option value="slide-tales-revenge">Unit 2: Ch. IX &amp; X Tiani Murders (Slide 12)</option>
+        <option value="slide-los-banos">Unit 3: Ch. XI Los Baños (Slide 13)</option>
+        <option value="slide-physics-class">Unit 3: Ch. XII &amp; XIII Physics Class (Slide 14)</option>
+        <option value="slide-student-lobby">Unit 3: Ch. XIV &amp; XV Student Lobby (Slide 15)</option>
+        <option value="slide-quiroga-sphinx">Unit 4: Ch. XVI–XVIII Quiroga &amp; Sphinx (Slide 16)</option>
+        <option value="slide-operetta-night">Unit 4: Ch. XIX &amp; XXI Operetta Night (Slide 17)</option>
+        <option value="slide-maria-clara-death">Unit 4: Ch. XX–XXIV Aborted Revolt (Slide 18)</option>
+        <option value="slide-pasquinades">Unit 5: Ch. XXV &amp; XXVI Pasquinades (Slide 19)</option>
+        <option value="slide-isagani-debate">Unit 5: Ch. XXVII &amp; XXVIII City Panic (Slide 20)</option>
+        <option value="slide-juli-martyrdom">Unit 5: Ch. XXIX–XXXI Juli's Martyrdom (Slide 21)</option>
+        <option value="slide-repression-aftermath">Unit 5: Ch. XXXII Broken Students (Slide 22)</option>
+        <option value="slide-transformed-basilio">Unit 6: Ch. XXXIII Transformed Basilio (Slide 23)</option>
+        <option value="slide-lamp-mechanism">Unit 6: The Pomegranate Lamp (Slide 24)</option>
+        <option value="slide-mined-house">Unit 6: Ch. XXXIV The Mined Wedding (Slide 25)</option>
+        <option value="slide-thrown-lamp">Unit 6: Ch. XXXV The Thrown Lamp (Slide 26)</option>
+        <option value="slide-climax-irony">Unit 6: Climax Irony Analysis (Slide 27)</option>
+        <option value="slide-aftermath-press">Unit 7: Ch. XXXVI &amp; XXXVII Silenced Press (Slide 28)</option>
+        <option value="slide-tano-selo-ambush">Unit 7: Ch. XXXVIII Mountain Ambush (Slide 29)</option>
+        <option value="slide-simoun-poison">Unit 8: Ch. XXXIX Simoun's Poison (Slide 30)</option>
+        <option value="slide-florentino-dialogue">Unit 8: Ch. XXXIX Florentino's Dialogue (Slide 31)</option>
+        <option value="slide-pacific-abyss">Unit 8: Ch. XXXIX Pacific Ocean Abyss (Slide 32)</option>
+        <option value="slide-noli-fili-comparison">Unit 9: Noli vs. Fili Comparison (Slide 33)</option>
+        <option value="slide-rizal-law">Unit 9: 1896 Revolution &amp; Rizal Law (Slide 34)</option>
+        <option value="slide-matrix-act1">Unit 9: Matrix — Act I (Ch. 1–10) (Slide 35)</option>
+        <option value="slide-matrix-act2">Unit 9: Matrix — Act II (Ch. 11–24) (Slide 36)</option>
+        <option value="slide-matrix-act3">Unit 9: Matrix — Act III (Ch. 25–35) (Slide 37)</option>
+        <option value="slide-matrix-act4">Unit 9: Matrix — Act IV (Ch. 36–39) (Slide 38)</option>
+        <option value="slide-sources">Unit 9: Scholarly Sources &amp; Summary (Slide 39)</option>
+      </select>
+    </div>
+
+    <div class="nav-actions">
+      <div class="beat-stepper" aria-label="Presentation Stepper">
+        <button class="beat-step-btn" id="beat-prev" aria-label="Previous slide" title="Previous slide (Page Up or &uarr;)">&larr;</button>
+        <button class="beat-step-btn" id="beat-next" aria-label="Next slide" title="Next slide (Page Down, &darr;, or Space)">&rarr;</button>
+      </div>
+      <button class="btn-utility" id="btn-projection" title="Toggle large classroom projection text scale">
+        A+ Projection
+      </button>
+      <button class="btn-utility" id="btn-fullscreen" title="Toggle fullscreen view">
+        Fullscreen
+      </button>
+      <button class="btn-utility" id="btn-archetypes" title="Open character profiles reference">
+        Characters
+      </button>
+    </div>
+
+    <div class="scroll-progress-track">
+      <div class="scroll-progress-bar" id="scroll-progress-bar"></div>
+    </div>
+  </header>
+
+  <!-- Full-Screen Vertical Presentation Viewport Container -->
+  <main class="presentation-viewport" id="presentation-viewport">
+"""
+
+slides_data = []
+
+# Slide 01: Cover
+slides_data.append("""
+    <section class="presentation-slide surface-obsidian" id="slide-cover" data-slide-index="0" data-unit-name="Cover" data-section-id="slide-cover">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Classroom Presentation &amp; Literary Guide</span>
+            <span class="slide-time-place">Ghent, Belgium · September 18, 1891</span>
+          </div>
+          <h1 class="slide-title" style="display:none;">El Filibusterismo</h1>
+        </header>
+
+        <div class="slide-body">
+          <div class="cover-layout">
+            <div class="cover-intro-col">
+              <span class="cover-kicker">Educational Visual Companion</span>
+              <h2 class="cover-title">El Filibusterismo</h2>
+              <p class="cover-subtitle">Continuación del Noli Me Tángere</p>
+              <div class="cover-byline">
+                <strong>By Dr. José Rizal</strong><br />
+                First Edition printed at F. Meyer-Van Loo Press, Ghent (1891)<br />
+                English translation by Charles Derbyshire (1912)
+              </div>
+              <div class="cover-guide-badge">
+                A complete, chronological, 39-chapter presentation designed for classroom instruction, historical analysis, and student understanding.
+              </div>
+              <div class="cover-start-cue">
+                <span class="cue-arrow">&darr;</span>
+                <span>Scroll down or press &rarr; / Page Down to begin the presentation</span>
+              </div>
+            </div>
+
+            <div class="cover-facsimile-frame">
+              <img src="/assets/book/book-cover.jpg" alt="1891 Ghent first edition facsimile cover of El Filibusterismo" />
+              <div class="cover-facsimile-caption">
+                Facsimile of the 1891 Ghent First Edition · Preserved with Rizal's Gomburza dedication
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>Lesson Overview:</strong> 39 Chapters · 9 Instructional Units · Historical Context · Complete Chronological Narrative
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 02: Meaning & Gomburza
+slides_data.append("""
+    <section class="presentation-slide surface-paper" id="slide-title-gomburza" data-slide-index="1" data-unit-name="Orientation" data-section-id="slide-title-gomburza">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Orientation · Historical Context</span>
+            <span class="slide-time-place">1872 &amp; 1891 · Manila &amp; Europe</span>
+          </div>
+          <h2 class="slide-title">The Meaning of <em>Filibustero</em> and the Gomburza Dedication</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col prose-weighted">
+            <div class="slide-col">
+              <p class="lead-p">
+                Originally referring to seventeenth-century Caribbean buccaneers, the Spanish word <strong>filibustero</strong> was weaponized by colonial authorities in the nineteenth-century Philippines to condemn any Filipino suspected of subverting colonial rule.
+              </p>
+              <p>
+                Writing to Ferdinand Blumentritt in 1887, Rizal explained: <em>“The word filibustero is very little known in the Philippines... The educated people fear the reach of the word... It means a dangerous patriot who will soon be on the gallows.”</em> Charles Derbyshire’s 1912 English translation titled it <em>The Reign of Greed</em>, whereas the original Spanish literally means <em>The Subversion</em>.
+              </p>
+            </div>
+            <div class="slide-col">
+              <div class="info-card crimson-accent">
+                <span class="card-num-kicker">Dedication Page · February 17, 1872</span>
+                <h4>To the Memory of the Three Priests</h4>
+                <p>
+                  Rizal dedicated the novel to secular priests <strong>Mariano Gómez</strong>, <strong>José Burgos</strong>, and <strong>Jacinto Zamora</strong>, executed by garrote at Bagumbayan following the 1872 Cavite Mutiny.
+                </p>
+                <p style="font-size: 0.9rem; color: var(--ink-muted); margin-top: 0.35rem;">
+                  <em>Historical note:</em> Writing from memory in Europe, Rizal misdated their execution as “28 de Febrero” and estimated their ages (actual NHCP records: Gómez 72–73, Burgos 35, Zamora 36–37).
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>Causal Bridge:</strong> The 1872 Bagumbayan martyrdom shattered the illusion of colonial reform and set Rizal on the path to writing the sequel.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 03: Historical Timeline
+slides_data.append("""
+    <section class="presentation-slide surface-obsidian" id="slide-historical-timeline" data-slide-index="2" data-unit-name="Orientation" data-section-id="slide-historical-timeline">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Orientation · Historical Chronology</span>
+            <span class="slide-time-place">1872 – 1891 · Calamba to Ghent</span>
+          </div>
+          <h2 class="slide-title">Four Milestones that Shaped <em>El Filibusterismo</em></h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="cards-grid-4">
+            <div class="info-card crimson-accent">
+              <span class="card-num-kicker">Milestone 1 · Feb 1872</span>
+              <h4>Gomburza Martyrdom</h4>
+              <p>
+                Execution of secular priests Gómez, Burgos, and Zamora at Bagumbayan. A ten-year-old Rizal vows to avenge their memory through letters and national awakening.
+              </p>
+            </div>
+
+            <div class="info-card">
+              <span class="card-num-kicker">Milestone 2 · 1887–1891</span>
+              <h4>Calamba Land Evictions</h4>
+              <p>
+                Dominican rent increases and military evictions of Rizal’s family and tenants under Gov.-Gen. Weyler. Directly inspires the dispossession of Cabesang Tales.
+              </p>
+            </div>
+
+            <div class="info-card">
+              <span class="card-num-kicker">Milestone 3 · 1890–1891</span>
+              <h4>Madrid Schism &amp; Heartbreak</h4>
+              <p>
+                Disillusionment with Del Pilar’s lobbying in Spain; Leonor Rivera marries Henry Kipping, inspiring Paulita Gómez’s abandonment of Isagani for Juanito Pelaez.
+              </p>
+            </div>
+
+            <div class="info-card crimson-accent">
+              <span class="card-num-kicker">Milestone 4 · Sept 1891</span>
+              <h4>Ghent Printing Crisis</h4>
+              <p>
+                Printing halts at page 112 in Ghent due to extreme poverty. Valentin Ventura loans funds from Paris, allowing publication on September 18, 1891.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>Historical Focus:</strong> Rizal’s own family struggles and disillusionment in Europe directly transformed into the darker, urgent tone of the sequel.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 04: Bridge from Noli
+slides_data.append("""
+    <section class="presentation-slide surface-paper" id="slide-noli-bridge" data-slide-index="3" data-unit-name="Orientation" data-section-id="slide-noli-bridge">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Orientation · Literary Continuity</span>
+            <span class="slide-time-place">Thirteen Years After Noli Me Tángere</span>
+          </div>
+          <h2 class="slide-title">The Bridge from <em>Noli Me Tángere</em>: The Return</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col">
+            <div class="slide-col">
+              <div class="info-card">
+                <span class="card-num-kicker">Noli Me Tángere · Berlin, 1887</span>
+                <h4>Crisóstomo Ibarra: The Peaceful Reformer</h4>
+                <p>
+                  A wealthy, European-educated young Filipino returns to San Diego trusting in Spanish justice, modern education, and legal progress. He seeks to build a public schoolhouse and marry his childhood love, María Clara.
+                </p>
+                <p style="font-size: 0.95rem; color: var(--oxide-crimson); margin-top: 0.25rem;">
+                  <strong>Result:</strong> Framed for an uprising by Padre Salví, hunted by civil guards, and reported killed on Laguna de Bay.
+                </p>
+              </div>
+            </div>
+
+            <div class="slide-col">
+              <div class="info-card crimson-accent">
+                <span class="card-num-kicker">El Filibusterismo · Ghent, 1891</span>
+                <h4>Simoun: The Cynical Subversive</h4>
+                <p>
+                  Thirteen years later, Ibarra returns unrecognizable behind large blue-tinted goggles and a foreign accent. Wealthy from Cuban mines, he acts as the Governor-General’s “Brown Cardinal,” using bribery and administrative tyranny to drive the people to violent revolution.
+                </p>
+                <p style="font-size: 0.95rem; color: var(--oxide-crimson); margin-top: 0.25rem;">
+                  <strong>Core Question:</strong> Can violent retaliation redeem a nation, or does corrupt revolution destroy itself?
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>Classroom Orientation:</strong> The story begins on a morning in late December aboard a river steamer traveling upstream from Manila.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 05: The Steamer Tabo
+slides_data.append("""
+    <section class="presentation-slide surface-obsidian" id="slide-tabo-ship" data-slide-index="4" data-unit-name="Unit 1 · Ch. 1–3" data-section-id="slide-tabo-ship">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 1 · Chapters I – III</span>
+            <span class="slide-time-place">Late December · Pasig River</span>
+          </div>
+          <h2 class="slide-title">The Steamer <em>Tabo</em>: A Society Divided</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-hero-plate">
+            <div class="hero-image-frame">
+              <img src="/assets/scenes/bapor-tabo.jpg" alt="Nineteenth-century pen and ink illustration of the steamer Tabo on the Pasig River" />
+              <div class="hero-caption">
+                The <em>Bapor Tabo</em> navigating upstream toward Laguna de Bay
+              </div>
+            </div>
+
+            <div class="slide-col">
+              <p class="lead-p">
+                Rizal opens the novel aboard the river steamer <strong>Tabo</strong>, explicitly comparing it to the colonial <strong>“Ship of State”</strong>:
+              </p>
+              <ul style="padding-left: 1.25rem; font-size: 1.05rem; line-height: 1.65; display: flex; flex-direction: column; gap: 0.5rem;">
+                <li><strong>Clumsy and Round:</strong> Shaped like a native coconut-shell dipper (<em>tabo</em>), moving with a heavy, awkward gait.</li>
+                <li><strong>Whitewashed Rust:</strong> Freshly painted white on the outside to hide dirt, rust, and mechanical decay.</li>
+                <li><strong>Stalled on Sandbars:</strong> Continually running aground, pushed forward only by sailors with bamboo poles.</li>
+                <li><strong>Racial &amp; Class Divide:</strong> Two distinct decks physically segregating the colonial rulers from the ruled.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>Novel Fact:</strong> Rizal’s narrator states in paragraph 3: <em>“...the Ship of State, so the joke runs, also has a slow and heavy gait.”</em>
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 06: Chapter I Upper Deck
+slides_data.append("""
+    <section class="presentation-slide surface-paper" id="slide-tabo-upper" data-slide-index="5" data-unit-name="Unit 1 · Ch. 1" data-section-id="slide-tabo-upper">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 1 · Chapter I (1)</span>
+            <span class="slide-time-place">Pasig River · Upper Deck</span>
+          </div>
+          <h2 class="slide-title">Chapter I: On the Upper Deck and Forced Labor</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col prose-weighted">
+            <div class="slide-col">
+              <p>
+                Beneath comfortable canvas awnings sit the Spanish friars (<strong>Padre Salví</strong>, <strong>Padre Sibyla</strong>, <strong>Padre Camorra</strong>, <strong>Padre Irene</strong>), bureaucrat <strong>Don Custodio</strong>, journalist <strong>Ben-Zayb</strong>, pretentious socialite <strong>Doña Victorina</strong>, and the jeweler <strong>Simoun</strong>.
+              </p>
+              <p>
+                As the steamer stalls in the shallow, winding river, Don Custodio proposes forcing riverside villagers to breed ducks so the birds will eat snails and deepen the mud.
+              </p>
+              <p>
+                <strong>Simoun’s Chilling Counter-Proposal:</strong> Dig a brand-new straight canal through Manila, close the Pasig River, and pay no wages at all. Draft all convicts, villagers, old men, and boys to work with their own tools and food.
+              </p>
+            </div>
+
+            <div class="slide-col">
+              <blockquote class="literary-quote">
+                “The dead remain dead, and might only is considered right by posterity... Thus were constructed the Pyramids, Lake Moeris, and the Colosseum in Rome.”
+                <cite>Simoun · Chapter I, On the Upper Deck</cite>
+              </blockquote>
+              <div class="quote-explanation">
+                <strong>Plain-English Meaning:</strong> Simoun argues that powerful empires are built on the suffering of unpaid forced laborers, and history honors the brutal conquerors, not the victims who died.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>What happens next:</strong> Rejected by the scandalized aristocrats, Simoun descends below deck to inspect the passengers in the lower hold.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 07: Chapter II Lower Deck
+slides_data.append("""
+    <section class="presentation-slide surface-obsidian" id="slide-tabo-lower" data-slide-index="6" data-unit-name="Unit 1 · Ch. 2" data-section-id="slide-tabo-lower">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 1 · Chapter II (2)</span>
+            <span class="slide-time-place">Pasig River · Lower Deck</span>
+          </div>
+          <h2 class="slide-title">Chapter II: On the Lower Deck — The Steam Warning</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col prose-weighted">
+            <div class="slide-col">
+              <p>
+                Crowded in the stifling hold beside the boilers and cargo sit native Filipino travelers, Chinese merchants, and university students <strong>Basilio</strong> and <strong>Isagani</strong>, accompanied by secular priest <strong>Father Florentino</strong>.
+              </p>
+              <p>
+                Basilio and Isagani are leading a student movement to establish an <strong>Academy of Castilian</strong>, offering to fund teachers and classrooms through student contributions.
+              </p>
+              <p>
+                Simoun approaches below deck and taunts them, claiming Filipinos lack energy and spirit because they drink only water instead of beer. Isagani delivers a famous counter-warning:
+              </p>
+            </div>
+
+            <div class="slide-col">
+              <blockquote class="literary-quote">
+                “Water is very sweet and can be drunk, but it can put out the fire of wine and beer... Water, when heated, becomes steam; when agitated, it becomes the ocean, which can rise and destroy.”
+                <cite>Isagani to Simoun · Chapter II, On the Lower Deck</cite>
+              </blockquote>
+              <div class="quote-explanation">
+                <strong>Plain-English Meaning:</strong> Isagani warns that while the Filipino people seem gentle and submissive like quiet water, if colonial oppression heats them up, they will turn into destructive steam and a tidal wave of revolution.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>What happens next:</strong> Father Florentino is called to the upper deck, where the passengers begin sharing river legends.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 08: Chapter III Legends
+slides_data.append("""
+    <section class="presentation-slide surface-paper" id="slide-tabo-legends" data-slide-index="7" data-unit-name="Unit 1 · Ch. 3" data-section-id="slide-tabo-legends">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 1 · Chapter III (3)</span>
+            <span class="slide-time-place">Entering Laguna de Bay</span>
+          </div>
+          <h2 class="slide-title">Chapter III: Legends and Simoun's Haunting Silence</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col">
+            <div class="slide-col">
+              <div class="info-card">
+                <span class="card-num-kicker">Three River Legends</span>
+                <h4>Folklore of the Pasig</h4>
+                <p><strong>1. Malapad-na-Bato:</strong> A sacred rock once worshiped by spirits, later turned into a bandits' hideout.</p>
+                <p><strong>2. Doña Jerónima’s Cave:</strong> A woman walled inside a river cave by her lover, an Archbishop who broke his marriage vow.</p>
+                <p><strong>3. Miracle of San Nicolás:</strong> A Chinese merchant spared when a crocodile turned to stone at his prayer.</p>
+              </div>
+            </div>
+
+            <div class="slide-col">
+              <div class="info-card crimson-accent">
+                <span class="card-num-kicker">The Hidden Plot Trigger</span>
+                <h4>The Waters of San Diego</h4>
+                <p>
+                  As the steamer enters Laguna de Bay, Ben-Zayb asks where a fugitive named <em>“Guevara, Navarra, or Ibarra”</em> was killed thirteen years ago. The captain points to the water, describing how the fugitive dove under gunfire and the lake turned red with blood.
+                </p>
+                <p style="margin-top: 0.5rem; font-weight: 500; color: var(--oxide-crimson);">
+                  Simoun stands completely motionless, deathly pale, staring silently into the distance without uttering a word.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>Transition to Chapter IV:</strong> Leaving the steamer behind, the narrative moves to the nearby town of Tiani to show how colonial land laws destroy an innocent family.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 09: Chapter IV Cabesang Tales
+slides_data.append("""
+    <section class="presentation-slide surface-paper" id="slide-tales-dispossession" data-slide-index="8" data-unit-name="Unit 2 · Ch. 4" data-section-id="slide-tales-dispossession">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 2 · Chapter IV (4)</span>
+            <span class="slide-time-place">Tiani, Laguna</span>
+          </div>
+          <h2 class="slide-title">Chapter IV: Cabesang Tales &amp; Agrarian Dispossession</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col prose-weighted">
+            <div class="slide-col">
+              <p class="lead-p">
+                <strong>Telesforo (Cabesang Tales)</strong>, son of old broom-maker Tandang Selo, clears dense forest land at the cost of his wife and eldest daughter Lucia’s lives to malaria.
+              </p>
+              <div class="info-card" style="padding: 0.85rem 1rem;">
+                <span class="card-num-kicker">The Escalation of Extortion</span>
+                <p style="font-size: 0.95rem;">
+                  Friar estate claims ownership &rarr; Rents raised from 20–30 to 50, then 200 pesos &rarr; Tales files lawsuit &rarr; Colonial judges acknowledge his justice but refuse to rule against the religious order without deeds &rarr; Tales spends his life savings &rarr; Son Tano is conscripted &rarr; Tales patrols fields with a shotgun, then bolo, then axe.
+                </p>
+              </div>
+            </div>
+
+            <div class="slide-col">
+              <div class="info-card crimson-accent">
+                <span class="card-num-kicker">Kidnapping &amp; Debt Bondage</span>
+                <h4>Juli’s Sacrifice</h4>
+                <p>
+                  Disarmed of all weapons by the government, Tales is kidnapped by mountain bandits for a <strong>500-peso ransom</strong>.
+                </p>
+                <p>
+                  His daughter <strong>Juli (Juliana)</strong> sells all her jewelry (saving only María Clara’s locket given by Basilio) and borrows the remaining 250 pesos by entering domestic servitude under <strong>Hermana Penchang</strong> on Christmas Day.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>Historical Context:</strong> Directly reflects the 1887–1891 Calamba Hacienda dispute where the Dominican estate raised rents and evicted Rizal’s family.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 10: Chapters V & VIII Christmas Eve
+slides_data.append("""
+    <section class="presentation-slide surface-obsidian" id="slide-tales-christmas" data-slide-index="9" data-unit-name="Unit 2 · Ch. 5 &amp; 8" data-section-id="slide-tales-christmas">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 2 · Chapters V &amp; VIII (5 &amp; 8)</span>
+            <span class="slide-time-place">Christmas Eve &amp; Morning · San Diego &amp; Tiani</span>
+          </div>
+          <h2 class="slide-title">Christmas Eve: Beaten Coachmen and Mute Sorrow</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col">
+            <div class="slide-col">
+              <div class="info-card">
+                <span class="card-num-kicker">Chapter V (5) · A Coachman’s Christmas Eve</span>
+                <h4>Sinong’s Beating</h4>
+                <p>
+                  <strong>Basilio</strong> arrives in San Diego by carriage to spend Christmas. His coachman <strong>Sinong</strong> is twice beaten by the Civil Guard—first for forgetting his tax card (*cédula*), and second because his carriage lamp blew out.
+                </p>
+                <p style="font-size: 0.95rem; color: var(--faded-sepia); margin-top: 0.35rem;">
+                  Arriving at Capitan Tiago’s home, Basilio learns that Tano has been conscripted into the military and Cabesang Tales is held captive in the mountains.
+                </p>
+              </div>
+            </div>
+
+            <div class="slide-col">
+              <div class="info-card crimson-accent">
+                <span class="card-num-kicker">Chapter VIII (8) · Merry Christmas</span>
+                <h4>Tandang Selo Struck Mute</h4>
+                <p>
+                  Christmas morning in Tiani: Juli bids a tearful farewell to her home and grandfather to report to Hermana Penchang as an indentured servant.
+                </p>
+                <p style="font-size: 0.95rem; color: var(--bone-light); margin-top: 0.35rem;">
+                  Finding himself completely alone, his son captive and both grandchildren taken, seventy-year-old <strong>Tandang Selo</strong> suffers a stroke and becomes completely mute (<em>pipi</em>).
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>What happens next:</strong> At midnight on Christmas Eve, Basilio slips out to visit his mother Sisa's grave in the forest.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 11: Chapters VI & VII Basilio in Forest
+slides_data.append("""
+    <section class="presentation-slide surface-paper" id="slide-basilio-forest" data-slide-index="10" data-unit-name="Unit 2 · Ch. 6 &amp; 7" data-section-id="slide-basilio-forest">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 2 · Chapters VI &amp; VII (6 &amp; 7)</span>
+            <span class="slide-time-place">Christmas Eve Midnight · San Diego Forest</span>
+          </div>
+          <h2 class="slide-title">Chapters VI &amp; VII: Basilio Discovers Simoun's Secret</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col prose-weighted">
+            <div class="slide-col">
+              <p>
+                <strong>Basilio's Background (Ch. 6):</strong> Orphaned son of Sisa who rose from Capitan Tiago's unpaid houseboy and neglected Letrán pupil to top medical clinician at the Ateneo.
+              </p>
+              <p>
+                <strong>The Discovery (Ch. 7):</strong> Visiting his mother's grave at midnight, Basilio hears digging and watches a man remove his blue-tinted goggles. Basilio recognizes him: <strong>Simoun is Crisóstomo Ibarra!</strong>
+              </p>
+              <p>
+                Simoun draws his revolver, admitting he could kill Basilio, but instead offers him an alliance: <em>“I have returned to destroy that system... by precipitating its corruption.”</em>
+              </p>
+            </div>
+
+            <div class="slide-col">
+              <blockquote class="literary-quote">
+                “You hold a secret that can ruin me... but I won’t kill you. You and I are both dry branches that thirst for light.”
+                <cite>Simoun to Basilio · Chapter VII</cite>
+              </blockquote>
+              <div class="quote-explanation">
+                <strong>Basilio's Rejection:</strong> Basilio refuses to join Simoun's violent conspiracy: <em>“I only want to practice medicine, cure the sick, ransom Juli, and live in peace.”</em> Simoun warns him that neutrality under tyranny is impossible.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>Teaching Key:</strong> Rizal preserves chronological discovery: the reader and Basilio learn Simoun's identity together in Chapter 7.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 12: Chapters IX & X Tiani Murders
+slides_data.append("""
+    <section class="presentation-slide surface-obsidian" id="slide-tales-revenge" data-slide-index="11" data-unit-name="Unit 2 · Ch. 9 &amp; 10" data-section-id="slide-tales-revenge">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 2 · Chapters IX &amp; X (9 &amp; 10)</span>
+            <span class="slide-time-place">Tiani · Tales' Usurped House</span>
+          </div>
+          <h2 class="slide-title">Chapters IX &amp; X: The Revolver for the Locket</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col prose-weighted">
+            <div class="slide-col">
+              <p>
+                Ransomed from bandits with Juli's indenture money, Tales returns to find his house occupied, his daughter enslaved, and a 3-day eviction notice served by the friars.
+              </p>
+              <p>
+                Simoun stays at Tales' house to sell diamonds to wealthy townsfolk. When Tales shows him María Clara's gold-and-emerald locket (given to Basilio and then to Juli), Simoun urgently offers 500 pesos or any diamond.
+              </p>
+              <p>
+                Looking out the window, Tales sees the friar administrator and the new tenant laughing at his usurped land.
+              </p>
+            </div>
+
+            <div class="slide-col">
+              <div class="info-card crimson-accent">
+                <span class="card-num-kicker">The Murders of Tiani</span>
+                <h4>The Fatal Exchange</h4>
+                <p>
+                  Tales slips away into the night, leaving the locket inside Simoun's empty revolver holster.
+                </p>
+                <p style="margin-top: 0.5rem; font-size: 0.95rem;">
+                  Next morning: The friar administrator and the new tenant are found murdered on the land with mouths stuffed with soil. A note in blood reads: <strong>“Cabesang Tales”</strong>.
+                </p>
+                <p style="font-size: 0.92rem; color: var(--faded-sepia); margin-top: 0.35rem;">
+                  Tales joins the mountain guerrillas as <em>Matanglawin</em>. The Civil Guard arrests mute Tandang Selo.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>Causal Link:</strong> Tales’ murders and the outlaw uprising dominate the Governor-General’s agenda in Chapter XI.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 13: Chapter XI Los Baños
+slides_data.append("""
+    <section class="presentation-slide surface-paper" id="slide-los-banos" data-slide-index="12" data-unit-name="Unit 3 · Ch. 11" data-section-id="slide-los-banos">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 3 · Chapter XI (11)</span>
+            <span class="slide-time-place">Los Baños, Laguna</span>
+          </div>
+          <h2 class="slide-title">Chapter XI: Los Baños — Arbitrary Governance</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col prose-weighted">
+            <div class="slide-col">
+              <p class="lead-p">
+                At the hot springs of Los Baños, the <strong>Captain-General</strong>, friars (Sibyla, Irene, Camorra), and bureaucrat Don Custodio play cards (<em>tresillo</em>) while casually deciding administrative decrees:
+              </p>
+              <ul style="padding-left: 1.25rem; font-size: 1.02rem; line-height: 1.6; display: flex; flex-direction: column; gap: 0.4rem;">
+                <li><strong>Firearms Ban:</strong> Simoun wins blank deportation warrants and supports banning hunting rifles to disarm natives.</li>
+                <li><strong>Silenced Teacher:</strong> A village schoolmaster asking for a roof for his classroom is suspended for complaining.</li>
+                <li><strong>The Students' Petition:</strong> The Academy of Castilian splits the table. Sibyla fears rebellion; Irene defends it for bribes. The General puts <strong>Basilio</strong> on the police watchlist.</li>
+              </ul>
+            </div>
+
+            <div class="slide-col">
+              <div class="info-card crimson-accent">
+                <span class="card-num-kicker">Padre Camorra's Condition</span>
+                <h4>Juli's Imprisoned Grandfather</h4>
+                <p>
+                  When petitions for the release of mute Tandang Selo are raised, Padre Camorra agrees to advocate for the old man—on one condition: that Selo's granddaughter, <strong>Juli</strong>, come to his convent in Tiani to beg him in person.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>Causal Link:</strong> The Captain-General refers the student petition to Don Custodio, moving the action to the universities of Manila.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 14: Chapters XII & XIII Physics Class
+slides_data.append("""
+    <section class="presentation-slide surface-obsidian" id="slide-physics-class" data-slide-index="13" data-unit-name="Unit 3 · Ch. 12 &amp; 13" data-section-id="slide-physics-class">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 3 · Chapters XII &amp; XIII (12 &amp; 13)</span>
+            <span class="slide-time-place">University of Santo Tomas, Manila</span>
+          </div>
+          <h2 class="slide-title">Chapters XII &amp; XIII: Placido and the Physics Class</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col prose-weighted">
+            <div class="slide-col">
+              <p>
+                <strong>Placido Penitente (Ch. 12):</strong> A bright, reluctant student from Batangas, tempted to quit university because of the constant disrespect shown to native youths by colonial professors.
+              </p>
+              <p>
+                <strong>The Class in Physics (Ch. 13):</strong> Dominican professor <strong>Padre Millón</strong> teaches physics in a spacious lecture hall where expensive European instruments are kept permanently locked behind glass cabinets—never touched by students.
+              </p>
+              <p>
+                Millón subjects students to humiliating scholastic word-games, marks Placido absent for 15 days, and calls him a “philosophaster.”
+              </p>
+            </div>
+
+            <div class="slide-col">
+              <div class="impact-callout">
+                <strong>Placido’s Breaking Point:</strong><br />
+                <em>“Enough, Padre, enough! Your Reverence may mark me with all the faults you please, but you have no right to insult me!”</em><br /><br />
+                Placido drops his books and storms out of the university forever, pushing him straight into Simoun’s revolutionary network.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>Pedagogical Significance:</strong> Rizal illustrates how colonial education was weaponized to humiliate Filipino minds rather than cultivate scientific literacy.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 15: Chapters XIV & XV Student Lobby
+slides_data.append("""
+    <section class="presentation-slide surface-paper" id="slide-student-lobby" data-slide-index="14" data-unit-name="Unit 3 · Ch. 14 &amp; 15" data-section-id="slide-student-lobby">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 3 · Chapters XIV &amp; XV (14 &amp; 15)</span>
+            <span class="slide-time-place">Manila · Makaraig's House &amp; Pasta's Office</span>
+          </div>
+          <h2 class="slide-title">Chapters XIV &amp; XV: Student Idealism vs. Selfish Careerism</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col prose-weighted">
+            <div class="slide-col">
+              <p>
+                <strong>In the House of the Students (Ch. 14):</strong> Student leaders gather at wealthy <strong>Makaraig's</strong> house. Spanish student <strong>Sandoval</strong> champions liberal equality; <strong>Pecson</strong> cynically predicts friar imprisonment; <strong>Isagani</strong> resolves to lobby lawyer <strong>Señor Pasta</strong>.
+              </p>
+              <p>
+                <strong>Señor Pasta's Counsel (Ch. 15):</strong> Pasta, Manila’s foremost native lawyer, advises Isagani to submit to the friars, study medicine, marry, and leave politics to the government.
+              </p>
+            </div>
+
+            <div class="slide-col">
+              <blockquote class="literary-quote">
+                “When I have gray hairs like yours, sir, and look back upon my past and see that I worked only for myself... every hair will be a thorn, and instead of glorying in them, I shall blush for them.”
+                <cite>Isagani to Señor Pasta · Chapter XV</cite>
+              </blockquote>
+              <div class="quote-explanation">
+                <strong>Plain-English Meaning:</strong> Isagani tells the veteran lawyer that achieving comfortable professional success while abandoning one’s country is shameful, not admirable.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>What happens next:</strong> While students lobby peacefully, Simoun prepares the military weapons for his violent uprising.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 16: Chapters XVI–XVIII Quiroga & Sphinx
+slides_data.append("""
+    <section class="presentation-slide surface-obsidian" id="slide-quiroga-sphinx" data-slide-index="15" data-unit-name="Unit 4 · Ch. 16–18" data-section-id="slide-quiroga-sphinx">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 4 · Chapters XVI – XVIII (16–18)</span>
+            <span class="slide-time-place">Binondo &amp; Quiapo Fair</span>
+          </div>
+          <h2 class="slide-title">Chapters XVI – XVIII: Smuggled Rifles and the Talking Head</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col">
+            <div class="slide-col">
+              <div class="info-card">
+                <span class="card-num-kicker">Chapter XVI · Quiroga's Dinner</span>
+                <h4>Smuggled Weapons</h4>
+                <p>
+                  At merchant Quiroga's lavish banquet, Simoun reduces Quiroga’s 9,000-peso debt to 7,000 pesos on one condition: Quiroga must store smuggled crates of rifles in his warehouse under the cover of commercial merchandise.
+                </p>
+                <p style="font-size: 0.95rem; color: var(--faded-sepia); margin-top: 0.35rem;">
+                  Simoun explains the guns will be used for an impending national uprising.
+                </p>
+              </div>
+            </div>
+
+            <div class="slide-col">
+              <div class="info-card crimson-accent">
+                <span class="card-num-kicker">Chapters XVII &amp; XVIII · The Sphinx</span>
+                <h4>Padre Salví Collapses</h4>
+                <p>
+                  At the Quiapo Fair, American illusionist Mr. Leeds presents the sphinx head <strong>Imuthis</strong>.
+                </p>
+                <p style="font-size: 0.95rem; color: var(--bone-light); margin-top: 0.35rem;">
+                  The head speaks of being framed and murdered by a lustful priest who desired his beloved—mirroring Padre Salví's framing of Ibarra over María Clara. Recognizing the accusation, <strong>Salví collapses in hysterics</strong>.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>What happens next:</strong> Simoun recruits the furious Placido Penitente to his underground network.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 17: Chapters XIX & XXI Operetta Night
+slides_data.append("""
+    <section class="presentation-slide surface-paper" id="slide-operetta-night" data-slide-index="16" data-unit-name="Unit 4 · Ch. 19 &amp; 21" data-section-id="slide-operetta-night">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 4 · Chapters XIX &amp; XXI (19 &amp; 21)</span>
+            <span class="slide-time-place">Calle Iris &amp; Teatro de Variedades</span>
+          </div>
+          <h2 class="slide-title">Chapters XIX &amp; XXI: The Clandestine Workshop and the Operetta</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col prose-weighted">
+            <div class="slide-col">
+              <p>
+                <strong>Placido Recruited (Ch. 19):</strong> Embittered by UST, Placido meets Simoun, who takes him to a secret pyrotechnic workshop on Calle Iris where bombs and ammunition are manufactured alongside pyrotechnist Castila.
+              </p>
+              <p>
+                <strong>The Theater Spectacle (Ch. 21):</strong> Manila society flocks to the Teatro de Variedades for the French operetta <em>Les Cloches de Corneville</em>.
+              </p>
+              <p>
+                While the audience is captivated by the singing, Simoun positions his armed units across the city to strike at a coordinated signal.
+              </p>
+            </div>
+
+            <div class="slide-col">
+              <div class="info-card crimson-accent">
+                <span class="card-num-kicker">The Plan for Tonight</span>
+                <h4>The Dual Objective</h4>
+                <p>
+                  1. Detonate bombs at government gates and coordinate with Cabesang Tales’ mountain fighters entering Manila.
+                </p>
+                <p>
+                  2. Personally breach the <strong>Santa Clara convent</strong> to rescue María Clara from Padre Salví.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>Crucial Timing:</strong> Simoun plans the revolt for that very night—until a single piece of news stops him cold.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 18: Chapters XX–XXIV María Clara's Death
+slides_data.append("""
+    <section class="presentation-slide surface-obsidian" id="slide-maria-clara-death" data-slide-index="17" data-unit-name="Unit 4 · Ch. 20–24" data-section-id="slide-maria-clara-death">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 4 · Chapters XX – XXIV (20–24)</span>
+            <span class="slide-time-place">10:30 PM · Capitan Tiago's House</span>
+          </div>
+          <h2 class="slide-title">Chapters XX – XXIV: Custodio's Decree and the Aborted Revolt</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col prose-weighted">
+            <div class="slide-col">
+              <p>
+                <strong>The Compromised Academy (Ch. XX &amp; XXII):</strong> Don Custodio copies an Augustinian file to approve the Academy, but places it under religious supervision, reducing students to mere fee collectors without academic freedom. At the theater (Ch. XXII), students mock their defeat.
+              </p>
+              <p>
+                <strong>The Aborted Revolt (Ch. XXIII):</strong> At 10:30 PM, Simoun visits Basilio, demanding he lead a strike team to free María Clara from the nunnery: <em>“Tonight the revolution breaks out!”</em> Next day on the Malecón (Ch. XXIV), Isagani shares his dreams with Paulita.
+              </p>
+            </div>
+
+            <div class="slide-col">
+              <div class="impact-callout">
+                <strong>Basilio's Fatal Revelation (Ch. XXIII):</strong><br />
+                <em>“María Clara is dead. She died at six o’clock this evening.”</em><br /><br />
+                Simoun collapses in wild, grief-stricken agony. Rushing out into the night without giving the attack signal, <strong>the first revolution is completely aborted</strong>.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>Teaching Key:</strong> Simoun's conspiracy was driven by personal passion; when María Clara died, his initial plot collapsed from within.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 19: Chapters XXV & XXVI Pasquinades
+slides_data.append("""
+    <section class="presentation-slide surface-paper" id="slide-pasquinades" data-slide-index="18" data-unit-name="Unit 5 · Ch. 25 &amp; 26" data-section-id="slide-pasquinades">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 5 · Chapters XXV &amp; XXVI (25 &amp; 26)</span>
+            <span class="slide-time-place">Pansitería &amp; University of Santo Tomas</span>
+          </div>
+          <h2 class="slide-title">Chapters XXV &amp; XXVI: The Banquet and the Pasquinade Panic</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col prose-weighted">
+            <div class="slide-col">
+              <p>
+                <strong>The Satirical Dinner (Ch. 25):</strong> Mocking their defeat, fourteen students hold a dinner at the <em>Pansiteria Macanista de Buen Gusto</em>, dedicating ironic dishes to friars and Don Custodio. Padre Sibyla's servant spies on them.
+              </p>
+              <p>
+                <strong>The Pasquinades (Ch. 26):</strong> Next morning, treasonous handwritten posters (<em>pasquinades</em>) appear on university doors.
+              </p>
+              <p>
+                The regime uses the posters as a pretext for mass arrests. Innocent <strong>Basilio</strong>, visiting Makaraig to borrow licensing fees, is arrested due to the Chapter 11 watchlist.
+              </p>
+            </div>
+
+            <div class="slide-col">
+              <div class="info-card crimson-accent">
+                <span class="card-num-kicker">Reactions to the Arrests</span>
+                <p><strong>Juanito Pelaez:</strong> Panics, denies knowing any student leaders, and begs to be forgotten.</p>
+                <p><strong>Isagani:</strong> Speaks fearlessly in defense of student dignity, surrenders voluntarily, and faces his interrogators.</p>
+                <p><strong>Basilio:</strong> Having avoided politics to study medicine, is trapped as the sole student without wealthy patrons.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>What happens next:</strong> Mass panic sweeps Manila while Isagani engages in a fearless debate with his Dominican professor.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 20: Chapters XXVII & XXVIII City Panic
+slides_data.append("""
+    <section class="presentation-slide surface-obsidian" id="slide-isagani-debate" data-slide-index="19" data-unit-name="Unit 5 · Ch. 27 &amp; 28" data-section-id="slide-isagani-debate">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 5 · Chapters XXVII &amp; XXVIII (27 &amp; 28)</span>
+            <span class="slide-time-place">Dominican Cell &amp; Streets of Manila</span>
+          </div>
+          <h2 class="slide-title">Chapters XXVII &amp; XXVIII: Intellectual Defiance and Citywide Panic</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col prose-weighted">
+            <div class="slide-col">
+              <p>
+                <strong>The Friar and the Filipino (Ch. 27):</strong> Summoned by Dominican professor <strong>Padre Fernández</strong>, Isagani charges that friar education deliberately starves the Filipino mind like corrupt prison contractors who pocket inmates' food rations.
+              </p>
+              <p>
+                <strong>Tatakut (Ch. 28):</strong> Wild rumors of impending insurrection paralyze Manila. Panic-stricken soldiers fire at shadows, killing innocent villagers.
+              </p>
+              <p>
+                Padre Irene's terrifying tales of executions induce a fatal heart attack in <strong>Capitan Tiago</strong>.
+              </p>
+            </div>
+
+            <div class="slide-col">
+              <blockquote class="literary-quote">
+                “You say we are ungrateful... Can you expect gratitude from a man whose eyes you have put out, so that he may not see the light?”
+                <cite>Isagani to Padre Fernández · Chapter XXVII</cite>
+              </blockquote>
+              <div class="quote-explanation">
+                <strong>Plain-English Meaning:</strong> Isagani tells his teacher that Spain cannot demand loyalty and gratitude from Filipinos after deliberately denying them education and human dignity.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>What happens next:</strong> Wealthy students buy their release, but patronless Basilio remains trapped in Bilibid Prison.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 21: Chapters XXIX–XXXI Juli's Martyrdom
+slides_data.append("""
+    <section class="presentation-slide surface-paper" id="slide-juli-martyrdom" data-slide-index="20" data-unit-name="Unit 5 · Ch. 29–31" data-section-id="slide-juli-martyrdom">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 5 · Chapters XXIX – XXXI (29–31)</span>
+            <span class="slide-time-place">Tiani &amp; Governor's Palace</span>
+          </div>
+          <h2 class="slide-title">Chapters XXIX – XXXI: Juli's Martyrdom and the Resigned Official</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col prose-weighted">
+            <div class="slide-col">
+              <p>
+                <strong>Capitan Tiago's Will (Ch. 29):</strong> Padre Irene alters Tiago's will, leaving his fortune to the Church and revoking Basilio's 25-peso legacy. Basilio remains the sole student in prison.
+              </p>
+              <p>
+                <strong>Juli's Suicide (Ch. 30):</strong> In Tiani, Sister Bali pressures Juli into the convent to plead with Padre Camorra for Basilio. To escape Camorra's sexual assault, <strong>Juli leaps from the convent window to her death</strong>. Mute Tandang Selo flees with his spear.
+              </p>
+            </div>
+
+            <div class="slide-col">
+              <div class="info-card crimson-accent">
+                <span class="card-num-kicker">Chapter XXXI · The Spanish Conscience</span>
+                <h4>The High Official Resigns</h4>
+                <p>
+                  A noble Spanish <strong>High Official</strong> defends innocent Basilio against the Governor-General’s arbitrary “reason of state,” proclaiming: <em>“Spain must be great not by oppressing, but by honoring justice!”</em>
+                </p>
+                <p style="margin-top: 0.35rem; font-size: 0.95rem;">
+                  Rebuffed by the General, the High Official resigns his office and departs for Spain.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>Causal Bridge:</strong> With peaceful avenues destroyed, Basilio emerges from Bilibid Prison a transformed, vengeful man.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 22: Chapter XXXII Aftermath & Paulita
+slides_data.append("""
+    <section class="presentation-slide surface-obsidian" id="slide-repression-aftermath" data-slide-index="21" data-unit-name="Unit 5 · Ch. 32" data-section-id="slide-repression-aftermath">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 5 · Chapter XXXII (32)</span>
+            <span class="slide-time-place">April · Manila</span>
+          </div>
+          <h2 class="slide-title">Chapter XXXII: Broken Students and Paulita's Choice</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col">
+            <div class="slide-col">
+              <div class="info-card">
+                <span class="card-num-kicker">The Crushed Generation</span>
+                <h4>The Death of Reform</h4>
+                <p>
+                  Exam season arrives in April: Makaraig flees to Europe; Pecson becomes a court clerk; Tadeo burns his textbooks.
+                </p>
+                <p style="font-size: 0.95rem; color: var(--bone-light); margin-top: 0.35rem;">
+                  Coachman Sinong visits jailed Basilio and delivers the crushing news that <strong>Juli is dead</strong> and Tandang Selo has vanished into the hills.
+                </p>
+              </div>
+            </div>
+
+            <div class="slide-col">
+              <div class="info-card crimson-accent">
+                <span class="card-num-kicker">Paulita Gómez &amp; Juanito Pelaez</span>
+                <h4>The High-Society Match</h4>
+                <p>
+                  Unwilling to marry an imprisoned reformer who shares his uncle's lonely coastal retreat, <strong>Paulita Gómez</strong> abandons Isagani.
+                </p>
+                <p style="font-size: 0.95rem; color: var(--bone-light); margin-top: 0.35rem;">
+                  She agrees to marry wealthy, sycophantic <strong>Juanito Pelaez</strong>. Simoun partners with groom’s father Don Timoteo Pelaez to finance a lavish wedding reception.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>Transition to Climax:</strong> The wedding banquet provides Simoun with the ultimate gathering of colonial rulers for his second conspiracy.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 23: Chapter XXXIII Transformed Basilio
+slides_data.append("""
+    <section class="presentation-slide surface-paper" id="slide-transformed-basilio" data-slide-index="22" data-unit-name="Unit 6 · Ch. 33" data-section-id="slide-transformed-basilio">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 6 · Chapter XXXIII (33)</span>
+            <span class="slide-time-place">Late April · Simoun's Laboratory</span>
+          </div>
+          <h2 class="slide-title">Chapter XXXIII: A Transformed Basilio Demands Arms</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col prose-weighted">
+            <div class="slide-col">
+              <p class="lead-p">
+                Released from Bilibid Prison in late April through Simoun’s influence, a hollow-eyed, emaciated <strong>Basilio</strong> enters Simoun’s laboratory.
+              </p>
+              <p>
+                Having lost his mother Sisa, brother Crispin, career, and sweetheart Juli, Basilio renounces his peaceful ideals:
+              </p>
+              <div class="impact-callout">
+                <em>“I have been a bad son and a bad brother... Now give me arms and let the revolution break out! I am ready to serve you!”</em>
+              </div>
+            </div>
+
+            <div class="slide-col">
+              <p>
+                Simoun welcomes Basilio as his trusted lieutenant, declaring that tonight the conspiracy will finally succeed.
+              </p>
+              <p>
+                Simoun leads Basilio to the workbench and reveals his weapon: an <strong>oxidized-gold lamp shaped like a split pomegranate</strong>.
+              </p>
+              <blockquote class="literary-quote">
+                “Concentrated tears, repressed hatred, wrongs, injustice, outrage—the last resort of the weak, force against force!”
+                <cite>Simoun · Chapter XXXIII</cite>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>What happens next:</strong> Simoun explains the lethal mechanical structure and chemical timing of the weapon.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 24: Pomegranate Lamp Mechanism
+slides_data.append("""
+    <section class="presentation-slide surface-obsidian" id="slide-lamp-mechanism" data-slide-index="23" data-unit-name="Unit 6 · Ch. 33 &amp; 34" data-section-id="slide-lamp-mechanism">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 6 · Chapters XXXIII &amp; XXXIV (33 &amp; 34)</span>
+            <span class="slide-time-place">Calle Anloague · Technical Anatomy</span>
+          </div>
+          <h2 class="slide-title">The Centerpiece: The Nitroglycerin Pomegranate Lamp</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-hero-plate">
+            <div class="hero-image-frame">
+              <img src="/assets/scenes/crystal-lamp.jpg" alt="Simoun's handcrafted explosive crystal pomegranate wedding lamp" />
+              <div class="hero-caption">
+                <em>Lámpara de Simoun</em> · Explosive vessel loaded with nitroglycerin
+              </div>
+            </div>
+
+            <div class="slide-col">
+              <p class="lead-p">
+                Simoun's weapon combines fine craftsmanship with modern high-explosive chemistry:
+              </p>
+              <ul style="padding-left: 1.25rem; font-size: 1.05rem; line-height: 1.65; display: flex; flex-direction: column; gap: 0.5rem;">
+                <li><strong>The Vessel:</strong> Handcrafted crystal and oxidized gold shaped like a split pomegranate set with carnelian seeds.</li>
+                <li><strong>The Core:</strong> An inner container of steel 2 centimeters thick holding over <strong>one liter of nitroglycerin</strong>.</li>
+                <li><strong>The Detonator:</strong> A concealed capsule of fulminate of mercury wired to the lamp’s wick.</li>
+                <li><strong>The Timed Trap:</strong> The lamp will burn for 20 minutes before dimming; raising the wick detonates the lamp, igniting gunpowder bags beneath the floor.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>Target:</strong> The Governor-General, the Archbishop, provincial governors, and friars assembled in one room.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 25: Chapter XXXIV Mined Wedding
+slides_data.append("""
+    <section class="presentation-slide surface-paper" id="slide-mined-house" data-slide-index="24" data-unit-name="Unit 6 · Ch. 34" data-section-id="slide-mined-house">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 6 · Chapter XXXIV (34)</span>
+            <span class="slide-time-place">7:00 – 8:00 PM · Calle Anloague</span>
+          </div>
+          <h2 class="slide-title">Chapter XXXIV: The Mined Wedding on Calle Anloague</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col prose-weighted">
+            <div class="slide-col">
+              <p>
+                <strong>The Venue:</strong> The wedding banquet takes place at <strong>Capitan Tiago’s former mansion</strong>, bought and ostentatiously remodeled by Don Timoteo Pelaez with gaudy chrome lithographs and mirrors.
+              </p>
+              <p>
+                On the open-air <em>azotea</em>, an exclusive octagonal kiosk is set for the seven supreme rulers of church and state—secretly wired to sacks of gunpowder beneath the floorboards.
+              </p>
+              <p>
+                Simoun arrives in a carriage, delivers the pomegranate lamp to the banquet table, and quickly departs pale and hurried.
+              </p>
+            </div>
+
+            <div class="slide-col">
+              <div class="info-card crimson-accent">
+                <span class="card-num-kicker">Outside in the Dark</span>
+                <h4>Isagani Lingers in the Street</h4>
+                <p>
+                  Armed with a revolver, Basilio watches guests arrive. He spots heartbroken <strong>Isagani</strong> wandering nearby, staring up at the brightly lit windows hoping for one last glimpse of Paulita.
+                </p>
+                <p style="font-size: 0.95rem; color: var(--oxide-crimson); margin-top: 0.35rem;">
+                  Basilio remembers the countdown: in minutes, the entire mansion will be blown into the sky.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>What happens next:</strong> Upstairs, the wedding feast begins; the clock ticks toward the fatal detonation.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 26: Chapter XXXV Thrown Lamp
+slides_data.append("""
+    <section class="presentation-slide surface-obsidian" id="slide-thrown-lamp" data-slide-index="25" data-unit-name="Unit 6 · Ch. 35" data-section-id="slide-thrown-lamp">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 6 · Chapter XXXV (35)</span>
+            <span class="slide-time-place">9:00 PM · The Climax</span>
+          </div>
+          <h2 class="slide-title">Chapter XXXV: <em>Mene, Tekel, Phares</em> &amp; The Thrown Lamp</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col prose-weighted">
+            <div class="slide-col">
+              <p>
+                During the meal, a square slip of paper written in red ink is passed among the dignitaries:
+              </p>
+              <div style="text-align: center; margin: 0.75rem 0; font-family: var(--font-serif); font-size: 1.8rem; font-weight: 600; color: var(--oxide-crimson-dark-bg);">
+                Mene, Tekel, Phares &mdash; Juan Crisostomo Ibarra
+              </div>
+              <p>
+                Padre Salví recognizes Ibarra's authentic handwriting and turns ashen with horror. The lamp begins to dim. The Governor-General says: <em>“Padre Irene, will you turn up the wick?”</em>
+              </p>
+            </div>
+
+            <div class="slide-col">
+              <div class="impact-callout">
+                <strong>Isagani’s Intervention:</strong><br />
+                Outside, Basilio blurts out that the house is mined. Remembering Paulita is inside, <strong>Isagani races up the grand staircase</strong>, bursts into the kiosk just as Irene touches the wick, snatches the burning lamp, and <strong>hurls it over the railing into the Pasig River</strong> before diving in himself!<br /><br />
+                The explosion is defused in the dark depths of the river.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>The Twist:</strong> Simoun’s conspiracy fails not by military counter-attack, but because Isagani’s love for Paulita overpowers revolutionary violence.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 27: Climax Irony Analysis
+slides_data.append("""
+    <section class="presentation-slide surface-paper" id="slide-climax-irony" data-slide-index="26" data-unit-name="Unit 6 · Analysis" data-section-id="slide-climax-irony">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 6 · Climax Analysis</span>
+            <span class="slide-time-place">Literary &amp; Moral Interpretation</span>
+          </div>
+          <h2 class="slide-title">Teaching Analysis: The Supreme Irony of the Climax</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col">
+            <div class="slide-col">
+              <div class="info-card">
+                <span class="card-num-kicker">Irony 1 · The Identity of the Savior</span>
+                <h4>Saved by Love, Not by Force</h4>
+                <p>
+                  The corrupt colonial regime—its Governor-General, corrupt friars, and extortionist judges—was saved not by its army or secret police, but by the love of the very student who opposed it most fiercely.
+                </p>
+                <p style="font-size: 0.95rem; color: var(--ink-muted); margin-top: 0.35rem;">
+                  Isagani's chivalric devotion to Paulita Gómez saved the lives of the men who oppressed his countrymen.
+                </p>
+              </div>
+            </div>
+
+            <div class="slide-col">
+              <div class="info-card crimson-accent">
+                <span class="card-num-kicker">Irony 2 · The Defect of Vengeance</span>
+                <h4>The Collapse of Corrupt Revolution</h4>
+                <p>
+                  Simoun’s revolution collapsed twice: first when María Clara died (Ch. 23), and second when Isagani saved Paulita (Ch. 35).
+                </p>
+                <p style="font-size: 0.95rem; color: var(--oxide-crimson); margin-top: 0.35rem;">
+                  Rizal demonstrates that a revolution built on deception, personal hatred, and indiscriminate slaughter contains the seeds of its own destruction.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>What happens next:</strong> Chapters 36 through 38 trace the immediate, devastating consequences of the failed conspiracy.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 28: Chapters XXXVI & XXXVII Silenced Press
+slides_data.append("""
+    <section class="presentation-slide surface-obsidian" id="slide-aftermath-press" data-slide-index="27" data-unit-name="Unit 7 · Ch. 36 &amp; 37" data-section-id="slide-aftermath-press">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 7 · Chapters XXXVI &amp; XXXVII (36 &amp; 37)</span>
+            <span class="slide-time-place">Manila &amp; Santa Cruz</span>
+          </div>
+          <h2 class="slide-title">Chapters XXXVI &amp; XXXVII: Silenced Presses and Santa Cruz Secrets</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col prose-weighted">
+            <div class="slide-col">
+              <p>
+                <strong>The Gagged Press (Ch. 36):</strong> The Governor-General strictly censors Ben-Zayb’s sensational article describing the wedding plot to prevent panic.
+              </p>
+              <p>
+                Meanwhile, betrayed bandits raid a Pasig country house, wounding Padre Camorra. A captured bandit confesses that a white-haired Spaniard promised them weapons and money, and vows vengeance against Simoun.
+              </p>
+              <p>
+                Simoun’s hidden store of gunpowder is discovered in his house; Simoun flees the city.
+              </p>
+            </div>
+
+            <div class="slide-col">
+              <div class="info-card crimson-accent">
+                <span class="card-num-kicker">Chapter XXXVII · The Silversmith's House</span>
+                <h4>Isagani Confronts His Act</h4>
+                <p>
+                  At the Orenda family home in Santa Cruz, silversmith Chichoy reveals that sacks of gunpowder were found under the dining kiosk floor.
+                </p>
+                <p style="font-size: 0.95rem; color: var(--bone-light); margin-top: 0.35rem;">
+                  Listening in the corner, Isagani realizes the full magnitude of what he stopped. He remarks cryptically that the thief acted without reflecting, and departs forever for Father Florentino’s coast.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>What happens next:</strong> In the Luzon mountains, the tragedy of Cabesang Tales’ family reaches a horrific culmination.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 29: Chapter XXXVIII Mountain Ambush
+slides_data.append("""
+    <section class="presentation-slide surface-paper" id="slide-tano-selo-ambush" data-slide-index="28" data-unit-name="Unit 7 · Ch. 38" data-section-id="slide-tano-selo-ambush">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 7 · Chapter XXXVIII (38)</span>
+            <span class="slide-time-place">Luzon Mountains · The Ambush</span>
+          </div>
+          <h2 class="slide-title">Chapter XXXVIII: Fatality — Fratricide in the Hills</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col prose-weighted">
+            <div class="slide-col">
+              <p class="lead-p">
+                <strong>Conscripted Carolino (Tano):</strong> Cabesang Tales’ son Tano, serving as conscript soldier Carolino, marches through the rocky mountains with colonial troops hunting *Matanglawin*’s guerrillas. Carolino protests the brutal torture of captured prisoners.
+              </p>
+              <p>
+                During a cliffside ambush, troops are ordered to fire on a guerrilla standing on the rocky heights, waving a spear.
+              </p>
+            </div>
+
+            <div class="slide-col">
+              <div class="impact-callout">
+                <strong>The Tragic Extinction of Tales’ Family:</strong><br />
+                Carolino fires his rifle. Climbing the crags, he discovers he has shot his own grandfather, <strong>mute Tandang Selo</strong>, who points dying fingers toward the mountain cave where Tales has fled.<br /><br />
+                <strong>The Family Destroyed:</strong> Mother &amp; sister Lucia dead of malaria; Tales an outlaw; Juli dead of suicide; Selo shot dead by his own grandson.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>Causal Link:</strong> Hunted and mortally wounded by outlaws and authorities, Simoun reaches Father Florentino’s house on the Pacific coast.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 30: Chapter XXXIX Simoun's Poison
+slides_data.append("""
+    <section class="presentation-slide surface-obsidian" id="slide-simoun-poison" data-slide-index="29" data-unit-name="Unit 8 · Ch. 39" data-section-id="slide-simoun-poison">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 8 · Chapter XXXIX (39)</span>
+            <span class="slide-time-place">Pacific Coast · Father Florentino's House</span>
+          </div>
+          <h2 class="slide-title">Chapter XXXIX: The Fugitive's Poison and Confession</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col prose-weighted">
+            <div class="slide-col">
+              <p class="lead-p">
+                Wounded and hunted, Simoun takes refuge in Father Florentino’s solitary stone house on the Pacific coast.
+              </p>
+              <p>
+                When a telegram arrives announcing that the Civil Guard will arrest Simoun at eight o’clock, Simoun drinks poison to avoid capture and public execution.
+              </p>
+              <p>
+                He calls Father Florentino to his bedside and confesses his entire identity as <strong>Crisóstomo Ibarra</strong>, recounting his thirteen years of exile and vengeance.
+              </p>
+            </div>
+
+            <div class="slide-col">
+              <div class="info-card crimson-accent">
+                <span class="card-num-kicker">Simoun’s Agonized Question</span>
+                <h4>Why Has God Abandoned Me?</h4>
+                <p>
+                  Simoun asks why God struck down his revolution while allowing the corrupt Spanish rulers and friars to flourish:
+                </p>
+                <p style="margin-top: 0.35rem; font-style: italic; color: var(--bone-light);">
+                  “Does God condone the crimes of the oppressors? Why should He refuse liberty to an oppressed people?”
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>What happens next:</strong> Father Florentino delivers Rizal’s supreme theological and moral response.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 31: Chapter XXXIX Florentino's Dialogue
+slides_data.append("""
+    <section class="presentation-slide surface-paper" id="slide-florentino-dialogue" data-slide-index="30" data-unit-name="Unit 8 · Ch. 39" data-section-id="slide-florentino-dialogue">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 8 · Chapter XXXIX (39)</span>
+            <span class="slide-time-place">Theological Resolution</span>
+          </div>
+          <h2 class="slide-title">Father Florentino's Dialogue: Liberty, Virtue, and the Youth</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col prose-weighted">
+            <div class="slide-col">
+              <p class="lead-p">
+                Father Florentino gently explains that God will not bless freedom achieved through corruption, bribery, and terror:
+              </p>
+              <blockquote class="literary-quote">
+                “Pure and spotless must the victim be that the sacrifice may be acceptable! What is the use of independence, if the slaves of today will be the tyrants of tomorrow?”
+                <cite>Father Florentino · Chapter XXXIX</cite>
+              </blockquote>
+              <div class="quote-explanation">
+                <strong>Plain-English Meaning:</strong> A nation that achieves freedom through murder and deceit will only create a new generation of home-grown tyrants. True independence requires moral virtue, education, and labor.
+              </div>
+            </div>
+
+            <div class="slide-col">
+              <div class="info-card crimson-accent">
+                <span class="card-num-kicker">Call to the Youth</span>
+                <h4>Where Are the Youth?</h4>
+                <p>
+                  <em>“Where are the youth who will dedicate their golden hours, their illusions, and their enthusiasm to the welfare of their native land? Where are the youth who will generously pour out their blood to wash away so much shame?”</em>
+                </p>
+                <p style="margin-top: 0.35rem; font-size: 0.95rem; color: var(--ink-muted);">
+                  As Florentino prays, Simoun breathes his last.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>What happens next:</strong> Father Florentino carries Simoun's diamond chest to the cliffs overlooking the Pacific Ocean.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 32: Chapter XXXIX Pacific Abyss
+slides_data.append("""
+    <section class="presentation-slide surface-obsidian" id="slide-pacific-abyss" data-slide-index="31" data-unit-name="Unit 8 · Ch. 39" data-section-id="slide-pacific-abyss">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 8 · Chapter XXXIX (39)</span>
+            <span class="slide-time-place">The Cliffs of the Pacific</span>
+          </div>
+          <h2 class="slide-title">The Jewel Chest in the Depths of the Sea</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-hero-plate">
+            <div class="hero-image-frame">
+              <img src="/assets/scenes/final-ocean.jpg" alt="Coastal cliffs and waves of the Pacific Ocean where Simoun's jewels are thrown" />
+              <div class="hero-caption">
+                The solitary cliffs of Father Florentino's Pacific retreat
+              </div>
+            </div>
+
+            <div class="slide-col">
+              <p class="lead-p">
+                Father Florentino takes Simoun’s heavy steel chest filled with diamonds and gold—the treasure used to corrupt officials and provoke rebellion—and hurls it from the cliff into the churning ocean:
+              </p>
+              <blockquote class="literary-quote">
+                “May nature guard you in the deep abyss among the corals and pearls... When for a holy and sublime purpose men need you, God will draw you from the breast of the waves!”
+                <cite>Father Florentino's Benediction · Chapter XXXIX</cite>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>Conclusion of the Narrative:</strong> The story ends on the sea—leaving the nation’s future in the hands of the youth.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 33: Comparative Analysis
+slides_data.append("""
+    <section class="presentation-slide surface-paper" id="slide-noli-fili-comparison" data-slide-index="32" data-unit-name="Unit 9 · Analysis" data-section-id="slide-noli-fili-comparison">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 9 · Literary Analysis</span>
+            <span class="slide-time-place">Berlin 1887 vs. Ghent 1891</span>
+          </div>
+          <h2 class="slide-title">Comparative Analysis: <em>Noli Me Tángere</em> vs. <em>El Filibusterismo</em></h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-table-wrapper">
+            <table class="slide-table">
+              <thead>
+                <tr>
+                  <th style="width: 22%;">Dimension</th>
+                  <th style="width: 39%;"><em>Noli Me Tángere</em> (1887)</th>
+                  <th style="width: 39%;"><em>El Filibusterismo</em> (1891)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Core Mood</strong></td>
+                  <td>Romantic, idealistic, satirical, warm sunlight.</td>
+                  <td>Dark, cynical, tragic, nocturnal, urgent.</td>
+                </tr>
+                <tr>
+                  <td><strong>Protagonist</strong></td>
+                  <td>Crisóstomo Ibarra: hopeful educator and builder.</td>
+                  <td>Simoun: disguised jeweler and revolutionary provocateur.</td>
+                </tr>
+                <tr>
+                  <td><strong>View on Spain</strong></td>
+                  <td>Believes lawful assimilation and reform are possible.</td>
+                  <td>Concludes Spanish colonial rule is irredeemably corrupt.</td>
+                </tr>
+                <tr>
+                  <td><strong>Primary Conflict</strong></td>
+                  <td>Enlightenment education vs. religious obscurantism.</td>
+                  <td>Radical subversion vs. moral and spiritual redemption.</td>
+                </tr>
+                <tr>
+                  <td><strong>The Climax</strong></td>
+                  <td>Persecution and escape across Laguna de Bay.</td>
+                  <td>The defused wedding lamp and suicide confession.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>Takeaway:</strong> <em>Noli</em> diagnoses the disease; <em>Fili</em> exposes the failure of violent retaliation without moral foundation.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 34: Rizal Law & Legacy
+slides_data.append("""
+    <section class="presentation-slide surface-obsidian" id="slide-rizal-law" data-slide-index="33" data-unit-name="Unit 9 · Legacy" data-section-id="slide-rizal-law">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Unit 9 · Historical Legacy</span>
+            <span class="slide-time-place">1896 &amp; 1956 · Philippine History</span>
+          </div>
+          <h2 class="slide-title">The 1896 Revolution and Republic Act No. 1425</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col">
+            <div class="slide-col">
+              <div class="info-card">
+                <span class="card-num-kicker">1896 Philippine Revolution</span>
+                <h4>The Spark of Katipunan</h4>
+                <p>
+                  Andrés Bonifacio and the Katipunan adopted “Rizal” as a password, citing *El Filibusterismo* as proof that Spanish rule could never be reformed peacefully.
+                </p>
+                <p style="font-size: 0.95rem; color: var(--bone-light); margin-top: 0.35rem;">
+                  Simoun’s failure also provided a crucial warning: a revolution built on private vengeance will collapse unless guided by civic virtue.
+                </p>
+              </div>
+            </div>
+
+            <div class="slide-col">
+              <div class="info-card crimson-accent">
+                <span class="card-num-kicker">Republic Act No. 1425 (1956)</span>
+                <h4>The Rizal Law</h4>
+                <p>
+                  Sponsored by Senator <strong>Claro M. Recto</strong> to mandate the study of Rizal's life, works, and writings across Philippine educational institutions.
+                </p>
+                <p style="font-size: 0.95rem; color: var(--bone-light); margin-top: 0.35rem;">
+                  <strong>Legal Nuance:</strong> The law mandates <em>unexpurgated</em> collegiate reading of both novels, while secondary schools keep copies in school libraries.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>Civic Impact:</strong> The novel remains a living document challenging each new generation to examine its civic responsibilities.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 35: Reference Matrix Act I
+slides_data.append("""
+    <section class="presentation-slide surface-paper" id="slide-matrix-act1" data-slide-index="34" data-unit-name="Reference Matrix" data-section-id="slide-matrix-act1">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Reference Matrix · Act I</span>
+            <span class="slide-time-place">Chapters I – X (1–10)</span>
+          </div>
+          <h2 class="slide-title">Act I: Opening on the Pasig to the Injustice of Tiani</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-table-wrapper">
+            <table class="slide-table">
+              <thead>
+                <tr>
+                  <th>Ch.</th>
+                  <th>Derbyshire Title</th>
+                  <th>Chronological Events &amp; Characters</th>
+                  <th>Direct Causal Link</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>I</td><td>On the Upper Deck</td><td>Friars, officials &amp; Simoun debate Pasig navigation; Simoun proposes forced canal labor.</td><td>Simoun descends to lower deck (Ch. II).</td></tr>
+                <tr><td>II</td><td>On the Lower Deck</td><td>Basilio &amp; Isagani lobby for Academy; Isagani gives steam/water warning to Simoun.</td><td>Florentino called upstairs for legends (Ch. III).</td></tr>
+                <tr><td>III</td><td>Legends</td><td>River legends told; entering the lake, Ben-Zayb asks about Ibarra; Simoun goes pale.</td><td>Basilio disembarks toward San Diego (Ch. IV).</td></tr>
+                <tr><td>IV</td><td>Cabesang Tales</td><td>Tales clears forest, faces rent hikes, loses court battle; Juli enters servitude.</td><td>Basilio arrives in San Diego on Christmas Eve (Ch. V).</td></tr>
+                <tr><td>V</td><td>A Coachman's Christmas Eve</td><td>Coachman Sinong twice beaten by Civil Guard; Basilio learns of Tales' capture.</td><td>Basilio visits Sisa's grave at midnight (Ch. VI).</td></tr>
+                <tr><td>VI</td><td>Basilio</td><td>Basilio's rise from servant to medical clinician under Capitan Tiago's roof.</td><td>Basilio spots digger in forest (Ch. VII).</td></tr>
+                <tr><td>VII</td><td>Simoun</td><td>Basilio discovers Simoun is Ibarra; Simoun offers alliance; Basilio refuses.</td><td>Christmas morning in Tiani (Ch. VIII).</td></tr>
+                <tr><td>VIII</td><td>Merry Christmas</td><td>Juli enters Penchang's service; Tandang Selo suffers stroke and becomes mute.</td><td>Simoun stays at Tales' house (Ch. IX).</td></tr>
+                <tr><td>IX</td><td>The Pilate</td><td>Town officials disclaim guilt for Tales' tragedy; Selo remains captive.</td><td>Simoun displays diamond trays to buyers (Ch. X).</td></tr>
+                <tr><td>X</td><td>Wealth and Want</td><td>Tales swaps locket for revolver, kills friar &amp; new tenant, flees as Matanglawin.</td><td>Murders dominate table at Los Baños (Ch. XI).</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>Act I Complete:</strong> Establishes colonial social structure, agrarian dispossession, and Simoun’s secret identity.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 36: Reference Matrix Act II
+slides_data.append("""
+    <section class="presentation-slide surface-obsidian" id="slide-matrix-act2" data-slide-index="35" data-unit-name="Reference Matrix" data-section-id="slide-matrix-act2">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Reference Matrix · Act II</span>
+            <span class="slide-time-place">Chapters XI – XXIV (11–24)</span>
+          </div>
+          <h2 class="slide-title">Act II: The Castilian Academy to the Aborted First Revolt</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-table-wrapper">
+            <table class="slide-table">
+              <thead>
+                <tr>
+                  <th>Ch.</th>
+                  <th>Derbyshire Title</th>
+                  <th>Chronological Events &amp; Characters</th>
+                  <th>Direct Causal Link</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>XI</td><td>Los Baños</td><td>General &amp; friars play cards; Simoun wins blank warrants; Basilio watchlisted.</td><td>Manila classes resume in January (Ch. XII).</td></tr>
+                <tr><td>XII</td><td>Placido Penitente</td><td>Reluctant UST student Placido walks to school; anti-Academy petitions circulate.</td><td>Placido enters physics lecture (Ch. XIII).</td></tr>
+                <tr><td>XIII</td><td>The Class in Physics</td><td>Padre Millón bullies Placido in locked lab; Placido walks out of university.</td><td>Students gather at Makaraig's house (Ch. XIV).</td></tr>
+                <tr><td>XIV</td><td>House of the Students</td><td>Makaraig, Sandoval, Pecson &amp; Isagani organize Academy lobby.</td><td>Isagani visits Señor Pasta's office (Ch. XV).</td></tr>
+                <tr><td>XV</td><td>Señor Pasta</td><td>Pasta advises selfish careerism; Isagani defends patriotic duty.</td><td>Simoun prepares hardware at Quiroga's (Ch. XVI).</td></tr>
+                <tr><td>XVI</td><td>Quiroga</td><td>Simoun forgives Quiroga debt in return for storing smuggled rifles.</td><td>Quiapo fair opens that evening (Ch. XVII).</td></tr>
+                <tr><td>XVII</td><td>The Quiapo Fair</td><td>Camorra ogles women; crowd enters Mr. Leeds' talking head tent.</td><td>Talking head performance begins (Ch. XVIII).</td></tr>
+                <tr><td>XVIII</td><td>The Phantasmagoria</td><td>Sphinx Imuthis recounts murder by lustful priest; Salví collapses in terror.</td><td>Placido visits Simoun's lab (Ch. XIX).</td></tr>
+                <tr><td>XIX</td><td>The Fuse</td><td>Simoun recruits Placido; pyrotechnic bombs prepared for uprising.</td><td>Don Custodio prepares Academy report (Ch. XX).</td></tr>
+                <tr><td>XX</td><td>The Arbiter</td><td>Don Custodio copies School of Arts file to place Academy under friars.</td><td>Audience arrives at French operetta (Ch. XXI).</td></tr>
+                <tr><td>XXI</td><td>Manila Types</td><td>Crowds gather for Les Cloches de Corneville; Simoun positions strike teams.</td><td>Students learn Custodio's decision (Ch. XXII).</td></tr>
+                <tr><td>XXII</td><td>The Performance</td><td>Students mock defeat in theater; Simoun readies assault.</td><td>Simoun visits Basilio at 10:30 PM (Ch. XXIII).</td></tr>
+                <tr><td>XXIII</td><td>A Corpse</td><td>Basilio reveals María Clara died at 6 PM; grief-stricken Simoun aborts revolt.</td><td>Isagani meets Paulita on promenade (Ch. XXIV).</td></tr>
+                <tr><td>XXIV</td><td>Dreams</td><td>Isagani shares patriotic dreams on Malecón; Paulita calls them foolish.</td><td>Students hold ironic pansitería banquet (Ch. XXV).</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>Act II Complete:</strong> Traces the peaceful student petition alongside Simoun’s first aborted military conspiracy.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 37: Reference Matrix Act III
+slides_data.append("""
+    <section class="presentation-slide surface-paper" id="slide-matrix-act3" data-slide-index="36" data-unit-name="Reference Matrix" data-section-id="slide-matrix-act3">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Reference Matrix · Act III</span>
+            <span class="slide-time-place">Chapters XXV – XXXV (25–35)</span>
+          </div>
+          <h2 class="slide-title">Act III: The Pasquinades to the Wedding Feast and Lamp</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-table-wrapper">
+            <table class="slide-table">
+              <thead>
+                <tr>
+                  <th>Ch.</th>
+                  <th>Derbyshire Title</th>
+                  <th>Chronological Events &amp; Characters</th>
+                  <th>Direct Causal Link</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>XXV</td><td>Smiles and Tears</td><td>Students hold satirical banquet mocking Custodio; Sibyla's servant spies.</td><td>Pasquinades found on campus doors (Ch. XXVI).</td></tr>
+                <tr><td>XXVI</td><td>Pasquinades</td><td>Campus closes; student leaders arrested; innocent Basilio jailed.</td><td>Padre Fernández calls Isagani for debate (Ch. XXVII).</td></tr>
+                <tr><td>XXVII</td><td>The Friar &amp; Filipino</td><td>Isagani charges friars starve Filipino minds; Fernández admires courage.</td><td>Insurrection panic grips city (Ch. XXVIII).</td></tr>
+                <tr><td>XXVIII</td><td>Tatakut</td><td>Soldiers shoot bystanders; Irene's tales of arrests kill Capitan Tiago.</td><td>Irene stages lavish funeral (Ch. XXIX).</td></tr>
+                <tr><td>XXIX</td><td>Exit Capitan Tiago</td><td>Tiago's will altered; Church takes estate; Basilio left penniless in jail.</td><td>Sister Bali pushes Juli to seek aid (Ch. XXX).</td></tr>
+                <tr><td>XXX</td><td>Juli</td><td>To escape Padre Camorra's assault, Juli leaps to death; Selo vanishes.</td><td>High Official defends Basilio (Ch. XXXI).</td></tr>
+                <tr><td>XXXI</td><td>The High Official</td><td>Spanish Official defends Basilio, proclaims Filipino rights, and resigns.</td><td>April arrives with broken students (Ch. XXXII).</td></tr>
+                <tr><td>XXXII</td><td>Effect of Pasquinades</td><td>Students flee; Paulita agrees to marry Juanito; Sinong tells Basilio of Juli.</td><td>Freed Basilio goes to Simoun (Ch. XXXIII).</td></tr>
+                <tr><td>XXXIII</td><td>La Última Razón</td><td>Basilio demands arms; Simoun reveals the nitroglycerin pomegranate lamp.</td><td>Wedding guests arrive on Calle Anloague (Ch. XXXIV).</td></tr>
+                <tr><td>XXXIV</td><td>The Wedding</td><td>Mined azotea kiosk set for rulers; Simoun places lamp on table and leaves.</td><td>Banquet begins upstairs (Ch. XXXV).</td></tr>
+                <tr><td>XXXV</td><td>The Fiesta</td><td>Mene Tekel Phares note read; Basilio warns Isagani; Isagani throws lamp into river.</td><td>Censors suppress wedding news (Ch. XXXVI).</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>Act III Complete:</strong> Chronicles student arrests, Juli’s death, the wedding trap, and Isagani’s intervention.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 38: Reference Matrix Act IV
+slides_data.append("""
+    <section class="presentation-slide surface-obsidian" id="slide-matrix-act4" data-slide-index="37" data-unit-name="Reference Matrix" data-section-id="slide-matrix-act4">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Reference Matrix · Act IV</span>
+            <span class="slide-time-place">Chapters XXXVI – XXXIX (36–39)</span>
+          </div>
+          <h2 class="slide-title">Act IV: The Silenced Press to the Depths of the Sea</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-table-wrapper">
+            <table class="slide-table">
+              <thead>
+                <tr>
+                  <th>Ch.</th>
+                  <th>Derbyshire Title</th>
+                  <th>Chronological Events &amp; Characters</th>
+                  <th>Direct Causal Link</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>XXXVI</td>
+                  <td>Ben-Zayb’s Afflictions</td>
+                  <td>Governor censors wedding news; betrayed bandits raid Pasig villa; Simoun’s hidden powder discovered in his house.</td>
+                  <td>Gossip spreads to Santa Cruz (Ch. XXXVII).</td>
+                </tr>
+                <tr>
+                  <td>XXXVII</td>
+                  <td>The Mystery</td>
+                  <td>Chichoy reveals gunpowder found under kiosk; Isagani realizes magnitude of what he stopped and leaves for the coast.</td>
+                  <td>Military patrol clashes with bandits in hills (Ch. XXXVIII).</td>
+                </tr>
+                <tr>
+                  <td>XXXVIII</td>
+                  <td>Fatality</td>
+                  <td>Conscript soldier Carolino (Tano) shoots cliffside guerrilla; discovers he has killed his own mute grandfather Tandang Selo.</td>
+                  <td>Fugitive Simoun reaches Florentino's house (Ch. XXXIX).</td>
+                </tr>
+                <tr>
+                  <td>XXXIX</td>
+                  <td>Conclusion</td>
+                  <td>Simoun drinks poison, confesses to Father Florentino; Florentino preaches virtue and throws diamond chest into Pacific abyss.</td>
+                  <td>Closes the 39-chapter novel on the moral challenge to the youth.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>All 39 Chapters Verified:</strong> Full coverage of Rizal’s complete chronological sequence without omissions or spoilers.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Slide 39: Scholarly Sources & Classroom Reference
+slides_data.append("""
+    <section class="presentation-slide surface-paper" id="slide-sources" data-slide-index="38" data-unit-name="Scholarly Sources" data-section-id="slide-sources">
+      <div class="slide-container">
+        <header class="slide-header">
+          <div class="slide-kicker-row">
+            <span class="slide-unit-badge">Documentation · Scholarly Bibliography</span>
+            <span class="slide-time-place">Editions &amp; Historical Scholarship</span>
+          </div>
+          <h2 class="slide-title">Primary Editions, Translations, and Historical Scholarship</h2>
+        </header>
+
+        <div class="slide-body">
+          <div class="slide-split-2col">
+            <div class="slide-col">
+              <div class="info-card">
+                <span class="card-num-kicker">Primary Text &amp; English Translations</span>
+                <p><strong>1891 First Edition (Ghent):</strong> <em>El Filibusterismo</em>, F. Meyer-Van Loo Press, Ghent, Belgium (September 18, 1891). Dedicated to Gomburza.</p>
+                <p><strong>Charles Derbyshire (1912):</strong> <em>The Reign of Greed</em>, Philippine Education Company, Manila. Primary source for English quotations used herein.</p>
+                <p><strong>Leon Ma. Guerrero (1965):</strong> <em>The Subversive</em>, Longmans, London. Renowned modern translation.</p>
+              </div>
+            </div>
+
+            <div class="slide-col">
+              <div class="info-card crimson-accent">
+                <span class="card-num-kicker">Historical References &amp; Legal Context</span>
+                <p><strong>John N. Schumacher, S.J. (1991):</strong> <em>The Making of a Nation: Essays on Nineteenth-Century Philippine Nationalism</em>.</p>
+                <p><strong>Austin Coates (1968):</strong> <em>Rizal: Philippine Nationalist and Martyr</em>, Oxford University Press.</p>
+                <p><strong>National Historical Commission (2012):</strong> Archival records on Gomburza ages, Bagumbayan trials, and RA 1425.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="slide-footer">
+          <div class="slide-takeaway">
+            <strong>Final Pedagogical Lesson:</strong> <em>“Pure and spotless must the victim be that the sacrifice may be acceptable!”</em> — José Rizal, 1891.
+          </div>
+        </footer>
+      </div>
+    </section>
+""")
+
+# Assemble the complete index.html
+full_html = html_content + "\n".join(slides_data) + """
+  </main>
+
+  <!-- Dramatis Personae Modal -->
+  <div class="modal-backdrop" id="archetype-modal" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-labelledby="modal-title">
+      <div class="modal-header">
+        <div>
+          <span class="slide-unit-badge" style="margin-bottom: 0.25rem; display:block;">Dramatis Personae · Verified Against Novel Text</span>
+          <h3 id="modal-title">Key Characters of <em>El Filibusterismo</em></h3>
+        </div>
+        <button class="modal-close" id="modal-close" aria-label="Close modal">&times;</button>
+      </div>
+
+      <div class="modal-tabs" id="modal-char-tabs"></div>
+      <div class="modal-body" id="modal-char-content"></div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
+"""
+
+with open("index.html", "w", encoding="utf-8") as f:
+    f.write(full_html)
+
+print(f"Successfully generated index.html with {len(slides_data)} slides!")
