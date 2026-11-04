@@ -594,6 +594,39 @@ body {
   color: var(--faded-sepia);
 }
 
+/* Modern Plain-English Student Explanations */
+.quote-explanation {
+  display: block;
+  margin-top: 0.95rem;
+  padding: 0.8rem 1.15rem;
+  background: rgba(210, 197, 170, 0.4);
+  border-left: 2px solid var(--faded-sepia);
+  font-family: var(--font-sans);
+  font-size: 1.04rem;
+  line-height: 1.62;
+  color: var(--ink-body);
+}
+
+.surface-obsidian .quote-explanation {
+  background: rgba(255, 255, 255, 0.045);
+  border-left-color: var(--faded-sepia);
+  color: var(--bone-light);
+}
+
+.quote-explanation strong {
+  color: var(--oxide-crimson);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.surface-obsidian .quote-explanation strong {
+  color: var(--oxide-crimson-dark-bg);
+}
+
 /* ==========================================================================
    4. NUMBERED PRESENTATION BEAT SPINE (01 -> 16)
    Each beat occupies its own spacious viewport stage so the next section never
@@ -1645,6 +1678,158 @@ body {
   color: var(--bone-light);
 }
 
+/* N. Classroom Scene-Flow Cards & Sequential Teaching Modules */
+.scene-flow-grid {
+  grid-column: 1 / 13;
+  display: grid;
+  gap: 2rem;
+  margin: 1.25rem 0;
+}
+
+.scene-flow-grid.cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.scene-flow-grid.cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.scene-flow-grid.cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.scene-flow-card {
+  background: rgba(210, 197, 170, 0.28);
+  border: 1px solid var(--rule-paper);
+  border-top: 3px solid var(--ink-brown);
+  padding: 1.5rem 1.65rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.surface-obsidian .scene-flow-card {
+  background: rgba(255, 255, 255, 0.035);
+  border-color: var(--rule-dark);
+  border-top-color: var(--faded-sepia);
+}
+
+.scene-step-kicker {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--oxide-crimson);
+  margin-bottom: 0.4rem;
+}
+
+.surface-obsidian .scene-step-kicker {
+  color: var(--oxide-crimson-dark-bg);
+}
+
+.scene-flow-card h4 {
+  font-family: var(--font-serif);
+  font-size: 1.48rem;
+  font-weight: 600;
+  line-height: 1.25;
+  margin-bottom: 0.75rem;
+  color: var(--ink-brown);
+}
+
+.surface-obsidian .scene-flow-card h4 {
+  color: var(--bone-light);
+}
+
+.scene-flow-card p {
+  font-family: var(--font-sans);
+  font-size: 1.06rem;
+  line-height: 1.68;
+  color: var(--ink-body);
+  margin-bottom: 0.85rem;
+}
+
+.surface-obsidian .scene-flow-card p {
+  color: var(--bone-light);
+}
+
+.scene-takeaway {
+  margin-top: auto;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--rule-paper);
+  font-family: var(--font-sans);
+  font-size: 0.94rem;
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+.surface-obsidian .scene-takeaway {
+  border-top-color: var(--rule-dark);
+  color: var(--faded-sepia);
+}
+
+.scene-takeaway strong {
+  color: var(--ink-brown);
+}
+
+.surface-obsidian .scene-takeaway strong {
+  color: var(--bone-light);
+}
+
+/* O. Dedicated Classroom Sources & Annotated Bibliography */
+.sources-reference-box {
+  grid-column: 1 / 13;
+  margin-top: 2rem;
+  padding: 2.25rem 2.5rem;
+  background: rgba(210, 197, 170, 0.42);
+  border-top: 2px solid var(--ink-brown);
+  border-bottom: 1px solid var(--rule-paper);
+}
+
+.sources-reference-box h4 {
+  font-family: var(--font-serif);
+  font-size: 1.85rem;
+  font-weight: 600;
+  color: var(--ink-brown);
+  margin-bottom: 0.75rem;
+}
+
+.sources-reference-box p.sources-intro {
+  font-family: var(--font-sans);
+  font-size: 1.08rem;
+  line-height: 1.7;
+  color: var(--ink-body);
+  margin-bottom: 1.5rem;
+  max-width: 72ch;
+}
+
+.sources-citation-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.75rem;
+}
+
+.citation-entry {
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--rule-paper);
+}
+
+.citation-entry strong {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--ink-brown);
+  margin-bottom: 0.25rem;
+}
+
+.citation-entry p {
+  font-family: var(--font-sans);
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
 /* Zero-Layout-Shift 39-Chapter Chronological Audit Explorer */
 .audit-explorer-container {
   grid-column: 1 / 13;
@@ -1948,6 +2133,10 @@ body {
   .epistemic-legend,
   .chapter-sequence-grid.cols-2,
   .chapter-sequence-grid.cols-3,
+  .scene-flow-grid.cols-4,
+  .scene-flow-grid.cols-3,
+  .scene-flow-grid.cols-2,
+  .sources-citation-list,
   .audit-tab-bar {
     grid-template-columns: 1fr;
   }
