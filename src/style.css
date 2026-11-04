@@ -489,8 +489,15 @@ body {
     radial-gradient(ellipse at center, rgba(232, 221, 197, 0.12) 0%, rgba(210, 197, 170, 0.35) 100%),
     url('/assets/book/parchment.jpg');
   background-size: 100% 100%, 640px 640px;
-  color: var(--ink-brown);
+  color: #1C1410;
   border-top: 1px solid var(--rule-paper);
+  --text-main: #1C1410;
+  --text-secondary: #3D2F27;
+  --text-muted: #524237;
+  --card-bg: rgba(255, 255, 255, 0.55);
+  --card-border: #C8B99B;
+  --faded-sepia: #4A3B32; /* Safe high-contrast bistre on paper */
+  --bone-light: #1C1410;  /* Guard against accidental light text on paper */
 }
 
 .surface-obsidian {
@@ -499,8 +506,15 @@ body {
     radial-gradient(circle at top, rgba(48, 38, 32, 0.28) 0%, rgba(24, 18, 15, 0.85) 100%),
     url('/assets/book/leather.jpg');
   background-size: 100% 100%, 420px 420px;
-  color: var(--bone-light);
+  color: #F7F2E8;
   border-top: 1px solid var(--rule-dark);
+  --text-main: #F7F2E8;
+  --text-secondary: #D8CCA8;
+  --text-muted: #B5A58B;
+  --card-bg: rgba(255, 255, 255, 0.04);
+  --card-border: rgba(181, 165, 139, 0.25);
+  --faded-sepia: #B5A58B;
+  --bone-light: #F7F2E8;
 }
 
 .editorial-grid {
@@ -881,10 +895,26 @@ body {
   gap: 0.5rem;
 }
 
+.surface-paper .info-card {
+  background: rgba(255, 255, 255, 0.58);
+  border-color: #C8B99B;
+  border-top-color: #211A16;
+  color: #1C1410;
+}
+
+.surface-paper .info-card p {
+  color: #1C1410;
+}
+
 .surface-obsidian .info-card {
   background: rgba(255, 255, 255, 0.04);
   border-color: var(--rule-dark);
   border-top-color: var(--faded-sepia);
+  color: #F7F2E8;
+}
+
+.surface-obsidian .info-card p {
+  color: #EDE4D3;
 }
 
 .info-card.crimson-accent {
@@ -919,6 +949,266 @@ body {
   font-family: var(--font-sans);
   font-size: clamp(0.95rem, 1.1vw, 1.04rem);
   line-height: 1.58;
+}
+
+.card-note {
+  font-size: 0.92rem;
+  line-height: 1.5;
+  margin-top: 0.35rem;
+}
+
+.surface-paper .card-note {
+  color: #4A3B32 !important;
+}
+
+.surface-obsidian .card-note {
+  color: #D2C5AA !important;
+}
+
+/* Classroom Discussion Callout Box */
+.discussion-callout {
+  margin-top: 0.85rem;
+  padding: 0.9rem 1.25rem;
+  border-left: 3.5px solid var(--oxide-crimson);
+  background: rgba(143, 40, 37, 0.07);
+  border-radius: 2px;
+}
+
+.surface-obsidian .discussion-callout {
+  border-left-color: var(--oxide-crimson-dark-bg);
+  background: rgba(224, 83, 78, 0.11);
+}
+
+.discussion-kicker {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--oxide-crimson);
+  margin-bottom: 0.35rem;
+}
+
+.surface-obsidian .discussion-kicker {
+  color: var(--oxide-crimson-dark-bg);
+}
+
+.discussion-prompt {
+  font-family: var(--font-serif);
+  font-size: clamp(1.05rem, 1.25vw, 1.2rem);
+  font-style: italic;
+  line-height: 1.48;
+}
+
+.surface-paper .discussion-prompt {
+  color: #1C1410;
+}
+
+.surface-obsidian .discussion-prompt {
+  color: #F7F2E8;
+}
+
+/* Chronological Cause-and-Effect Ladder (Tales) */
+.cause-effect-ladder {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  width: 100%;
+}
+
+.ladder-step {
+  display: grid;
+  grid-template-columns: 2.2rem 1fr;
+  gap: 0.85rem;
+  align-items: baseline;
+  padding: 0.65rem 0.95rem;
+  background: rgba(255, 255, 255, 0.52);
+  border: 1px solid var(--rule-paper);
+  border-left: 3.5px solid var(--ink-brown);
+}
+
+.surface-obsidian .ladder-step {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--rule-dark);
+  border-left-color: var(--faded-sepia);
+}
+
+.ladder-step.step-fatal {
+  border-left-color: var(--oxide-crimson);
+  background: rgba(143, 40, 37, 0.06);
+}
+
+.surface-obsidian .ladder-step.step-fatal {
+  border-left-color: var(--oxide-crimson-dark-bg);
+  background: rgba(224, 83, 78, 0.1);
+}
+
+.ladder-num {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--oxide-crimson);
+}
+
+.surface-obsidian .ladder-num {
+  color: var(--oxide-crimson-dark-bg);
+}
+
+.ladder-content h5 {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 0.2rem;
+}
+
+.ladder-content p {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Character Confrontation Dialogue (Basilio vs Simoun) */
+.dialogue-confrontation {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.75rem;
+  width: 100%;
+}
+
+.speaker-box {
+  padding: 1.15rem 1.35rem;
+  border: 1px solid var(--rule-paper);
+  border-top: 3.5px solid var(--ink-brown);
+  background: rgba(255, 255, 255, 0.52);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.surface-obsidian .speaker-box {
+  border-color: var(--rule-dark);
+  border-top-color: var(--faded-sepia);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.speaker-box.speaker-simoun {
+  border-top-color: var(--oxide-crimson);
+}
+
+.surface-obsidian .speaker-box.speaker-simoun {
+  border-top-color: var(--oxide-crimson-dark-bg);
+}
+
+.speaker-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px solid var(--rule-paper);
+  padding-bottom: 0.45rem;
+}
+
+.surface-obsidian .speaker-header {
+  border-bottom-color: var(--rule-dark);
+}
+
+.speaker-name {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.speaker-role {
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.surface-paper .speaker-role {
+  color: #4A3B32;
+}
+
+.surface-obsidian .speaker-role {
+  color: #D2C5AA;
+}
+
+/* Classroom Scene Reconstruction (Physics Class) */
+.scene-reconstruction-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.scene-component-box {
+  padding: 1.1rem 1.35rem;
+  border: 1px solid var(--rule-dark);
+  background: rgba(255, 255, 255, 0.04);
+  border-top: 3px solid var(--faded-sepia);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.surface-paper .scene-component-box {
+  border-color: var(--rule-paper);
+  background: rgba(255, 255, 255, 0.55);
+  border-top-color: var(--ink-brown);
+}
+
+.scene-component-box.scene-critical {
+  border-top-color: var(--oxide-crimson);
+}
+
+.surface-obsidian .scene-component-box.scene-critical {
+  border-top-color: var(--oxide-crimson-dark-bg);
+}
+
+/* Lamp & Explosion Technical Schematic */
+.lamp-schematic-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.schematic-card {
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--rule-paper);
+  background: rgba(255, 255, 255, 0.55);
+  border-top: 3.5px solid var(--ink-brown);
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.surface-obsidian .schematic-card {
+  border-color: var(--rule-dark);
+  border-top-color: var(--faded-sepia);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.schematic-card.schematic-critical {
+  border-top-color: var(--oxide-crimson);
+}
+
+.surface-obsidian .schematic-card.schematic-critical {
+  border-top-color: var(--oxide-crimson-dark-bg);
+}
+
+/* Unequal Weight Milestone Grid */
+.milestones-weighted-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 0.95fr;
+  gap: 1.35rem;
+  width: 100%;
+}
+
+.milestone-primary {
+  border-top-width: 4px;
 }
 
 .slide-hero-plate {
@@ -2461,7 +2751,11 @@ body {
   .slide-hero-plate,
   .cards-grid-2,
   .cards-grid-3,
-  .cards-grid-4 {
+  .cards-grid-4,
+  .dialogue-confrontation,
+  .scene-reconstruction-grid,
+  .lamp-schematic-grid,
+  .milestones-weighted-grid {
     grid-template-columns: 1fr;
   }
 

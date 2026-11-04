@@ -189,25 +189,13 @@ function initBookOutroTransition() {
 
 /* ==========================================================================
    4. RESTRAINED REVEALS FOR PLATES & KEY MOMENTS
+   Keep all presentation beats 100% opaque so slides are never faded or
+   invisible during classroom projection, fast navigation, or PDF export.
    ========================================================================== */
 function initSelectiveMomentReveals() {
   const moments = document.querySelectorAll('.reveal-moment');
   moments.forEach((el) => {
-    gsap.fromTo(
-      el,
-      { y: 16, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.65,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 88%',
-          toggleActions: 'play none none none'
-        }
-      }
-    );
+    gsap.set(el, { opacity: 1, y: 0 });
   });
 }
 
@@ -448,14 +436,14 @@ function initPresentationControls() {
   const fullscreenBtn = document.getElementById('btn-fullscreen');
 
   function stepNext() {
-    const next = stops.find((el) => el.getBoundingClientRect().top > 85);
+    const next = stops.find((el) => el.getBoundingClientRect().top > 24);
     if (next) {
       next.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 
   function stepPrev() {
-    const prevs = stops.filter((el) => el.getBoundingClientRect().top < 40);
+    const prevs = stops.filter((el) => el.getBoundingClientRect().top < -24);
     const target = prevs[prevs.length - 1] || stops[0];
     if (target) {
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
