@@ -98,9 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initBookOutroTransition();
   initScrollProgressAndNav();
   initSelectiveMomentReveals();
-  initDeckExplorer();
-  initLampExplorer();
-  initAuditExplorer();
   initCharacterModal();
   initPresentationControls();
 });
@@ -211,86 +208,6 @@ function initSelectiveMomentReveals() {
   });
 }
 
-/* ==========================================================================
-   5. INTERACTIVE BAPOR TABO EXPLORER (CHAPTERS 1–3, ZERO LAYOUT SHIFT)
-   ========================================================================== */
-function initDeckExplorer() {
-  const container = document.getElementById('deck-explorer');
-  if (!container) return;
-
-  const tabs = container.querySelectorAll('.deck-tab-btn');
-  const panels = container.querySelectorAll('.deck-panel');
-
-  tabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      const target = tab.getAttribute('data-deck-target');
-
-      tabs.forEach((t) => {
-        const isActive = t === tab;
-        t.classList.toggle('active', isActive);
-        t.setAttribute('aria-selected', String(isActive));
-      });
-
-      panels.forEach((p) => {
-        p.classList.toggle('active', p.getAttribute('data-deck-panel') === target);
-      });
-    });
-  });
-}
-
-/* ==========================================================================
-   6. INTERACTIVE POMEGRANATE LAMP INSPECTOR (CHAPTERS 33–35, ZERO SHIFT)
-   ========================================================================== */
-function initLampExplorer() {
-  const container = document.getElementById('lamp-explorer');
-  if (!container) return;
-
-  const tabs = container.querySelectorAll('.lamp-tab-btn');
-  const panels = container.querySelectorAll('.lamp-stage-content');
-
-  tabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      const target = tab.getAttribute('data-lamp-target');
-
-      tabs.forEach((t) => {
-        const isActive = t === tab;
-        t.classList.toggle('active', isActive);
-        t.setAttribute('aria-selected', String(isActive));
-      });
-
-      panels.forEach((p) => {
-        p.classList.toggle('active', p.getAttribute('data-lamp-panel') === target);
-      });
-    });
-  });
-}
-
-/* ==========================================================================
-   7. INTERACTIVE 39-CHAPTER CHRONOLOGICAL REFERENCE MATRIX (BEAT 19)
-   ========================================================================== */
-function initAuditExplorer() {
-  const container = document.getElementById('audit-explorer');
-  if (!container) return;
-
-  const tabs = container.querySelectorAll('.audit-tab-btn');
-  const panels = container.querySelectorAll('.audit-panel');
-
-  tabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      const target = tab.getAttribute('data-audit-target');
-
-      tabs.forEach((t) => {
-        const isActive = t === tab;
-        t.classList.toggle('active', isActive);
-        t.setAttribute('aria-selected', String(isActive));
-      });
-
-      panels.forEach((p) => {
-        p.classList.toggle('active', p.getAttribute('data-audit-panel') === target);
-      });
-    });
-  });
-}
 
 /* ==========================================================================
    8. SCROLL PROGRESS & NAVIGATION HIGHLIGHT
