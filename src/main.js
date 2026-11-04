@@ -4,72 +4,89 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 /* ==========================================================================
-   1. CHARACTER PROFILES (NATURAL, ACADEMICALLY GROUNDED PROSE)
+   1. CHARACTER PROFILES (VERIFIED AGAINST DERBYSHIRE'S 1912 TRANSLATION)
    ========================================================================== */
 const CHARACTER_ARCHETYPES = {
   simoun: {
-    name: 'Simoun (Crisóstomo Ibarra)',
-    archetype: 'Wealthy Jeweler and Leader of the Conspiracy',
-    chapters: 'Chapters 1–2, 7, 10–11, 16, 23, 33–35, 39',
-    role: 'Thirteen years after being pursued on the lake as Crisóstomo Ibarra, he returns from Cuba as an affluent jeweler with influence over the Captain-General. Convinced that peaceful reform cannot succeed, he uses bribery to worsen official abuses and provoke a nationwide revolt.',
+    tabLabel: 'Simoun',
+    name: 'Simoun (Revealed in Ch. 7 as Crisóstomo Ibarra)',
+    archetype: 'Wealthy Jeweler and Architect of the Conspiracy',
+    chapters: 'Chapters 1–3, 5, 7, 10–11, 16, 18–19, 21, 23, 28, 32–36, 39',
+    role: 'Introduced on the steamer Tabo behind blue-tinted goggles as the Captain-General’s “Brown Cardinal,” he is recognized by Basilio in the San Diego forest in Chapter 7 as Juan Crisóstomo Ibarra, enriched in Cuba thirteen years after Noli Me Tángere. Convinced that lawful reform is futile, he uses bribery and flattery to worsen official abuses and provoke a nationwide uprising.',
     significance:
-      'His two failed uprisings expose the conflict in his motives: in Chapter 23, he calls off his attack upon learning that María Clara has died, showing that his revolutionary plan remained tied to personal grief and revenge.'
+      'Literary & Historical Note: Both of Simoun’s uprisings fail because personal motives and corrupt methods undermine them—first at 10:30 PM in Chapter 23 when he learns María Clara died at six o’clock, and second in Chapter 35 when Isagani hurls the nitroglycerin lamp into the Pasig. Mortally wounded by the very outlaws he twice stood up (Chapters 36, 39), he takes poison and confesses to Father Florentino.'
   },
   basilio: {
+    tabLabel: 'Basilio',
     name: 'Basilio',
     archetype: 'Graduating Medical Student',
-    chapters: 'Chapters 6–7, 23, 26, 31, 33–35',
-    role: 'Orphaned son of Sisa who worked as an unpaid servant for Captain Tiago while completing medical school. In Chapter 7, he declines Simoun’s conspiracy because he hopes to practice medicine peacefully and marry Juli.',
+    chapters: 'Chapters 2, 5–7, 9, 11, 23, 26, 29–35',
+    role: 'Orphaned son of Sisa who rose from Capitan Tiago’s unpaid servant and neglected Letrán pupil to Ateneo honor student and graduating medical clinician. In Chapter 7 he rejects Simoun’s conspiracy, trusting in medical science, peaceful work, and marriage to Juli after ransoming her from Hermana Penchang.',
     significance:
-      'Represents Filipinos who try to survive colonial rule through hard work and compliance. Only after he is arrested without cause, stripped of his twenty-five-peso bequest, and told of Juli’s death does he join Simoun’s plot, though his warning to Isagani ultimately prevents the explosion.'
+      'Literary & Historical Note: Tests whether quiet compliance can protect an honest Filipino under arbitrary colonial rule. Flagged on the government watchlist in Chapter 11, arrested at Makaraig’s house in Chapter 26, stripped of Tiago’s 25-peso bequest in Chapter 29, held over three months in Bilibid, and told by coachman Sinong of Juli’s death (Chapter 32), he finally joins Simoun in Chapter 33—yet his warning to Isagani in Chapter 35 prevents the blast.'
   },
   isagani: {
+    tabLabel: 'Isagani',
     name: 'Isagani',
-    archetype: 'Student Poet and Advocate for the Spanish Academy',
-    chapters: 'Chapters 2, 14–15, 22, 27, 35',
-    role: 'Nephew of Father Florentino and former fiancé of Paulita Gómez. He speaks for the student campaign before the lawyer Señor Pasta (Chapter 15) and debates the Jesuit Father Fernández on the shortcomings of colonial education (Chapter 27).',
+    archetype: 'Student Poet and Spokesman for the Castilian Academy',
+    chapters: 'Chapters 2, 12, 14–15, 17, 22, 24–27, 32, 34–35, 37',
+    role: 'Nephew of Father Florentino, educated earlier by the Jesuits at the Ateneo and studying at UST. He champions the Castilian Academy before lawyer Señor Pasta (Chapter 15), speaks fearlessly to classmates after the pasquinades (Chapter 26), and debates his sole respected Dominican professor, Padre Fernández (Chapter 27), before voluntarily surrendering to arrest.',
     significance:
-      'Illustrates a central contradiction in the climax: despite opposing colonial abuses throughout the novel, he rushes into the mined house at Calle Anloague and throws Simoun’s lamp into the Pasig River to save Paulita, inadvertently rescuing the colonial elite.'
+      'Literary & Historical Note: Embodies generous civic idealism undone by romantic attachment. Abandoned by comfort-loving Paulita Gómez for wealthy Juanito Pelaez (Chapter 32), he lingers outside the Calle Anloague wedding feast, hears Basilio’s warning, and hurls Simoun’s dimming lamp into the Pasig River to save Paulita (Chapter 35)—only to express quiet regret at the Orenda house in Chapter 37 before returning forever to Father Florentino’s coast.'
   },
   'cabesang-tales': {
-    name: 'Cabesang Tales (Matanglawin)',
-    archetype: 'Dispossessed Farmer of Tiani',
-    chapters: 'Chapters 4, 10, 38',
-    role: 'Son of Tandang Selo and father of Tano and Juli. After clearing forest land at the cost of his wife and eldest daughter Lucia’s lives, he faces friar rent increases from twenty to two hundred pesos, loses his appeal in court, and is held by bandits for a 500-peso ransom.',
+    tabLabel: 'Cabesang Tales',
+    name: 'Cabesang Tales & Tandang Selo',
+    archetype: 'Dispossessed Farmer of Tiani and His Mute Father',
+    chapters: 'Chapters 4–5, 8–11, 19, 23, 30–31, 38',
+    role: 'Son of old broom-maker Tandang Selo and father of Lucia, Tano, and Juli. After clearing forest land at the cost of his wife’s and Lucia’s lives, Tales faces friar rent hikes from 20–30 to 200 pesos, loses his savings in court, sees Tano conscripted, and is kidnapped for a 500-peso ransom. Returning to usurped fields, a mute father, an enslaved daughter, and a 3-day eviction notice, he trades María Clara’s locket for Simoun’s revolver in Chapter 10, kills three people, and leads mountain guerrillas—known by Chapter 31 as Matanglawin.',
     significance:
-      'Modeled on the evicted tenant farmers of Calamba. Tales exhausts every peaceful and legal remedy before taking Simoun’s revolver in Chapter 10 and leading guerrilla fighters in the mountains as Matanglawin.'
+      'Historical Context: Directly parallels the 1887–1891 Calamba Hacienda evictions addressed by Rizal at the end of Chapter 10. In Chapter 38, Tales’ conscripted son Tano (serving as “Carolino”) is caught in a mountain ambush where his squad shoots down his mute grandfather Tandang Selo.'
   },
   juli: {
+    tabLabel: 'Juli',
     name: 'Juli (Juliana)',
     archetype: 'Daughter of Cabesang Tales and Fiancée of Basilio',
-    chapters: 'Chapters 4, 8–9, 10, 30',
-    role: 'Sells her jewelry and enters domestic service under Hermana Penchang on Christmas Day to pay her father’s 500-peso ransom. Months later, when Basilio is the last student held in prison facing deportation, townspeople urge her to ask Father Camorra for help.',
+    chapters: 'Chapters 4, 8–12, 23, 30, 32',
+    role: 'Sells her combs and jewelry (keeping only María Clara’s locket given by Basilio) and enters domestic servitude under pious Hermana Penchang on Christmas Day to raise half her father’s 500-peso ransom. Ransomed later by Basilio, she faces fresh despair in Chapter 30 when Capitan Tiago dies and patronless Basilio remains the sole student jailed facing deportation.',
     significance:
-      'Shows how debt, unequal courts, and clerical abuse fall heaviest on peasant families without money or influence. Rather than submit to Father Camorra inside the Tiani convent, she leaps from the window to her death.'
+      'Literary & Historical Note: Exposes how colonial courts, debt bondage, and clerical predation crush peasant women without wealth or patrons. Pressured by town officials and Sister Bali to enter the Tiani convent to beg Padre Camorra for Basilio’s release, she leaps from the convent window to her death that night (Chapter 30).'
   },
   'padre-florentino': {
+    tabLabel: 'Father Florentino',
     name: 'Father Florentino',
     archetype: 'Retired Filipino Secular Priest',
     chapters: 'Chapters 2–3, 39',
-    role: 'Born to a wealthy Manila family and pressured by his mother to enter the priesthood, he retired to his estate on the Pacific coast shortly after the 1872 execution of Gomburza and raised his nephew Isagani.',
+    role: 'Born to a wealthy Manila family and pressured into ordination by his mother despite loving another woman, he retired to his solitary Pacific estate shortly after the 1872 execution of Gomburza, raising his nephew Isagani and sheltering Don Tiburcio de Espadaña.',
     significance:
-      'Honors the Filipino secular clergy and delivers the ethical argument of Chapter 39: that independence won through corruption and hatred risks turning today’s slaves into tomorrow’s tyrants.'
+      'Literary & Historical Note: Honors the dignity of the Filipino secular clergy (like Father Leoncio Lopez and Father Burgos) and voices Chapter 39’s ethical argument—affirming God’s justice and the right to liberty while warning that freedom pursued through corruption and hatred merely turns today’s slaves into tomorrow’s tyrants, before casting Simoun’s jewel-chest into the sea.'
   },
   'pasta-custodio': {
+    tabLabel: 'Pasta & Custodio',
     name: 'Señor Pasta & Don Custodio',
-    archetype: 'Manila Lawyer and Colonial Arbitrator',
-    chapters: 'Chapters 14–15, 20',
-    role: 'Señor Pasta is a wealthy Filipino lawyer who advises the friars and counsels Isagani to avoid public causes; Don Custodio is the Spanish official appointed to rule on the students’ Spanish-language academy.',
+    archetype: 'Cautious Filipino Jurist and Colonial Arbitrator',
+    chapters: 'Chapters 1, 14–15, 20, 22, 28, 35–36',
+    role: 'Señor Pasta is Manila’s wealthiest Filipino lawyer and legal adviser to the friars who urges Isagani to think only of personal career and comfort (Chapter 15). Don Custodio (“Buena Tinta”) is the pompous Spanish official appointed to rule on the Castilian Academy, copying the Augustinian-run School of Arts and Trades file in Chapter 20 to place the students’ school under friar control as mere fee-collectors (Chapter 22).',
     significance:
-      'Together they show why peaceful petitions fail: educated insiders like Pasta protect their own standing, while officials like Custodio place student initiatives back under clerical control.'
+      'Literary Interpretation: Together they demonstrate why lawful reform petitions fail from within—blocked both by cautious native insiders protecting their status and pseudo-liberal colonial bureaucrats preserving clerical dominance.'
+  },
+  'placido-fernandez': {
+    tabLabel: 'Placido & High Official',
+    name: 'Placido Penitente, Padre Fernández & The High Official',
+    archetype: 'Alienated Student and Rare Institutional Consciences',
+    chapters: 'Chapters 11–13, 19, 27–28, 31',
+    role: 'Placido Penitente walks out of Dominican Padre Millón’s abusive UST Physics class (Chapter 13) and witnesses Simoun’s Calle Iris bomb workshop (Chapter 19). By contrast, Dominican professor Padre Fernández treats Isagani as an equal in debate (Chapter 27), and the Spanish High Official defends innocent Basilio against the Captain-General before resigning in protest (Chapter 31).',
+    significance:
+      'Literary Interpretation: Proves Rizal did not caricature individuals simplistically by nationality—showing both how institutional humiliation radicalizes peaceful students like Placido and how even fair-minded Spaniards (Padre Fernández and the High Official) are overruled by the colonial system.'
   },
   'zayb-paulita': {
-    name: 'Ben Zayb & Paulita Gómez',
-    archetype: 'Manila Journalist and Colonial Society Bride',
-    chapters: 'Chapters 1, 16–18, 22, 34–36',
-    role: 'Ben Zayb (an anagram of Ybañez) writes flattering newspaper reports for colonial officials until the Captain-General censors his coverage of the wedding; Paulita Gómez breaks off her engagement to Isagani after his arrest to marry the wealthy Juanito Pelaez.',
+    tabLabel: 'Ben-Zayb & Paulita',
+    name: 'Ben-Zayb & Paulita Gómez',
+    archetype: 'Sycophantic Journalist and Colonial Society Bride',
+    chapters: 'Chapters 1–3, 12, 16–18, 22, 24, 28, 32, 34–36',
+    role: 'Ben-Zayb (anagram of Ybañez) flatters friars and officials in print, fails to find hidden mirrors at Mr. Leeds’ show (Chapter 18), and sees his grand wedding epic banned by the Captain-General’s censorship (Chapter 36). Paulita Gómez dismisses Isagani’s patriotic ideals as “Dreams!” (Chapter 24) and marries wealthy Spanish mestizo Juanito Pelaez after Isagani’s arrest (Chapters 32, 34).',
     significance:
-      'Depict a colonial press shaped by censorship and vanity alongside an elite social circle that values comfort and status over solidarity.'
+      'Literary Interpretation: Depict a censored colonial press blind to real suffering alongside a privileged social class that chooses wealth, carriages, and safety over solidarity.'
   }
 };
 
@@ -83,6 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSelectiveMomentReveals();
   initDeckExplorer();
   initLampExplorer();
+  initAuditExplorer();
   initCharacterModal();
   initPresentationControls();
 });
@@ -194,7 +212,7 @@ function initSelectiveMomentReveals() {
 }
 
 /* ==========================================================================
-   5. INTERACTIVE BAPOR TABO DECK EXPLORER (BEAT 03)
+   5. INTERACTIVE BAPOR TABO EXPLORER (CHAPTERS 1–3, ZERO LAYOUT SHIFT)
    ========================================================================== */
 function initDeckExplorer() {
   const container = document.getElementById('deck-explorer');
@@ -221,7 +239,7 @@ function initDeckExplorer() {
 }
 
 /* ==========================================================================
-   6. INTERACTIVE POMEGRANATE LAMP INSPECTOR (BEAT 11)
+   6. INTERACTIVE POMEGRANATE LAMP INSPECTOR (CHAPTERS 33–35, ZERO SHIFT)
    ========================================================================== */
 function initLampExplorer() {
   const container = document.getElementById('lamp-explorer');
@@ -248,7 +266,34 @@ function initLampExplorer() {
 }
 
 /* ==========================================================================
-   7. SCROLL PROGRESS & NAVIGATION HIGHLIGHT
+   7. INTERACTIVE 39-CHAPTER CHRONOLOGICAL REFERENCE MATRIX (BEAT 19)
+   ========================================================================== */
+function initAuditExplorer() {
+  const container = document.getElementById('audit-explorer');
+  if (!container) return;
+
+  const tabs = container.querySelectorAll('.audit-tab-btn');
+  const panels = container.querySelectorAll('.audit-panel');
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const target = tab.getAttribute('data-audit-target');
+
+      tabs.forEach((t) => {
+        const isActive = t === tab;
+        t.classList.toggle('active', isActive);
+        t.setAttribute('aria-selected', String(isActive));
+      });
+
+      panels.forEach((p) => {
+        p.classList.toggle('active', p.getAttribute('data-audit-panel') === target);
+      });
+    });
+  });
+}
+
+/* ==========================================================================
+   8. SCROLL PROGRESS & NAVIGATION HIGHLIGHT
    ========================================================================== */
 function initScrollProgressAndNav() {
   const progressBar = document.getElementById('scroll-progress-bar');
@@ -256,6 +301,10 @@ function initScrollProgressAndNav() {
   const stages = document.querySelectorAll('[data-stage-index]');
   const beats = Array.from(document.querySelectorAll('.presentation-beat'));
   const beatIndicator = document.getElementById('beat-indicator');
+
+  if (beatIndicator && beats.length > 0) {
+    beatIndicator.textContent = `01 / ${String(beats.length).padStart(2, '0')}`;
+  }
 
   window.addEventListener(
     'scroll',
@@ -296,7 +345,7 @@ function initScrollProgressAndNav() {
 }
 
 /* ==========================================================================
-   8. CHARACTER ARCHETYPES MODAL
+   9. CHARACTER ARCHETYPES MODAL
    ========================================================================== */
 function initCharacterModal() {
   const modal = document.getElementById('archetype-modal');
@@ -310,10 +359,7 @@ function initCharacterModal() {
   const keys = Object.keys(CHARACTER_ARCHETYPES);
 
   tabsContainer.innerHTML = keys
-    .map(
-      (k) =>
-        `<button class="char-tab-btn" data-key="${k}">${CHARACTER_ARCHETYPES[k].name.split(' (')[0]}</button>`
-    )
+    .map((k) => `<button class="char-tab-btn" data-key="${k}">${CHARACTER_ARCHETYPES[k].tabLabel}</button>`)
     .join('');
 
   bodyContainer.innerHTML = keys
@@ -324,15 +370,15 @@ function initCharacterModal() {
         <h4>${data.name}</h4>
         <span class="modal-archetype-pill">${data.archetype}</span>
         <div class="modal-detail-block">
-          <h5>Chapters</h5>
+          <h5>Chapters in the Novel</h5>
           <p>${data.chapters}</p>
         </div>
         <div class="modal-detail-block">
-          <h5>Role in the Novel</h5>
+          <h5>Chronological Role in the Story</h5>
           <p>${data.role}</p>
         </div>
         <div class="modal-detail-block">
-          <h5>Historical &amp; Literary Context</h5>
+          <h5>Significance &amp; Context</h5>
           <p>${data.significance}</p>
         </div>
       </div>
@@ -387,7 +433,7 @@ function initCharacterModal() {
 }
 
 /* ==========================================================================
-   9. PRESENTATION CONTROLS (STEPPER, PROJECTION SCALE & FULLSCREEN)
+   10. PRESENTATION CONTROLS (STEPPER, PROJECTION SCALE & FULLSCREEN)
    ========================================================================== */
 function initPresentationControls() {
   const stops = [

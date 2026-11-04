@@ -924,7 +924,7 @@ body {
 
 .deck-selector-bar {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   border-bottom: 1px solid var(--rule-dark);
 }
 
@@ -1487,6 +1487,290 @@ body {
   margin-bottom: 0;
 }
 
+/* M. Chronological Chapter Cards, Significance Callouts & 39-Chapter Audit Matrix */
+.epistemic-legend {
+  grid-column: 1 / 13;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  padding: 1.4rem 1.75rem;
+  background: rgba(210, 197, 170, 0.42);
+  border-top: 2px solid var(--ink-brown);
+  border-bottom: 1px solid var(--rule-paper);
+}
+
+.epistemic-item strong {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-brown);
+  margin-bottom: 0.35rem;
+}
+
+.epistemic-item p {
+  font-family: var(--font-sans);
+  font-size: 0.98rem;
+  line-height: 1.58;
+  color: var(--ink-body);
+}
+
+.chapter-sequence-grid {
+  grid-column: 1 / 13;
+  display: grid;
+  gap: 2.75rem;
+  padding: 0.5rem 0;
+}
+
+.chapter-sequence-grid.cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.chapter-sequence-grid.cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.chapter-card {
+  border-top: 2px solid var(--ink-brown);
+  padding-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.surface-obsidian .chapter-card {
+  border-top-color: var(--faded-sepia);
+}
+
+.chapter-badge {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--oxide-crimson);
+  margin-bottom: 0.45rem;
+}
+
+.surface-obsidian .chapter-badge {
+  color: var(--oxide-crimson-dark-bg);
+}
+
+.chapter-card h4 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.55rem, 2.2vw, 1.85rem);
+  font-weight: 600;
+  line-height: 1.22;
+  margin-bottom: 0.8rem;
+}
+
+.chapter-card p {
+  font-family: var(--font-sans);
+  font-size: 1.12rem;
+  line-height: 1.74;
+  margin-bottom: 1.05rem;
+  color: var(--ink-body);
+}
+
+.surface-obsidian .chapter-card p {
+  color: var(--bone-light);
+}
+
+.chapter-link-note {
+  margin-top: auto;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--rule-paper);
+  font-family: var(--font-sans);
+  font-size: 0.96rem !important;
+  line-height: 1.58 !important;
+  color: var(--ink-muted) !important;
+  margin-bottom: 0 !important;
+}
+
+.surface-obsidian .chapter-link-note {
+  border-top-color: var(--rule-dark);
+  color: var(--faded-sepia) !important;
+}
+
+.significance-callout {
+  grid-column: 1 / 13;
+  padding: 1.45rem 1.85rem;
+  background: rgba(210, 197, 170, 0.38);
+  border-left: 3px solid var(--ink-brown);
+}
+
+.surface-obsidian .significance-callout {
+  background: rgba(232, 221, 197, 0.045);
+  border-left-color: var(--faded-sepia);
+}
+
+.significance-callout.crimson-border {
+  border-left-color: var(--oxide-crimson);
+}
+
+.surface-obsidian .significance-callout.crimson-border {
+  border-left-color: var(--oxide-crimson-dark-bg);
+}
+
+.significance-kicker {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 0.45rem;
+}
+
+.surface-obsidian .significance-kicker {
+  color: var(--faded-sepia);
+}
+
+.significance-callout p {
+  font-family: var(--font-sans);
+  font-size: 1.08rem;
+  line-height: 1.72;
+  color: var(--ink-body);
+  margin-bottom: 0.65rem;
+}
+
+.significance-callout p:last-child {
+  margin-bottom: 0;
+}
+
+.surface-obsidian .significance-callout p {
+  color: var(--bone-light);
+}
+
+/* Zero-Layout-Shift 39-Chapter Chronological Audit Explorer */
+.audit-explorer-container {
+  grid-column: 1 / 13;
+  border: 1px solid var(--rule-paper);
+  background: rgba(255, 252, 244, 0.52);
+}
+
+.audit-tab-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid var(--rule-paper);
+  background: rgba(210, 197, 170, 0.35);
+}
+
+.audit-tab-btn {
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--rule-paper);
+  border-bottom: 3px solid transparent;
+  padding: 1.1rem 1.35rem;
+  text-align: left;
+  cursor: pointer;
+  color: var(--ink-muted);
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.audit-tab-btn:last-child {
+  border-right: none;
+}
+
+.audit-tab-btn:hover {
+  background: rgba(210, 197, 170, 0.45);
+  color: var(--ink-brown);
+}
+
+.audit-tab-btn.active {
+  background: rgba(255, 252, 244, 0.85);
+  color: var(--ink-brown);
+  border-bottom-color: var(--oxide-crimson);
+}
+
+.audit-tab-kicker {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+
+.audit-tab-title {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.audit-panels-stack {
+  display: grid;
+}
+
+.audit-panel {
+  grid-area: 1 / 1;
+  padding: 1.5rem 1.85rem 2rem;
+  align-self: start;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+  overflow-x: auto;
+}
+
+.audit-panel.active {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.chapter-audit-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: 0.98rem;
+}
+
+.chapter-audit-table th,
+.chapter-audit-table td {
+  padding: 0.8rem 1rem 0.8rem 0;
+  text-align: left;
+  border-bottom: 1px solid var(--rule-paper);
+  vertical-align: top;
+  line-height: 1.56;
+  color: var(--ink-body);
+}
+
+.chapter-audit-table th {
+  font-family: var(--font-serif);
+  font-size: 1.22rem;
+  font-weight: 600;
+  color: var(--ink-brown);
+  border-bottom: 2px solid var(--ink-brown);
+}
+
+.chapter-audit-table td:first-child {
+  font-weight: 600;
+  color: var(--oxide-crimson);
+  white-space: nowrap;
+  width: 7%;
+}
+
+.chapter-audit-table td:nth-child(2) {
+  font-weight: 600;
+  color: var(--ink-brown);
+  width: 20%;
+}
+
+.chapter-audit-table td:nth-child(3) {
+  width: 48%;
+}
+
+.chapter-audit-table td:nth-child(4) {
+  color: var(--ink-muted);
+  width: 25%;
+}
+
 /* ==========================================================================
    6. DRAMATIS PERSONAE MODAL
    ========================================================================== */
@@ -1660,7 +1944,11 @@ body {
   .three-col-sequence,
   .lamp-centerpiece-stage,
   .lamp-stage-tabs,
-  .character-plaque-row {
+  .character-plaque-row,
+  .epistemic-legend,
+  .chapter-sequence-grid.cols-2,
+  .chapter-sequence-grid.cols-3,
+  .audit-tab-bar {
     grid-template-columns: 1fr;
   }
 
