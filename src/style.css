@@ -990,6 +990,58 @@ body {
   margin-bottom: 0.35rem;
 }
 
+/* Epistemological Distinction Badges */
+.epistemic-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
+  margin-bottom: 0.45rem;
+  line-height: 1;
+}
+
+.epistemic-badge.textual {
+  background: rgba(33, 26, 22, 0.08);
+  color: var(--ink-brown);
+  border: 1px solid rgba(33, 26, 22, 0.25);
+}
+
+.surface-obsidian .epistemic-badge.textual {
+  background: rgba(232, 221, 197, 0.12);
+  color: var(--parchment);
+  border-color: rgba(232, 221, 197, 0.3);
+}
+
+.epistemic-badge.historical {
+  background: rgba(143, 40, 37, 0.1);
+  color: var(--oxide-crimson);
+  border: 1px solid rgba(143, 40, 37, 0.28);
+}
+
+.surface-obsidian .epistemic-badge.historical {
+  background: rgba(196, 69, 65, 0.18);
+  color: #F0A5A3;
+  border-color: rgba(196, 69, 65, 0.35);
+}
+
+.epistemic-badge.interpretation {
+  background: rgba(92, 79, 66, 0.12);
+  color: #4A3B32;
+  border: 1px solid rgba(92, 79, 66, 0.28);
+}
+
+.surface-obsidian .epistemic-badge.interpretation {
+  background: rgba(181, 165, 139, 0.15);
+  color: var(--old-paper);
+  border-color: rgba(181, 165, 139, 0.3);
+}
+
 .surface-obsidian .discussion-kicker {
   color: var(--oxide-crimson-dark-bg);
 }

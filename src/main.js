@@ -19,9 +19,9 @@ const CHARACTER_ARCHETYPES = {
   basilio: {
     tabLabel: 'Basilio',
     name: 'Basilio',
-    archetype: 'Graduating Medical Student',
+    archetype: 'Graduating Medical Student at UST',
     chapters: 'Chapters 2, 5–7, 9, 11, 23, 26, 29–35',
-    role: 'Orphaned son of Sisa who rose from Capitan Tiago’s unpaid servant and neglected Letrán pupil to Ateneo honor student and graduating medical clinician. In Chapter 7 he rejects Simoun’s conspiracy, trusting in medical science, peaceful work, and marriage to Juli after ransoming her from Hermana Penchang.',
+    role: 'Orphaned son of Sisa who rose from Capitan Tiago’s unpaid servant and neglected Letrán pupil to Ateneo secondary graduate and graduating medical clinician at the University of Santo Tomás (UST). In Chapter 7 he rejects Simoun’s conspiracy, trusting in medical science, peaceful work, and marriage to Juli after ransoming her from Hermana Penchang.',
     significance:
       'Literary & Historical Note: Tests whether quiet compliance can protect an honest Filipino under arbitrary colonial rule. Flagged on the government watchlist in Chapter 11, arrested at Makaraig’s house in Chapter 26, stripped of Tiago’s 25-peso bequest in Chapter 29, held over three months in Bilibid, and told by coachman Sinong of Juli’s death (Chapter 32), he finally joins Simoun in Chapter 33—yet his warning to Isagani in Chapter 35 prevents the blast.'
   },
@@ -424,10 +424,15 @@ function initCharacterModal() {
    10. PRESENTATION CONTROLS (STEPPER, PROJECTION SCALE & FULLSCREEN)
    ========================================================================== */
 function initPresentationControls() {
+  const beats = Array.from(document.querySelectorAll('.presentation-beat'));
+  const heroBook = document.getElementById('hero-book');
+  const closingBook = document.getElementById('closing-book');
+
+  // Ordered list of navigation stops
   const stops = [
-    document.getElementById('hero-book'),
-    ...Array.from(document.querySelectorAll('.presentation-beat')),
-    document.getElementById('closing-book')
+    heroBook,
+    ...beats,
+    closingBook
   ].filter(Boolean);
 
   const prevBtn = document.getElementById('beat-prev');
@@ -435,18 +440,49 @@ function initPresentationControls() {
   const projectionBtn = document.getElementById('btn-projection');
   const fullscreenBtn = document.getElementById('btn-fullscreen');
 
+  const NAV_OFFSET = 75;
+
+  function scrollToElement(target) {
+    if (!target) return;
+    if (target === heroBook) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    const targetTop = target.getBoundingClientRect().top + window.pageYOffset - NAV_OFFSET;
+    window.scrollTo({
+      top: Math.max(0, targetTop),
+      behavior: 'smooth'
+    });
+  }
+
   function stepNext() {
-    const next = stops.find((el) => el.getBoundingClientRect().top > 24);
-    if (next) {
-      next.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Current viewport position
+    const threshold = NAV_OFFSET + 20;
+    // Find the next stop whose top is below the header threshold
+    const nextStop = stops.find((el) => {
+      if (el === heroBook) return false;
+      const rect = el.getBoundingClientRect();
+      return rect.top > threshold;
+    });
+
+    if (nextStop) {
+      scrollToElement(nextStop);
     }
   }
 
   function stepPrev() {
-    const prevs = stops.filter((el) => el.getBoundingClientRect().top < -24);
-    const target = prevs[prevs.length - 1] || stops[0];
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const threshold = NAV_OFFSET - 20;
+    // Find elements strictly above our reading threshold
+    const prevStops = stops.filter((el) => {
+      const rect = el.getBoundingClientRect();
+      return rect.top < threshold;
+    });
+
+    if (prevStops.length > 0) {
+      const target = prevStops[prevStops.length - 1];
+      scrollToElement(target);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
 
