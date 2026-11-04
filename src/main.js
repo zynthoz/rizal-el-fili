@@ -1,7 +1,9 @@
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
+/* ==========================================================================
+   EL FILIBUSTERISMO — CLASSROOM PRESENTATION JAVASCRIPT
+   Full-Viewport Slide Controller, Keyboard Stepper, and Archetypes Modal
+   ========================================================================== */
 
 /* ==========================================================================
    1. CHARACTER PROFILES (VERIFIED AGAINST DERBYSHIRE'S 1912 TRANSLATION)
@@ -78,191 +80,320 @@ const CHARACTER_ARCHETYPES = {
     role: 'Placido Penitente walks out of Dominican Padre Millón’s abusive UST Physics class (Chapter 13) and witnesses Simoun’s Calle Iris bomb workshop (Chapter 19). By contrast, Dominican professor Padre Fernández treats Isagani as an equal in debate (Chapter 27), and the Spanish High Official defends innocent Basilio against the Captain-General before resigning in protest (Chapter 31).',
     significance:
       'Literary Interpretation: Proves Rizal did not caricature individuals simplistically by nationality—showing both how institutional humiliation radicalizes peaceful students like Placido and how even fair-minded Spaniards (Padre Fernández and the High Official) are overruled by the colonial system.'
-  },
-  'zayb-paulita': {
-    tabLabel: 'Ben-Zayb & Paulita',
-    name: 'Ben-Zayb & Paulita Gómez',
-    archetype: 'Sycophantic Journalist and Colonial Society Bride',
-    chapters: 'Chapters 1–3, 12, 16–18, 22, 24, 28, 32, 34–36',
-    role: 'Ben-Zayb (anagram of Ybañez) flatters friars and officials in print, fails to find hidden mirrors at Mr. Leeds’ show (Chapter 18), and sees his grand wedding epic banned by the Captain-General’s censorship (Chapter 36). Paulita Gómez dismisses Isagani’s patriotic ideals as “Dreams!” (Chapter 24) and marries wealthy Spanish mestizo Juanito Pelaez after Isagani’s arrest (Chapters 32, 34).',
-    significance:
-      'Literary Interpretation: Depict a censored colonial press blind to real suffering alongside a privileged social class that chooses wealth, carriages, and safety over solidarity.'
   }
 };
 
 /* ==========================================================================
-   2. INITIALIZATION
+   2. INITIALIZATION ON DOM READY
    ========================================================================== */
 document.addEventListener('DOMContentLoaded', () => {
-  initBookPortalTransition();
-  initBookOutroTransition();
-  initScrollProgressAndNav();
-  initSelectiveMomentReveals();
+  initSlidePresentation();
   initCharacterModal();
-  initPresentationControls();
 });
 
 /* ==========================================================================
-   3A. OPENING BOOK PORTAL (60FPS GPU-ACCELERATED)
+   3. SLIDE PRESENTATION CONTROLLER
    ========================================================================== */
-function initBookPortalTransition() {
-  const portalSection = document.getElementById('hero-book');
-  const pinViewport = document.getElementById('portal-pin-viewport');
-  const pageWipe = document.getElementById('portal-page-wipe');
+function initSlidePresentation() {
+  const viewport = document.getElementById('presentation-viewport');
+  const slides = Array.from(document.querySelectorAll('.presentation-slide'));
+  const slideIndicator = document.getElementById('slide-indicator');
+  const sectionSelect = document.getElementById('nav-section-jump');
+  const progressBar = document.getElementById('scroll-progress-bar');
+  const prevBtn = document.getElementById('beat-prev');
+  const nextBtn = document.getElementById('beat-next');
+  const projectionBtn = document.getElementById('btn-projection');
+  const fullscreenBtn = document.getElementById('btn-fullscreen');
+
+  if (!viewport || slides.length === 0) return;
+
+  let currentSlideIndex = 0;
+  const totalSlides = slides.length;
+
+  function updateStatus(index) {
+    currentSlideIndex = Math.max(0, Math.min(totalSlides - 1, index));
+    const activeSlide = slides[currentSlideIndex];
+    const unitTitle = activeSlide.getAttribute('data-unit-name') || 'Lesson';
+    const slideNumStr = String(currentSlideIndex + 1).padStart(2, '0');
+    const totalNumStr = String(totalSlides).padStart(2, '0');
+
+    if (slideIndicator) {
+      slideIndicator.textContent = `Slide ${slideNumStr} / ${totalNumStr} · ${unitTitle}`;
+    }
+
+    if (progressBar) {
+      const pct = totalSlides > 1 ? (currentSlideIndex / (totalSlides - 1)) * 100 : 0;
+      progressBar.style.width = `${pct}%`;
+    }
+
+    if (sectionSelect) {
+      // Find matching option for the active slide's section id
+      const targetUnit = activeSlide.getAttribute('data-section-id');
+      if (targetUnit && sectionSelect.value !== targetUnit) {
+        sectionSelect.value = targetUnit;
+      }
+    }
+  }
+
+  function goToSlide(index) {
+    const targetIdx = Math.max(0, Math.min(totalSlides - 1, index));
+    const targetSlide = slides[targetIdx];
+    if (targetSlide) {
+      targetSlide.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  // Observer to track which slide occupies the viewport
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const idx = slides.indexOf(entry.target);
+          if (idx !== -1) {
+            updateStatus(idx);
+          }
+        }
+      });
+    },
+    {
+      root: viewport,
+      threshold: 0.55
+    }
+  );
+
+  slides.forEach((slide) => observer.observe(slide));
+
+  // Stepper buttons
+  if (nextBtn) nextBtn.addEventListener('click', handleNextSlide);
+  if (prevBtn) prevBtn.addEventListener('click', () => goToSlide(currentSlideIndex - 1));
+
+  // 3D Book Portal Controller (Slide 01)
   const bookObject = document.getElementById('book-object');
   const frontCover = document.getElementById('book-front-cover');
   const insideContent = document.getElementById('inside-page-content');
+  const pageWipe = document.getElementById('portal-page-wipe');
+  const btnOpen = document.getElementById('btn-open-book');
 
-  if (!portalSection || !pinViewport || !bookObject || !frontCover || !pageWipe) return;
+  let isBookOpen = false;
+  let isBookAnimating = false;
 
-  gsap.set(frontCover, { rotateY: 0, force3D: true });
-  gsap.set(bookObject, { scale: 1, rotateX: 4, rotateY: -3, force3D: true });
-  gsap.set(insideContent, { opacity: 0.25, scale: 0.96 });
-  gsap.set(pageWipe, { opacity: 0 });
-
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: portalSection,
-      start: 'top top',
-      end: '+=165%',
-      pin: pinViewport,
-      scrub: 0.4,
-      anticipatePin: 1,
-      fastScrollEnd: true
-    }
-  });
-
-  tl.to(bookObject, { rotateX: 0, rotateY: 0, duration: 0.45, ease: 'power2.inOut' }, 0)
-    .to(frontCover, { rotateY: -168, duration: 0.48, ease: 'power2.inOut' }, 0.02)
-    .to(insideContent, { opacity: 1, scale: 1, duration: 0.35, ease: 'power2.out' }, 0.2);
-
-  tl.to(bookObject, { scale: 1.06, duration: 0.16, ease: 'none' }, 0.46);
-
-  tl.to(insideContent, { opacity: 0, scale: 1.08, duration: 0.24, ease: 'power2.in' }, 0.64)
-    .to(bookObject, { scale: 2.25, duration: 0.38, ease: 'power2.in' }, 0.62)
-    .to(pageWipe, { opacity: 1, duration: 0.26, ease: 'power2.inOut' }, 0.72);
-}
-
-/* ==========================================================================
-   3B. CLOSING BOOK PORTAL (60FPS GPU-ACCELERATED REVERSE ANIMATION)
-   ========================================================================== */
-function initBookOutroTransition() {
-  const outroSection = document.getElementById('closing-book');
-  const outroPinViewport = document.getElementById('outro-pin-viewport');
-  const outroWipe = document.getElementById('outro-page-wipe');
-  const outroBook = document.getElementById('outro-book-object');
-  const outroCover = document.getElementById('outro-front-cover');
-  const outroContent = document.getElementById('outro-inside-content');
-
-  if (!outroSection || !outroPinViewport || !outroBook || !outroCover || !outroWipe) return;
-
-  gsap.set(outroWipe, { opacity: 1 });
-  gsap.set(outroBook, { scale: 2.25, rotateX: 0, rotateY: 0, force3D: true });
-  gsap.set(outroCover, { rotateY: -168, force3D: true });
-  gsap.set(outroContent, { opacity: 0, scale: 1.08 });
-
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: outroSection,
-      start: 'top top',
-      end: '+=155%',
-      pin: outroPinViewport,
-      scrub: 0.35,
-      anticipatePin: 1,
-      fastScrollEnd: true
-    }
-  });
-
-  tl.to(outroWipe, { opacity: 0, duration: 0.24, ease: 'power2.inOut' }, 0)
-    .to(outroBook, { scale: 1.04, duration: 0.38, ease: 'power2.out' }, 0)
-    .to(outroContent, { opacity: 1, scale: 1, duration: 0.25, ease: 'power2.out' }, 0.15);
-
-  tl.to(outroBook, { scale: 1, duration: 0.14, ease: 'none' }, 0.38);
-
-  tl.to(outroContent, { opacity: 0.25, scale: 0.96, duration: 0.28, ease: 'power2.in' }, 0.52)
-    .to(outroCover, { rotateY: 0, duration: 0.45, ease: 'power2.inOut' }, 0.52)
-    .to(outroBook, { rotateX: 4, rotateY: -3, duration: 0.44, ease: 'power2.inOut' }, 0.54);
-}
-
-/* ==========================================================================
-   4. RESTRAINED REVEALS FOR PLATES & KEY MOMENTS
-   ========================================================================== */
-function initSelectiveMomentReveals() {
-  const moments = document.querySelectorAll('.reveal-moment');
-  moments.forEach((el) => {
-    gsap.fromTo(
-      el,
-      { y: 16, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.65,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 88%',
-          toggleActions: 'play none none none'
-        }
-      }
-    );
-  });
-}
-
-
-/* ==========================================================================
-   8. SCROLL PROGRESS & NAVIGATION HIGHLIGHT
-   ========================================================================== */
-function initScrollProgressAndNav() {
-  const progressBar = document.getElementById('scroll-progress-bar');
-  const navLinks = document.querySelectorAll('.chapter-nav .nav-link');
-  const stages = document.querySelectorAll('[data-stage-index]');
-  const beats = Array.from(document.querySelectorAll('.presentation-beat'));
-  const beatIndicator = document.getElementById('beat-indicator');
-
-  if (beatIndicator && beats.length > 0) {
-    beatIndicator.textContent = `01 / ${String(beats.length).padStart(2, '0')}`;
+  if (frontCover && bookObject) {
+    gsap.set(frontCover, { rotateY: 0, force3D: true, transformOrigin: 'left center' });
+    gsap.set(bookObject, { scale: 1, rotateX: 4, rotateY: -3, force3D: true });
+    if (insideContent) gsap.set(insideContent, { opacity: 0.25, scale: 0.96 });
+    if (pageWipe) gsap.set(pageWipe, { opacity: 0 });
   }
 
-  window.addEventListener(
+  function animateOpenBook(onComplete) {
+    if (isBookAnimating || !frontCover || !bookObject) return;
+    isBookAnimating = true;
+    isBookOpen = true;
+
+    gsap.timeline({
+      onComplete: () => {
+        isBookAnimating = false;
+        if (onComplete) onComplete();
+      }
+    })
+    .to(bookObject, { rotateX: 0, rotateY: 0, scale: 1.05, duration: 0.5, ease: 'power2.inOut' }, 0)
+    .to(frontCover, { rotateY: -168, duration: 0.75, ease: 'power2.inOut' }, 0.05)
+    .to(insideContent, { opacity: 1, scale: 1, duration: 0.5, ease: 'power2.out' }, 0.2);
+  }
+
+  function animateCloseBook(onComplete) {
+    if (isBookAnimating || !frontCover || !bookObject) return;
+    isBookAnimating = true;
+    isBookOpen = false;
+
+    gsap.timeline({
+      onComplete: () => {
+        isBookAnimating = false;
+        if (onComplete) onComplete();
+      }
+    })
+    .to(frontCover, { rotateY: 0, duration: 0.65, ease: 'power2.inOut' }, 0)
+    .to(bookObject, { rotateX: 4, rotateY: -3, scale: 1, duration: 0.55, ease: 'power2.inOut' }, 0.05)
+    .to(insideContent, { opacity: 0.25, scale: 0.96, duration: 0.35, ease: 'power2.in' }, 0.05);
+  }
+
+  function toggleBook() {
+    if (isBookOpen) {
+      animateCloseBook();
+    } else {
+      animateOpenBook();
+    }
+  }
+
+  if (bookObject) {
+    bookObject.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleBook();
+    });
+
+    bookObject.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleBook();
+      }
+    });
+  }
+
+  if (btnOpen) {
+    btnOpen.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!isBookOpen) {
+        animateOpenBook(() => {
+          setTimeout(() => {
+            goToSlide(1);
+          }, 300);
+        });
+      } else {
+        goToSlide(1);
+      }
+    });
+  }
+
+  function handleNextSlide() {
+    if (currentSlideIndex === 0 && !isBookOpen) {
+      animateOpenBook(() => {
+        goToSlide(1);
+      });
+    } else {
+      goToSlide(currentSlideIndex + 1);
+    }
+  }
+
+  // Real-time scroll scrub between Slide 0 (Cover) and Slide 1
+  viewport.addEventListener(
     'scroll',
     () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const pct = docHeight > 0 ? Math.min(100, Math.max(0, (scrollTop / docHeight) * 100)) : 0;
-      if (progressBar) {
-        progressBar.style.width = `${pct}%`;
-      }
+      if (slides.length < 2 || !frontCover || !bookObject || isBookAnimating) return;
+      const slide1 = slides[1];
+      const threshold = slide1.offsetTop || viewport.clientHeight;
+      const scrollTop = viewport.scrollTop;
 
-      let activeIdx = 0;
-      stages.forEach((sec) => {
-        const idx = Number(sec.getAttribute('data-stage-index'));
-        const rect = sec.getBoundingClientRect();
-        if (rect.top <= window.innerHeight * 0.45) {
-          activeIdx = idx;
-        }
-      });
+      if (scrollTop <= threshold) {
+        const progress = Math.min(1, Math.max(0, scrollTop / threshold));
+        const rotY = -168 * Math.min(1, progress * 1.35);
+        const scale = 1 + 0.08 * progress;
+        const opacity = 0.25 + 0.75 * Math.min(1, progress * 1.5);
+        const rotX = 4 * (1 - progress);
+        const bookRotY = -3 * (1 - progress);
 
-      navLinks.forEach((link, idx) => {
-        link.classList.toggle('active', idx === activeIdx);
-      });
+        gsap.set(frontCover, { rotateY: rotY });
+        gsap.set(bookObject, { rotateX: rotX, rotateY: bookRotY, scale: scale });
+        if (insideContent) gsap.set(insideContent, { opacity: opacity, scale: 0.96 + 0.04 * progress });
+        if (pageWipe) gsap.set(pageWipe, { opacity: Math.max(0, (progress - 0.75) / 0.25) });
 
-      if (beatIndicator && beats.length > 0) {
-        let currentBeatNum = '01';
-        beats.forEach((beat) => {
-          const rect = beat.getBoundingClientRect();
-          if (rect.top <= window.innerHeight * 0.48) {
-            currentBeatNum = beat.getAttribute('data-beat') || '01';
-          }
-        });
-        beatIndicator.textContent = `${currentBeatNum} / ${String(beats.length).padStart(2, '0')}`;
+        isBookOpen = progress > 0.45;
       }
     },
     { passive: true }
   );
+
+  // Section Jump Dropdown
+  if (sectionSelect) {
+    sectionSelect.addEventListener('change', (e) => {
+      const targetId = e.target.value;
+      const targetSlide = document.getElementById(targetId);
+      if (targetSlide) {
+        targetSlide.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
+
+  // Projection font-scaling
+  if (projectionBtn) {
+    projectionBtn.addEventListener('click', () => {
+      const isLarge = document.documentElement.classList.toggle('projection-large');
+      projectionBtn.classList.toggle('active', isLarge);
+    });
+  }
+
+  // Fullscreen toggle
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen?.().catch(() => {});
+      } else {
+        document.exitFullscreen?.().catch(() => {});
+      }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+      fullscreenBtn.classList.toggle('active', Boolean(document.fullscreenElement));
+    });
+  }
+
+  // Comprehensive keyboard navigation
+  window.addEventListener('keydown', (e) => {
+    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) return;
+    const modalOpen = document.getElementById('archetype-modal')?.classList.contains('open');
+    if (modalOpen) return;
+
+    switch (e.key) {
+      case 'ArrowDown':
+      case 'ArrowRight':
+      case 'PageDown':
+      case ' ': // Spacebar
+        e.preventDefault();
+        handleNextSlide();
+        break;
+
+      case 'ArrowUp':
+      case 'ArrowLeft':
+      case 'PageUp':
+        e.preventDefault();
+        goToSlide(currentSlideIndex - 1);
+        break;
+
+      case 'Home':
+        e.preventDefault();
+        goToSlide(0);
+        break;
+
+      case 'End':
+        e.preventDefault();
+        goToSlide(totalSlides - 1);
+        break;
+
+      default:
+        break;
+    }
+  });
+
+  // Touch swipe support for tablet presentation screens
+  let touchStartY = 0;
+  viewport.addEventListener(
+    'touchstart',
+    (e) => {
+      touchStartY = e.changedTouches[0].clientY;
+    },
+    { passive: true }
+  );
+
+  viewport.addEventListener(
+    'touchend',
+    (e) => {
+      const touchEndY = e.changedTouches[0].clientY;
+      const diffY = touchStartY - touchEndY;
+      if (Math.abs(diffY) > 50) {
+        if (diffY > 0) {
+          handleNextSlide();
+        } else {
+          goToSlide(currentSlideIndex - 1);
+        }
+      }
+    },
+    { passive: true }
+  );
+
+  // Initialize status on start
+  updateStatus(0);
 }
 
 /* ==========================================================================
-   9. CHARACTER ARCHETYPES MODAL
+   4. CHARACTER ARCHETYPES MODAL
    ========================================================================== */
 function initCharacterModal() {
   const modal = document.getElementById('archetype-modal');
@@ -346,76 +477,5 @@ function initCharacterModal() {
 
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeModal();
-  });
-}
-
-/* ==========================================================================
-   10. PRESENTATION CONTROLS (STEPPER, PROJECTION SCALE & FULLSCREEN)
-   ========================================================================== */
-function initPresentationControls() {
-  const stops = [
-    document.getElementById('hero-book'),
-    ...Array.from(document.querySelectorAll('.presentation-beat')),
-    document.getElementById('closing-book')
-  ].filter(Boolean);
-
-  const prevBtn = document.getElementById('beat-prev');
-  const nextBtn = document.getElementById('beat-next');
-  const projectionBtn = document.getElementById('btn-projection');
-  const fullscreenBtn = document.getElementById('btn-fullscreen');
-
-  function stepNext() {
-    const next = stops.find((el) => el.getBoundingClientRect().top > 95);
-    if (next) {
-      next.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
-
-  function stepPrev() {
-    const prevs = stops.filter((el) => el.getBoundingClientRect().top < -60);
-    const target = prevs[prevs.length - 1] || stops[0];
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
-
-  if (nextBtn) nextBtn.addEventListener('click', stepNext);
-  if (prevBtn) prevBtn.addEventListener('click', stepPrev);
-
-  if (projectionBtn) {
-    projectionBtn.addEventListener('click', () => {
-      const isLarge = document.documentElement.classList.toggle('projection-large');
-      projectionBtn.classList.toggle('active', isLarge);
-      setTimeout(() => ScrollTrigger.refresh(), 100);
-    });
-  }
-
-  if (fullscreenBtn) {
-    fullscreenBtn.addEventListener('click', () => {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen?.();
-      } else {
-        document.exitFullscreen?.();
-      }
-    });
-
-    document.addEventListener('fullscreenchange', () => {
-      fullscreenBtn.classList.toggle('active', Boolean(document.fullscreenElement));
-      setTimeout(() => ScrollTrigger.refresh(), 150);
-    });
-  }
-
-  window.addEventListener('keydown', (e) => {
-    if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) return;
-    const modalOpen = document.getElementById('archetype-modal')?.classList.contains('open');
-    if (modalOpen) return;
-
-    if (e.key === 'ArrowRight') {
-      e.preventDefault();
-      stepNext();
-    } else if (e.key === 'ArrowLeft') {
-      e.preventDefault();
-      stepPrev();
-    }
   });
 }
