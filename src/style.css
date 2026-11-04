@@ -413,7 +413,7 @@ body {
 .exhibit-section {
   position: relative;
   width: 100%;
-  padding: 8.5rem 2.5rem 10rem;
+  padding: 2.75rem 2.5rem 3.25rem;
 }
 
 .surface-paper {
@@ -442,18 +442,18 @@ body {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   column-gap: 3.25rem;
-  row-gap: 7.5rem;
+  row-gap: 2.5rem;
 }
 
 /* Dedicated Open Stage for Each Act / Part Introduction */
 .section-intro-stage {
   grid-column: 1 / 13;
-  min-height: 68vh;
+  min-height: 42vh;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   column-gap: 3.25rem;
   align-content: center;
-  padding: 3.5rem 0 4.5rem;
+  padding: 2rem 0 2.25rem;
 }
 
 .col-margin {
@@ -562,14 +562,14 @@ body {
 
 /* Literary Quotations (Upright Reading Serif — High Projection Legibility) */
 .literary-quote {
-  margin: 2.5rem 0;
+  margin: 1.25rem 0;
   padding: 0.4rem 0 0.4rem 1.85rem;
   border-left: 3px solid var(--oxide-crimson);
   font-family: var(--font-serif);
   font-weight: 500;
   font-style: normal;
-  font-size: clamp(1.5rem, 2.2vw, 1.85rem);
-  line-height: 1.52;
+  font-size: clamp(1.45rem, 2.1vw, 1.8rem);
+  line-height: 1.5;
   color: var(--ink-brown);
 }
 
@@ -597,13 +597,13 @@ body {
 /* Modern Plain-English Student Explanations */
 .quote-explanation {
   display: block;
-  margin-top: 0.95rem;
-  padding: 0.8rem 1.15rem;
+  margin-top: 0.85rem;
+  padding: 0.75rem 1.1rem;
   background: rgba(210, 197, 170, 0.4);
   border-left: 2px solid var(--faded-sepia);
   font-family: var(--font-sans);
-  font-size: 1.04rem;
-  line-height: 1.62;
+  font-size: 1.02rem;
+  line-height: 1.58;
   color: var(--ink-body);
 }
 
@@ -636,12 +636,12 @@ body {
   grid-column: 1 / 13;
   min-height: calc(96vh - var(--nav-height));
   scroll-margin-top: calc(var(--nav-height) + 1rem);
-  padding: 5.25rem 0 6.75rem;
+  padding: 2.25rem 0 2.5rem;
   border-top: 1px solid var(--rule-paper);
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   column-gap: 3.25rem;
-  row-gap: 3rem;
+  row-gap: 1.5rem;
   align-content: center;
 }
 
@@ -792,8 +792,8 @@ body {
 .timeline-item {
   display: grid;
   grid-template-columns: 240px 1fr;
-  gap: 3.5rem;
-  padding: 3.5rem 0;
+  gap: 2rem;
+  padding: 1.75rem 0;
   border-bottom: 1px solid var(--rule-paper);
 }
 
@@ -949,124 +949,98 @@ body {
   white-space: nowrap;
 }
 
-.deck-explorer-container {
+/* Open Bapor Tabo Decks (Chapters 1–3, Zero Hidden Content, Zero Clicking) */
+.deck-open-grid {
   grid-column: 1 / 13;
-  border: 1px solid var(--rule-dark);
-  background: rgba(24, 18, 15, 0.55);
-}
-
-.deck-selector-bar {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.deck-open-card {
+  border: 1px solid var(--rule-dark);
+  background: rgba(24, 18, 15, 0.68);
+  padding: 1.5rem 1.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.deck-open-card-header {
   border-bottom: 1px solid var(--rule-dark);
+  padding-bottom: 0.65rem;
 }
 
-.deck-tab-btn {
-  background: transparent;
-  border: none;
-  border-right: 1px solid var(--rule-dark);
-  border-bottom: 3px solid transparent;
-  padding: 1.15rem 1.35rem;
-  text-align: left;
-  cursor: pointer;
-  color: var(--faded-sepia);
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-}
-
-.deck-tab-btn:last-child {
-  border-right: none;
-}
-
-.deck-tab-btn:hover {
-  background: rgba(232, 221, 197, 0.05);
-  color: var(--bone-light);
-}
-
-.deck-tab-btn.active {
-  background: rgba(232, 221, 197, 0.08);
-  color: var(--bone-light);
-  border-bottom-color: var(--oxide-crimson-dark-bg);
-}
-
-.deck-tab-kicker {
+.deck-open-kicker {
   display: block;
   font-family: var(--font-sans);
   font-size: 0.76rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  margin-bottom: 0.25rem;
   color: var(--faded-sepia);
+  margin-bottom: 0.25rem;
 }
 
-.deck-tab-title {
+.deck-open-title {
   display: block;
   font-family: var(--font-serif);
   font-size: 1.45rem;
   font-weight: 600;
-}
-
-/* Zero-Layout-Shift Grid Stack: All 3 deck panels share cell 1/1 so container
-   permanently preserves the height of the tallest panel without jumping. */
-.deck-panels-stack {
-  display: grid;
-}
-
-.deck-panel {
-  grid-area: 1 / 1;
-  display: grid;
-  grid-template-columns: 5fr 7fr;
-  gap: 3.25rem;
-  padding: 2.5rem 2.5rem;
-  align-content: start;
-  visibility: hidden;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.22s ease;
-}
-
-.deck-panel.active {
-  visibility: visible;
-  opacity: 1;
-  pointer-events: auto;
+  color: var(--bone-light);
+  line-height: 1.22;
 }
 
 .deck-meta-list {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  border-right: 1px solid var(--rule-dark);
-  padding-right: 2rem;
+  gap: 0.85rem;
+  background: rgba(0, 0, 0, 0.22);
+  padding: 0.95rem 1.15rem;
+  border-left: 2px solid var(--faded-sepia);
 }
 
 .deck-meta-block h5 {
   font-family: var(--font-sans);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--faded-sepia);
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.25rem;
 }
 
 .deck-meta-block p {
-  font-size: 1.08rem;
-  line-height: 1.65;
+  font-size: 0.98rem;
+  line-height: 1.55;
   color: var(--bone-light);
+  margin-bottom: 0;
+}
+
+.deck-story-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
 }
 
 .deck-story-col h4 {
   font-family: var(--font-serif);
-  font-size: 1.9rem;
+  font-size: 1.45rem;
   font-weight: 600;
-  margin-bottom: 0.85rem;
+  color: var(--bone-light);
+  line-height: 1.25;
+  margin-bottom: 0.25rem;
 }
 
 .deck-story-col p {
-  font-size: 1.15rem;
-  line-height: 1.75;
-  margin-bottom: 1.25rem;
+  font-size: 1.05rem;
+  line-height: 1.65;
   color: var(--bone-light);
+  margin-bottom: 0.65rem;
+}
+
+.deck-story-col p:last-child {
+  margin-bottom: 0;
 }
 
 /* D. Cabesang Tales Escalation Ladder */
@@ -1214,130 +1188,95 @@ body {
   line-height: 1.7;
 }
 
-/* G. Dedicated Interactive Centerpiece: Simoun's Pomegranate Lamp */
-.lamp-centerpiece-stage {
+/* G. Open Centerpiece: Simoun's Crystal Pomegranate Lamp (Chapters 33–35) */
+.lamp-open-container {
   grid-column: 1 / 13;
   display: grid;
-  grid-template-columns: 5.2fr 6.8fr;
-  gap: 3rem;
+  grid-template-columns: 4.8fr 7.2fr;
+  gap: 2.25rem;
   border: 1px solid var(--rule-dark);
   background: rgba(20, 15, 12, 0.65);
-  padding: 2.25rem;
-  align-items: center;
+  padding: 1.85rem;
+  align-items: start;
 }
 
 .lamp-illustration-showcase {
   background: #F4EFE4;
-  padding: 2rem 1.5rem;
+  padding: 1.5rem 1.25rem;
   border: 1px solid var(--rule-paper);
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: sticky;
+  top: calc(var(--nav-height) + 1.5rem);
 }
 
 .lamp-illustration-showcase img {
   width: auto;
   max-width: 100%;
-  max-height: 490px;
+  max-height: 440px;
   object-fit: contain;
   display: block;
 }
 
 .lamp-showcase-caption {
-  margin-top: 1rem;
-  padding-top: 0.75rem;
+  margin-top: 0.85rem;
+  padding-top: 0.65rem;
   border-top: 1px solid var(--rule-paper);
   width: 100%;
   text-align: center;
   font-family: var(--font-serif);
-  font-size: 1.15rem;
+  font-size: 1.08rem;
   color: var(--ink-brown);
+  line-height: 1.4;
 }
 
-.lamp-inspector-panel {
+.lamp-open-stages-stack {
   display: flex;
   flex-direction: column;
+  gap: 1.15rem;
 }
 
-.lamp-stage-tabs {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.65rem;
-  margin-bottom: 1.75rem;
-}
-
-.lamp-tab-btn {
-  background: rgba(232, 221, 197, 0.04);
+.lamp-open-stage-card {
   border: 1px solid var(--rule-dark);
-  padding: 0.85rem 1rem;
-  text-align: left;
-  cursor: pointer;
-  color: var(--faded-sepia);
-  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  background: rgba(30, 24, 20, 0.7);
+  padding: 1.35rem 1.6rem;
+  border-left: 3px solid var(--faded-sepia);
 }
 
-.lamp-tab-btn:hover {
-  background: rgba(232, 221, 197, 0.09);
-  color: var(--bone-light);
+.lamp-open-stage-card.danger-stage {
+  border-left-color: var(--oxide-crimson-dark-bg);
 }
 
-.lamp-tab-btn.active {
-  background: rgba(143, 40, 37, 0.22);
-  border-color: var(--oxide-crimson-dark-bg);
-  color: var(--bone-light);
-}
-
-.lamp-tab-num {
+.lamp-stage-kicker {
   display: block;
   font-family: var(--font-sans);
-  font-size: 0.74rem;
+  font-size: 0.76rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  margin-bottom: 0.2rem;
+  color: var(--faded-sepia);
+  margin-bottom: 0.35rem;
 }
 
-.lamp-tab-label {
-  display: block;
+.lamp-open-stage-card h4 {
   font-family: var(--font-serif);
-  font-size: 1.3rem;
+  font-size: 1.55rem;
   font-weight: 600;
-}
-
-/* Zero-Layout-Shift Grid Stack: All 4 lamp stages share cell 1/1 so clicking
-   tabs never changes container height or shifts the page below. */
-.lamp-panels-stack {
-  display: grid;
-}
-
-.lamp-stage-content {
-  grid-area: 1 / 1;
-  align-self: start;
-  visibility: hidden;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.22s ease;
-}
-
-.lamp-stage-content.active {
-  visibility: visible;
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.lamp-stage-content h4 {
-  font-family: var(--font-serif);
-  font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: 0.85rem;
   color: var(--bone-light);
+  line-height: 1.25;
+  margin-bottom: 0.65rem;
 }
 
-.lamp-stage-content p {
-  font-size: 1.16rem;
-  line-height: 1.76;
-  margin-bottom: 1.2rem;
+.lamp-open-stage-card p {
+  font-size: 1.05rem;
+  line-height: 1.65;
   color: var(--bone-light);
+  margin-bottom: 0.65rem;
+}
+
+.lamp-open-stage-card p:last-child {
+  margin-bottom: 0;
 }
 
 /* H. Quiet Centered Narrative Passages (Juli, Carolino, Chapter 39) */
@@ -1488,7 +1427,7 @@ body {
 .concluding-interpretation-box {
   grid-column: 2 / 12;
   margin-top: 1rem;
-  padding: 2.75rem 3rem;
+  padding: 1.75rem 2rem;
   background: rgba(210, 197, 170, 0.45);
   border-top: 3px solid var(--oxide-crimson);
   border-bottom: 1px solid var(--rule-paper);
@@ -1779,8 +1718,8 @@ body {
 /* O. Dedicated Classroom Sources & Annotated Bibliography */
 .sources-reference-box {
   grid-column: 1 / 13;
-  margin-top: 2rem;
-  padding: 2.25rem 2.5rem;
+  margin-top: 1.5rem;
+  padding: 1.5rem 1.85rem;
   background: rgba(210, 197, 170, 0.42);
   border-top: 2px solid var(--ink-brown);
   border-bottom: 1px solid var(--rule-paper);
@@ -1830,83 +1769,48 @@ body {
   color: var(--ink-muted);
 }
 
-/* Zero-Layout-Shift 39-Chapter Chronological Audit Explorer */
-.audit-explorer-container {
+/* Open 39-Chapter Chronological Reference Matrix (Beat 19) */
+.audit-open-matrix {
   grid-column: 1 / 13;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.audit-act-card {
   border: 1px solid var(--rule-paper);
-  background: rgba(255, 252, 244, 0.52);
+  background: rgba(255, 252, 244, 0.65);
+  padding: 1.35rem 1.6rem 1.6rem;
 }
 
-.audit-tab-bar {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+.audit-act-header {
+  margin-bottom: 0.95rem;
+  padding-bottom: 0.55rem;
   border-bottom: 1px solid var(--rule-paper);
-  background: rgba(210, 197, 170, 0.35);
 }
 
-.audit-tab-btn {
-  background: transparent;
-  border: none;
-  border-right: 1px solid var(--rule-paper);
-  border-bottom: 3px solid transparent;
-  padding: 1.1rem 1.35rem;
-  text-align: left;
-  cursor: pointer;
-  color: var(--ink-muted);
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-}
-
-.audit-tab-btn:last-child {
-  border-right: none;
-}
-
-.audit-tab-btn:hover {
-  background: rgba(210, 197, 170, 0.45);
-  color: var(--ink-brown);
-}
-
-.audit-tab-btn.active {
-  background: rgba(255, 252, 244, 0.85);
-  color: var(--ink-brown);
-  border-bottom-color: var(--oxide-crimson);
-}
-
-.audit-tab-kicker {
+.audit-act-kicker {
   display: block;
   font-family: var(--font-sans);
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  color: var(--ink-muted);
   margin-bottom: 0.2rem;
 }
 
-.audit-tab-title {
+.audit-act-title {
   display: block;
   font-family: var(--font-serif);
-  font-size: 1.4rem;
+  font-size: 1.55rem;
   font-weight: 600;
+  color: var(--ink-brown);
+  line-height: 1.25;
 }
 
-.audit-panels-stack {
-  display: grid;
-}
-
-.audit-panel {
-  grid-area: 1 / 1;
-  padding: 1.5rem 1.85rem 2rem;
-  align-self: start;
-  visibility: hidden;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.22s ease;
+.audit-table-wrapper {
   overflow-x: auto;
-}
-
-.audit-panel.active {
-  visibility: visible;
-  opacity: 1;
-  pointer-events: auto;
 }
 
 .chapter-audit-table {
@@ -2097,17 +2001,17 @@ body {
   }
 
   .exhibit-section {
-    padding: 5.5rem 1.5rem 6.5rem;
+    padding: 2rem 1.25rem 2.25rem;
   }
 
   .section-intro-stage {
     min-height: auto;
-    padding: 2rem 0 3rem;
+    padding: 1.5rem 0 2rem;
   }
 
   .presentation-beat {
     min-height: auto;
-    padding: 3.5rem 0 4.5rem;
+    padding: 1.75rem 0 2rem;
   }
 
   .col-margin,
@@ -2123,12 +2027,10 @@ body {
 
   .timeline-item,
   .editorial-ledger,
-  .deck-selector-bar,
-  .deck-panel,
+  .deck-open-grid,
   .two-col-spread,
   .three-col-sequence,
-  .lamp-centerpiece-stage,
-  .lamp-stage-tabs,
+  .lamp-open-container,
   .character-plaque-row,
   .epistemic-legend,
   .chapter-sequence-grid.cols-2,
@@ -2136,9 +2038,12 @@ body {
   .scene-flow-grid.cols-4,
   .scene-flow-grid.cols-3,
   .scene-flow-grid.cols-2,
-  .sources-citation-list,
-  .audit-tab-bar {
+  .sources-citation-list {
     grid-template-columns: 1fr;
+  }
+
+  .lamp-illustration-showcase {
+    position: static;
   }
 
   .deck-meta-list {
