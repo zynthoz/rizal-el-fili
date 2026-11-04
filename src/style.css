@@ -413,7 +413,7 @@ body {
 .exhibit-section {
   position: relative;
   width: 100%;
-  padding: 8.5rem 2.5rem 10rem;
+  padding: 2rem 2.5rem 2.5rem;
 }
 
 .surface-paper {
@@ -437,23 +437,23 @@ body {
 }
 
 .editorial-grid {
-  max-width: 1240px;
+  max-width: 1280px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  column-gap: 3.25rem;
-  row-gap: 7.5rem;
+  column-gap: 3rem;
+  row-gap: 1.5rem;
 }
 
 /* Dedicated Open Stage for Each Act / Part Introduction */
 .section-intro-stage {
   grid-column: 1 / 13;
-  min-height: 68vh;
+  min-height: 40vh;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   column-gap: 3.25rem;
   align-content: center;
-  padding: 3.5rem 0 4.5rem;
+  padding: 2rem 0 2.5rem;
 }
 
 .col-margin {
@@ -628,21 +628,25 @@ body {
 }
 
 /* ==========================================================================
-   4. NUMBERED PRESENTATION BEAT SPINE (01 -> 16)
-   Each beat occupies its own spacious viewport stage so the next section never
-   crowds into view while reading.
+   4. NUMBERED PRESENTATION BEAT SPINE (01 -> 38)
+   Each beat occupies its own full-viewport presentation slide so the next
+   section never crowds into view while reading.
    ========================================================================== */
 .presentation-beat {
   grid-column: 1 / 13;
-  min-height: calc(96vh - var(--nav-height));
-  scroll-margin-top: calc(var(--nav-height) + 1rem);
-  padding: 5.25rem 0 6.75rem;
+  min-height: calc(100vh - var(--nav-height) - 2rem);
+  min-height: calc(100svh - var(--nav-height) - 2rem);
+  scroll-margin-top: calc(var(--nav-height) + 0.5rem);
+  padding: 2.25rem 0 2.5rem;
   border-top: 1px solid var(--rule-paper);
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  column-gap: 3.25rem;
-  row-gap: 3rem;
-  align-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.presentation-beat:first-child {
+  border-top: none;
 }
 
 .surface-obsidian .presentation-beat {
@@ -650,15 +654,15 @@ body {
 }
 
 .beat-rail-header {
-  grid-column: 1 / 13;
+  width: 100%;
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 1.25rem;
-  padding-bottom: 1.25rem;
-  margin-bottom: 0.5rem;
+  gap: 1rem;
+  padding-bottom: 0.85rem;
   border-bottom: 1px solid var(--rule-paper);
+  flex-shrink: 0;
 }
 
 .surface-obsidian .beat-rail-header {
@@ -673,19 +677,19 @@ body {
 
 .beat-index-num {
   font-family: var(--font-serif);
-  font-size: 1.95rem;
+  font-size: 1.85rem;
   font-weight: 700;
   line-height: 1;
-  color: var(--ink-muted);
+  color: var(--oxide-crimson);
 }
 
 .surface-obsidian .beat-index-num {
-  color: var(--faded-sepia);
+  color: var(--oxide-crimson-dark-bg);
 }
 
 .beat-outline-title {
   font-family: var(--font-serif);
-  font-size: clamp(1.85rem, 2.8vw, 2.45rem);
+  font-size: clamp(1.75rem, 2.7vw, 2.35rem);
   font-weight: 600;
   line-height: 1.15;
 }
@@ -701,6 +705,253 @@ body {
 
 .surface-obsidian .beat-outline-ref {
   color: var(--faded-sepia);
+}
+
+/* ==========================================================================
+   4B. SLIDE CONTENT LAYOUT CLASSES (38-BEAT PRESENTATION FORMAT)
+   ========================================================================== */
+.slide-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.35rem;
+  width: 100%;
+}
+
+.slide-footer {
+  flex-shrink: 0;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--rule-paper);
+  width: 100%;
+}
+
+.surface-obsidian .slide-footer {
+  border-top-color: var(--rule-dark);
+}
+
+.slide-takeaway {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+.surface-obsidian .slide-takeaway {
+  color: var(--faded-sepia);
+}
+
+.slide-takeaway strong {
+  color: var(--oxide-crimson);
+  text-transform: uppercase;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  margin-right: 0.4rem;
+}
+
+.surface-obsidian .slide-takeaway strong {
+  color: var(--oxide-crimson-dark-bg);
+}
+
+.slide-split-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.75rem;
+  align-items: center;
+  width: 100%;
+}
+
+.slide-split-2col.prose-weighted {
+  grid-template-columns: 1.12fr 0.88fr;
+}
+
+.slide-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.slide-col p {
+  font-family: var(--font-sans);
+  font-size: clamp(1.02rem, 1.25vw, 1.15rem);
+  line-height: 1.66;
+}
+
+.slide-col p.lead-p {
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 1.6vw, 1.48rem);
+  line-height: 1.48;
+}
+
+.cards-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.cards-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.cards-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.info-card {
+  background: rgba(210, 197, 170, 0.34);
+  border: 1px solid var(--rule-paper);
+  border-top: 3px solid var(--ink-brown);
+  padding: 1.25rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.surface-obsidian .info-card {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--rule-dark);
+  border-top-color: var(--faded-sepia);
+}
+
+.info-card.crimson-accent {
+  border-top-color: var(--oxide-crimson);
+}
+
+.surface-obsidian .info-card.crimson-accent {
+  border-top-color: var(--oxide-crimson-dark-bg);
+}
+
+.card-num-kicker {
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--oxide-crimson);
+}
+
+.surface-obsidian .card-num-kicker {
+  color: var(--oxide-crimson-dark-bg);
+}
+
+.info-card h4 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.3rem, 1.6vw, 1.52rem);
+  font-weight: 600;
+  line-height: 1.22;
+}
+
+.info-card p {
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 1.1vw, 1.04rem);
+  line-height: 1.58;
+}
+
+.slide-hero-plate {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 2.5rem;
+  align-items: center;
+  width: 100%;
+}
+
+.hero-image-frame {
+  background: var(--parchment);
+  padding: 0.75rem;
+  border: 1px solid var(--rule-paper);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+}
+
+.surface-obsidian .hero-image-frame {
+  border-color: var(--rule-dark);
+}
+
+.hero-image-frame img {
+  width: 100%;
+  max-height: 46vh;
+  object-fit: contain;
+  display: block;
+}
+
+.hero-caption {
+  padding-top: 0.55rem;
+  margin-top: 0.55rem;
+  border-top: 1px solid var(--rule-paper);
+  font-size: 0.88rem;
+  color: var(--ink-muted);
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.impact-callout {
+  padding: 1.15rem 1.45rem;
+  background: rgba(143, 40, 37, 0.08);
+  border-left: 3px solid var(--oxide-crimson);
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 1.15vw, 1.1rem);
+  line-height: 1.62;
+}
+
+.surface-obsidian .impact-callout {
+  background: rgba(196, 69, 65, 0.11);
+  border-left-color: var(--oxide-crimson-dark-bg);
+}
+
+.slide-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--rule-paper);
+  background: rgba(255, 252, 244, 0.55);
+}
+
+.surface-obsidian .slide-table-wrapper {
+  border-color: var(--rule-dark);
+  background: rgba(24, 18, 15, 0.55);
+}
+
+.slide-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: clamp(0.86rem, 1vw, 0.96rem);
+}
+
+.slide-table th,
+.slide-table td {
+  padding: 0.52rem 0.85rem;
+  text-align: left;
+  border-bottom: 1px solid var(--rule-paper);
+  vertical-align: top;
+  line-height: 1.45;
+}
+
+.surface-obsidian .slide-table th,
+.surface-obsidian .slide-table td {
+  border-bottom-color: var(--rule-dark);
+}
+
+.slide-table th {
+  font-family: var(--font-serif);
+  font-size: 1.12rem;
+  font-weight: 600;
+  border-bottom-width: 2px;
+}
+
+.slide-table td:first-child {
+  font-weight: 600;
+  color: var(--oxide-crimson);
+  white-space: nowrap;
+}
+
+.surface-obsidian .slide-table td:first-child {
+  color: var(--oxide-crimson-dark-bg);
 }
 
 /* ==========================================================================
@@ -2137,7 +2388,13 @@ body {
   .scene-flow-grid.cols-3,
   .scene-flow-grid.cols-2,
   .sources-citation-list,
-  .audit-tab-bar {
+  .audit-tab-bar,
+  .slide-split-2col,
+  .slide-split-2col.prose-weighted,
+  .slide-hero-plate,
+  .cards-grid-2,
+  .cards-grid-3,
+  .cards-grid-4 {
     grid-template-columns: 1fr;
   }
 
