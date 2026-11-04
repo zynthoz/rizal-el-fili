@@ -216,8 +216,6 @@ function initDeckExplorer() {
       panels.forEach((p) => {
         p.classList.toggle('active', p.getAttribute('data-deck-panel') === target);
       });
-
-      ScrollTrigger.refresh();
     });
   });
 }
@@ -245,8 +243,6 @@ function initLampExplorer() {
       panels.forEach((p) => {
         p.classList.toggle('active', p.getAttribute('data-lamp-panel') === target);
       });
-
-      ScrollTrigger.refresh();
     });
   });
 }
@@ -313,15 +309,18 @@ function initCharacterModal() {
 
   const keys = Object.keys(CHARACTER_ARCHETYPES);
 
-  function renderCharacter(charKey) {
-    const data = CHARACTER_ARCHETYPES[charKey] || CHARACTER_ARCHETYPES.simoun;
+  tabsContainer.innerHTML = keys
+    .map(
+      (k) =>
+        `<button class="char-tab-btn" data-key="${k}">${CHARACTER_ARCHETYPES[k].name.split(' (')[0]}</button>`
+    )
+    .join('');
 
-    tabsContainer.querySelectorAll('.char-tab-btn').forEach((btn) => {
-      btn.classList.toggle('active', btn.dataset.key === charKey);
-    });
-
-    bodyContainer.innerHTML = `
-      <div class="modal-char-details">
+  bodyContainer.innerHTML = keys
+    .map((k) => {
+      const data = CHARACTER_ARCHETYPES[k];
+      return `
+      <div class="modal-char-details" data-char-panel="${k}">
         <h4>${data.name}</h4>
         <span class="modal-archetype-pill">${data.archetype}</span>
         <div class="modal-detail-block">
@@ -338,14 +337,20 @@ function initCharacterModal() {
         </div>
       </div>
     `;
-  }
-
-  tabsContainer.innerHTML = keys
-    .map(
-      (k) =>
-        `<button class="char-tab-btn" data-key="${k}">${CHARACTER_ARCHETYPES[k].name.split(' (')[0]}</button>`
-    )
+    })
     .join('');
+
+  function renderCharacter(charKey) {
+    const activeKey = CHARACTER_ARCHETYPES[charKey] ? charKey : 'simoun';
+
+    tabsContainer.querySelectorAll('.char-tab-btn').forEach((btn) => {
+      btn.classList.toggle('active', btn.dataset.key === activeKey);
+    });
+
+    bodyContainer.querySelectorAll('.modal-char-details').forEach((panel) => {
+      panel.classList.toggle('active', panel.dataset.charPanel === activeKey);
+    });
+  }
 
   tabsContainer.addEventListener('click', (e) => {
     const btn = e.target.closest('.char-tab-btn');

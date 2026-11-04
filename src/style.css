@@ -413,7 +413,7 @@ body {
 .exhibit-section {
   position: relative;
   width: 100%;
-  padding: 6.5rem 2.25rem 7.5rem;
+  padding: 8.5rem 2.5rem 10rem;
 }
 
 .surface-paper {
@@ -437,12 +437,23 @@ body {
 }
 
 .editorial-grid {
-  max-width: 1220px;
+  max-width: 1240px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  column-gap: 2.75rem;
-  row-gap: 3.75rem;
+  column-gap: 3.25rem;
+  row-gap: 7.5rem;
+}
+
+/* Dedicated Open Stage for Each Act / Part Introduction */
+.section-intro-stage {
+  grid-column: 1 / 13;
+  min-height: 68vh;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 3.25rem;
+  align-content: center;
+  padding: 3.5rem 0 4.5rem;
 }
 
 .col-margin {
@@ -530,11 +541,11 @@ body {
 /* Role 3: Neutral Sans-Serif Body Text (Sized Up for Classroom Projection) */
 .prose-flow p {
   font-family: var(--font-sans);
-  font-size: 1.18rem;
-  line-height: 1.78;
-  margin-bottom: 1.35rem;
+  font-size: 1.2rem;
+  line-height: 1.86;
+  margin-bottom: 1.65rem;
   color: var(--ink-body);
-  max-width: 65ch;
+  max-width: 64ch;
 }
 
 .surface-obsidian .prose-flow p {
@@ -544,21 +555,21 @@ body {
 .prose-flow h4 {
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: 1.75rem;
-  line-height: 1.22;
-  margin-bottom: 0.85rem;
+  font-size: 1.8rem;
+  line-height: 1.25;
+  margin-bottom: 1rem;
 }
 
 /* Literary Quotations (Upright Reading Serif — High Projection Legibility) */
 .literary-quote {
-  margin: 2rem 0;
-  padding: 0.25rem 0 0.25rem 1.6rem;
+  margin: 2.5rem 0;
+  padding: 0.4rem 0 0.4rem 1.85rem;
   border-left: 3px solid var(--oxide-crimson);
   font-family: var(--font-serif);
   font-weight: 500;
   font-style: normal;
-  font-size: clamp(1.48rem, 2.2vw, 1.82rem);
-  line-height: 1.48;
+  font-size: clamp(1.5rem, 2.2vw, 1.85rem);
+  line-height: 1.52;
   color: var(--ink-brown);
 }
 
@@ -585,16 +596,20 @@ body {
 
 /* ==========================================================================
    4. NUMBERED PRESENTATION BEAT SPINE (01 -> 16)
+   Each beat occupies its own spacious viewport stage so the next section never
+   crowds into view while reading.
    ========================================================================== */
 .presentation-beat {
   grid-column: 1 / 13;
-  scroll-margin-top: calc(var(--nav-height) + 1.25rem);
-  padding-top: 2.5rem;
+  min-height: calc(96vh - var(--nav-height));
+  scroll-margin-top: calc(var(--nav-height) + 1rem);
+  padding: 5.25rem 0 6.75rem;
   border-top: 1px solid var(--rule-paper);
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  column-gap: 2.75rem;
-  row-gap: 2.25rem;
+  column-gap: 3.25rem;
+  row-gap: 3rem;
+  align-content: center;
 }
 
 .surface-obsidian .presentation-beat {
@@ -607,8 +622,9 @@ body {
   align-items: baseline;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 1rem;
-  padding-bottom: 0.9rem;
+  gap: 1.25rem;
+  padding-bottom: 1.25rem;
+  margin-bottom: 0.5rem;
   border-bottom: 1px solid var(--rule-paper);
 }
 
@@ -742,9 +758,9 @@ body {
 
 .timeline-item {
   display: grid;
-  grid-template-columns: 230px 1fr;
-  gap: 2.5rem;
-  padding: 2rem 0;
+  grid-template-columns: 240px 1fr;
+  gap: 3.5rem;
+  padding: 3.5rem 0;
   border-bottom: 1px solid var(--rule-paper);
 }
 
@@ -957,15 +973,29 @@ body {
   font-weight: 600;
 }
 
+/* Zero-Layout-Shift Grid Stack: All 3 deck panels share cell 1/1 so container
+   permanently preserves the height of the tallest panel without jumping. */
+.deck-panels-stack {
+  display: grid;
+}
+
 .deck-panel {
-  display: none;
+  grid-area: 1 / 1;
+  display: grid;
   grid-template-columns: 5fr 7fr;
-  gap: 3rem;
-  padding: 2.25rem 2.25rem;
+  gap: 3.25rem;
+  padding: 2.5rem 2.5rem;
+  align-content: start;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
 }
 
 .deck-panel.active {
-  display: grid;
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .deck-meta-list {
@@ -1057,7 +1087,8 @@ body {
   grid-column: 1 / 13;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3.5rem;
+  gap: 4.5rem;
+  padding: 1.25rem 0;
   position: relative;
 }
 
@@ -1109,7 +1140,8 @@ body {
   grid-column: 1 / 13;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2.5rem;
+  gap: 3.25rem;
+  padding: 1.25rem 0;
 }
 
 .seq-block {
@@ -1239,12 +1271,25 @@ body {
   font-weight: 600;
 }
 
+/* Zero-Layout-Shift Grid Stack: All 4 lamp stages share cell 1/1 so clicking
+   tabs never changes container height or shifts the page below. */
+.lamp-panels-stack {
+  display: grid;
+}
+
 .lamp-stage-content {
-  display: none;
+  grid-area: 1 / 1;
+  align-self: start;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
 }
 
 .lamp-stage-content.active {
-  display: block;
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .lamp-stage-content h4 {
@@ -1265,25 +1310,25 @@ body {
 /* H. Quiet Centered Narrative Passages (Juli, Carolino, Chapter 39) */
 .quiet-centered-passage {
   grid-column: 3 / 11;
-  padding: 1rem 0;
+  padding: 2.25rem 0;
 }
 
 .quiet-centered-passage p {
   font-family: var(--font-sans);
-  font-size: 1.2rem;
-  line-height: 1.82;
+  font-size: 1.22rem;
+  line-height: 1.9;
   color: var(--bone-light);
-  margin-bottom: 1.45rem;
+  margin-bottom: 1.75rem;
 }
 
 .quiet-key-moment {
-  margin: 1.75rem 0;
-  padding: 1.15rem 1.5rem;
+  margin: 2.25rem 0;
+  padding: 1.5rem 1.85rem;
   border-left: 3px solid var(--oxide-crimson-dark-bg);
   background: rgba(255, 255, 255, 0.03);
   font-family: var(--font-serif);
-  font-size: 1.55rem;
-  line-height: 1.5;
+  font-size: 1.62rem;
+  line-height: 1.55;
   color: var(--bone-light);
 }
 
@@ -1519,7 +1564,23 @@ body {
 }
 
 .modal-body {
+  display: grid;
+  align-items: start;
   padding: 2.25rem 2rem;
+}
+
+.modal-char-details {
+  grid-area: 1 / 1;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+}
+
+.modal-char-details.active {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .modal-char-details h4 {
@@ -1566,6 +1627,20 @@ body {
     display: none;
   }
 
+  .exhibit-section {
+    padding: 5.5rem 1.5rem 6.5rem;
+  }
+
+  .section-intro-stage {
+    min-height: auto;
+    padding: 2rem 0 3rem;
+  }
+
+  .presentation-beat {
+    min-height: auto;
+    padding: 3.5rem 0 4.5rem;
+  }
+
   .col-margin,
   .col-main,
   .col-main-left,
@@ -1580,7 +1655,7 @@ body {
   .timeline-item,
   .editorial-ledger,
   .deck-selector-bar,
-  .deck-panel.active,
+  .deck-panel,
   .two-col-spread,
   .three-col-sequence,
   .lamp-centerpiece-stage,
