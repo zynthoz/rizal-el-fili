@@ -49,15 +49,21 @@ html.projection-large {
   padding: 0;
 }
 
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden; /* .presentation-viewport manages scrolling */
+html {
+  scroll-behavior: smooth;
   background-color: var(--ink-brown);
   color: var(--bone-light);
   font-family: var(--font-sans);
+  font-size: 100%;
+  line-height: 1.72;
   -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: var(--ink-brown);
 }
 
 /* ==========================================================================
@@ -211,29 +217,18 @@ html, body {
 }
 
 /* ==========================================================================
-   2. PRESENTATION VIEWPORT CONTAINER (MANDATORY SCROLL SNAPPING)
+   2. PRESENTATION VIEWPORT CONTAINER & SLIDES
    ========================================================================== */
 .presentation-viewport {
-  width: 100vw;
-  height: 100vh;
-  height: 100svh;
-  overflow-y: auto;
-  overflow-x: hidden;
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
 }
 
 .presentation-slide {
   width: 100vw;
-  height: 100vh;
-  height: 100svh;
   min-height: 100vh;
   min-height: 100svh;
-  max-height: 100vh;
-  max-height: 100svh;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
   box-sizing: border-box;
   padding-top: var(--nav-height);
   position: relative;
@@ -719,23 +714,26 @@ html, body {
 .stage-book-portal {
   position: relative;
   width: 100%;
-  height: 100vh;
-  height: 100svh;
+  min-height: 100vh;
+  min-height: 100svh;
   background-color: var(--ink-deep);
   background-image:
     radial-gradient(circle at center, rgba(45, 34, 28, 0.42) 0%, rgba(20, 15, 12, 0.94) 85%),
     url('/assets/book/leather.jpg');
   background-size: 100% 100%, 420px 420px;
+  padding-top: 0;
 }
 
 .portal-pin-viewport {
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
+  padding-top: var(--nav-height);
   box-sizing: border-box;
 }
 
