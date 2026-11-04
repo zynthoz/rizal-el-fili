@@ -1,4 +1,7 @@
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 /* ==========================================================================
    EL FILIBUSTERISMO — CLASSROOM PRESENTATION JAVASCRIPT
@@ -92,10 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ==========================================================================
-   3. SLIDE PRESENTATION CONTROLLER
+   3. SLIDE PRESENTATION CONTROLLER & 3D BOOK PORTAL
    ========================================================================== */
 function initSlidePresentation() {
-  const viewport = document.getElementById('presentation-viewport');
   const slides = Array.from(document.querySelectorAll('.presentation-slide'));
   const slideIndicator = document.getElementById('slide-indicator');
   const sectionSelect = document.getElementById('nav-section-jump');
@@ -105,11 +107,80 @@ function initSlidePresentation() {
   const projectionBtn = document.getElementById('btn-projection');
   const fullscreenBtn = document.getElementById('btn-fullscreen');
 
-  if (!viewport || slides.length === 0) return;
+  if (slides.length === 0) return;
 
-  let currentSlideIndex = 0;
   const totalSlides = slides.length;
+  let currentSlideIndex = 0;
 
+  // ------------------------------------------------------------------------
+  // A. 3D Book Portal Opening Transition (Zoom & Fade Onto Actual Text)
+  // ------------------------------------------------------------------------
+  const portalSection = document.getElementById('slide-cover');
+  const pinViewport = document.getElementById('portal-pin-viewport');
+  const pageWipe = document.getElementById('portal-page-wipe');
+  const bookObject = document.getElementById('book-object');
+  const frontCover = document.getElementById('book-front-cover');
+  const insideContent = document.getElementById('inside-page-content');
+  const btnOpen = document.getElementById('btn-open-book');
+
+  if (portalSection && pinViewport && bookObject && frontCover && pageWipe) {
+    gsap.set(frontCover, { rotateY: 0, force3D: true, transformOrigin: 'left center' });
+    gsap.set(bookObject, { scale: 1, rotateX: 4, rotateY: -3, force3D: true });
+    if (insideContent) gsap.set(insideContent, { opacity: 0.25, scale: 0.96 });
+    gsap.set(pageWipe, { opacity: 0 });
+
+    const portalTL = gsap.timeline({
+      scrollTrigger: {
+        trigger: portalSection,
+        start: 'top top',
+        end: '+=165%',
+        pin: pinViewport,
+        scrub: 0.4,
+        anticipatePin: 1,
+        fastScrollEnd: true
+      }
+    });
+
+    portalTL
+      .to(bookObject, { rotateX: 0, rotateY: 0, duration: 0.45, ease: 'power2.inOut' }, 0)
+      .to(frontCover, { rotateY: -168, duration: 0.48, ease: 'power2.inOut' }, 0.02)
+      .to(insideContent, { opacity: 1, scale: 1, duration: 0.35, ease: 'power2.out' }, 0.2)
+      .to(bookObject, { scale: 1.06, duration: 0.16, ease: 'none' }, 0.46)
+      .to(insideContent, { opacity: 0, scale: 1.08, duration: 0.24, ease: 'power2.in' }, 0.64)
+      .to(bookObject, { scale: 2.25, duration: 0.38, ease: 'power2.in' }, 0.62)
+      .to(pageWipe, { opacity: 1, duration: 0.26, ease: 'power2.inOut' }, 0.72);
+  }
+
+  function proceedToFirstSlide() {
+    const slide1 = document.getElementById('slide-title-gomburza');
+    if (slide1) {
+      slide1.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  if (bookObject) {
+    bookObject.addEventListener('click', (e) => {
+      e.stopPropagation();
+      proceedToFirstSlide();
+    });
+    bookObject.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        proceedToFirstSlide();
+      }
+    });
+  }
+
+  if (btnOpen) {
+    btnOpen.addEventListener('click', (e) => {
+      e.stopPropagation();
+      proceedToFirstSlide();
+    });
+  }
+
+  // ------------------------------------------------------------------------
+  // B. Slide Stepping & Status Tracking
+  // ------------------------------------------------------------------------
   function updateStatus(index) {
     currentSlideIndex = Math.max(0, Math.min(totalSlides - 1, index));
     const activeSlide = slides[currentSlideIndex];
@@ -127,7 +198,6 @@ function initSlidePresentation() {
     }
 
     if (sectionSelect) {
-      // Find matching option for the active slide's section id
       const targetUnit = activeSlide.getAttribute('data-section-id');
       if (targetUnit && sectionSelect.value !== targetUnit) {
         sectionSelect.value = targetUnit;
@@ -135,13 +205,32 @@ function initSlidePresentation() {
     }
   }
 
-  function goToSlide(index) {
-    const targetIdx = Math.max(0, Math.min(totalSlides - 1, index));
-    const targetSlide = slides[targetIdx];
-    if (targetSlide) {
-      targetSlide.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  function stepNext() {
+    // Find next slide whose top boundary is below the header
+    const next = slides.find((el) => {
+      const rect = el.getBoundingClientRect();
+      return rect.top > 85;
+    });
+    if (next) {
+      next.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
+
+  function stepPrev() {
+    // Find previous slide whose top boundary is scrolled past
+    const prevs = slides.filter((el) => {
+      const rect = el.getBoundingClientRect();
+      return rect.top < -85;
+    });
+    const target = prevs[prevs.length - 1] || slides[0];
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  // Stepper buttons
+  if (nextBtn) nextBtn.addEventListener('click', stepNext);
+  if (prevBtn) prevBtn.addEventListener('click', stepPrev);
 
   // Observer to track which slide occupies the viewport
   const observer = new IntersectionObserver(
@@ -156,140 +245,12 @@ function initSlidePresentation() {
       });
     },
     {
-      root: viewport,
-      threshold: 0.55
+      root: null,
+      threshold: 0.45
     }
   );
 
   slides.forEach((slide) => observer.observe(slide));
-
-  // Stepper buttons
-  if (nextBtn) nextBtn.addEventListener('click', handleNextSlide);
-  if (prevBtn) prevBtn.addEventListener('click', () => goToSlide(currentSlideIndex - 1));
-
-  // 3D Book Portal Controller (Slide 01)
-  const bookObject = document.getElementById('book-object');
-  const frontCover = document.getElementById('book-front-cover');
-  const insideContent = document.getElementById('inside-page-content');
-  const pageWipe = document.getElementById('portal-page-wipe');
-  const btnOpen = document.getElementById('btn-open-book');
-
-  let isBookOpen = false;
-  let isBookAnimating = false;
-
-  if (frontCover && bookObject) {
-    gsap.set(frontCover, { rotateY: 0, force3D: true, transformOrigin: 'left center' });
-    gsap.set(bookObject, { scale: 1, rotateX: 4, rotateY: -3, force3D: true });
-    if (insideContent) gsap.set(insideContent, { opacity: 0.25, scale: 0.96 });
-    if (pageWipe) gsap.set(pageWipe, { opacity: 0 });
-  }
-
-  function animateOpenBook(onComplete) {
-    if (isBookAnimating || !frontCover || !bookObject) return;
-    isBookAnimating = true;
-    isBookOpen = true;
-
-    gsap.timeline({
-      onComplete: () => {
-        isBookAnimating = false;
-        if (onComplete) onComplete();
-      }
-    })
-    .to(bookObject, { rotateX: 0, rotateY: 0, scale: 1.05, duration: 0.5, ease: 'power2.inOut' }, 0)
-    .to(frontCover, { rotateY: -168, duration: 0.75, ease: 'power2.inOut' }, 0.05)
-    .to(insideContent, { opacity: 1, scale: 1, duration: 0.5, ease: 'power2.out' }, 0.2);
-  }
-
-  function animateCloseBook(onComplete) {
-    if (isBookAnimating || !frontCover || !bookObject) return;
-    isBookAnimating = true;
-    isBookOpen = false;
-
-    gsap.timeline({
-      onComplete: () => {
-        isBookAnimating = false;
-        if (onComplete) onComplete();
-      }
-    })
-    .to(frontCover, { rotateY: 0, duration: 0.65, ease: 'power2.inOut' }, 0)
-    .to(bookObject, { rotateX: 4, rotateY: -3, scale: 1, duration: 0.55, ease: 'power2.inOut' }, 0.05)
-    .to(insideContent, { opacity: 0.25, scale: 0.96, duration: 0.35, ease: 'power2.in' }, 0.05);
-  }
-
-  function toggleBook() {
-    if (isBookOpen) {
-      animateCloseBook();
-    } else {
-      animateOpenBook();
-    }
-  }
-
-  if (bookObject) {
-    bookObject.addEventListener('click', (e) => {
-      e.stopPropagation();
-      toggleBook();
-    });
-
-    bookObject.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        toggleBook();
-      }
-    });
-  }
-
-  if (btnOpen) {
-    btnOpen.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (!isBookOpen) {
-        animateOpenBook(() => {
-          setTimeout(() => {
-            goToSlide(1);
-          }, 300);
-        });
-      } else {
-        goToSlide(1);
-      }
-    });
-  }
-
-  function handleNextSlide() {
-    if (currentSlideIndex === 0 && !isBookOpen) {
-      animateOpenBook(() => {
-        goToSlide(1);
-      });
-    } else {
-      goToSlide(currentSlideIndex + 1);
-    }
-  }
-
-  // Real-time scroll scrub between Slide 0 (Cover) and Slide 1
-  viewport.addEventListener(
-    'scroll',
-    () => {
-      if (slides.length < 2 || !frontCover || !bookObject || isBookAnimating) return;
-      const slide1 = slides[1];
-      const threshold = slide1.offsetTop || viewport.clientHeight;
-      const scrollTop = viewport.scrollTop;
-
-      if (scrollTop <= threshold) {
-        const progress = Math.min(1, Math.max(0, scrollTop / threshold));
-        const rotY = -168 * Math.min(1, progress * 1.35);
-        const scale = 1 + 0.08 * progress;
-        const opacity = 0.25 + 0.75 * Math.min(1, progress * 1.5);
-        const rotX = 4 * (1 - progress);
-        const bookRotY = -3 * (1 - progress);
-
-        gsap.set(frontCover, { rotateY: rotY });
-        gsap.set(bookObject, { rotateX: rotX, rotateY: bookRotY, scale: scale });
-        if (insideContent) gsap.set(insideContent, { opacity: opacity, scale: 0.96 + 0.04 * progress });
-        if (pageWipe) gsap.set(pageWipe, { opacity: Math.max(0, (progress - 0.75) / 0.25) });
-
-        isBookOpen = progress > 0.45;
-      }
-    },
-    { passive: true }
-  );
 
   // Section Jump Dropdown
   if (sectionSelect) {
@@ -307,6 +268,7 @@ function initSlidePresentation() {
     projectionBtn.addEventListener('click', () => {
       const isLarge = document.documentElement.classList.toggle('projection-large');
       projectionBtn.classList.toggle('active', isLarge);
+      setTimeout(() => ScrollTrigger.refresh(), 150);
     });
   }
 
@@ -318,10 +280,12 @@ function initSlidePresentation() {
       } else {
         document.exitFullscreen?.().catch(() => {});
       }
+      setTimeout(() => ScrollTrigger.refresh(), 200);
     });
 
     document.addEventListener('fullscreenchange', () => {
       fullscreenBtn.classList.toggle('active', Boolean(document.fullscreenElement));
+      setTimeout(() => ScrollTrigger.refresh(), 200);
     });
   }
 
@@ -337,24 +301,24 @@ function initSlidePresentation() {
       case 'PageDown':
       case ' ': // Spacebar
         e.preventDefault();
-        handleNextSlide();
+        stepNext();
         break;
 
       case 'ArrowUp':
       case 'ArrowLeft':
       case 'PageUp':
         e.preventDefault();
-        goToSlide(currentSlideIndex - 1);
+        stepPrev();
         break;
 
       case 'Home':
         e.preventDefault();
-        goToSlide(0);
+        slides[0]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         break;
 
       case 'End':
         e.preventDefault();
-        goToSlide(totalSlides - 1);
+        slides[totalSlides - 1]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         break;
 
       default:
@@ -364,7 +328,7 @@ function initSlidePresentation() {
 
   // Touch swipe support for tablet presentation screens
   let touchStartY = 0;
-  viewport.addEventListener(
+  window.addEventListener(
     'touchstart',
     (e) => {
       touchStartY = e.changedTouches[0].clientY;
@@ -372,16 +336,16 @@ function initSlidePresentation() {
     { passive: true }
   );
 
-  viewport.addEventListener(
+  window.addEventListener(
     'touchend',
     (e) => {
       const touchEndY = e.changedTouches[0].clientY;
       const diffY = touchStartY - touchEndY;
       if (Math.abs(diffY) > 50) {
         if (diffY > 0) {
-          handleNextSlide();
+          stepNext();
         } else {
-          goToSlide(currentSlideIndex - 1);
+          stepPrev();
         }
       }
     },
